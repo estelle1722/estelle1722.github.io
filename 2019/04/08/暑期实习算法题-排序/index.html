@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="冒泡排序">
+<meta name="keywords" content="春招,算法题,排序算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暑期实习算法题-排序">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/暑期实习算法题-排序/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="冒泡排序">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-09T07:42:10.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暑期实习算法题-排序">
+<meta name="twitter:description" content="冒泡排序">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/08/暑期实习算法题-排序/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>暑期实习算法题-排序 | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/暑期实习算法题-排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">暑期实习算法题-排序
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-08 17:03:22" itemprop="dateCreated datePublished" datetime="2019-04-08T17:03:22+08:00">2019-04-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-09 15:42:10" itemprop="dateModified" datetime="2019-04-09T15:42:10+08:00">2019-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/春招/" itemprop="url" rel="index"><span itemprop="name">春招</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="冒泡排序">冒泡排序</h2>
+<a id="more"></a>
+<p>冒泡排序，设包含<span class="math inline">\(n​\)</span>个数字的数组<span class="math inline">\(A​\)</span>，共进行<span class="math inline">\((n-1)​\)</span>趟排序，对于第<span class="math inline">\(i​\)</span>趟，过程如下：</p>
+<p>第<span class="math inline">\(i\)</span>趟，依次是<span class="math inline">\((A_0,A_{1})\)</span>、<span class="math inline">\((A_{1},A_{2})\)</span>、<span class="math inline">\((A_{2},A_{3})\)</span>、<span class="math inline">\((A_{3}, A_{4})\)</span>、…、<span class="math inline">\((A_{n-i-1},A_{n-i})\)</span>进行比较。</p>
+<p>从上述过程可以看到，每进行一趟排序，至少都能排好一个元素。冒泡排序时间复杂度为<span class="math inline">\(O(n^2)​\)</span>，空间复杂度为<span class="math inline">\(O(1)​\)</span>。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> arr <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> len(arr) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    n = len(arr)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">        <span class="comment"># early stopping if sorted</span></span><br><span class="line">        flag = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, n-i<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> arr[j+<span class="number">1</span>] &lt; arr[j]:</span><br><span class="line">                arr[j+<span class="number">1</span>], arr[j] = arr[j], arr[j+<span class="number">1</span>]</span><br><span class="line">                flag = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> flag:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">          </span><br><span class="line"><span class="comment"># simple version</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort1</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> arr <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> len(arr) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    n = len(arr)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n<span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> arr[j] &gt; arr[j+<span class="number">1</span>]:</span><br><span class="line">                arr[j], arr[j+<span class="number">1</span>] = arr[j+<span class="number">1</span>], arr[j]</span><br></pre></td></tr></table></figure>
+<p>到今天亲自手撕代码，才发现原来自己对冒泡排序的理解是存在很大偏差的。</p>
+<h2 id="选择排序">选择排序</h2>
+<p>选择排序，设包含<span class="math inline">\(n​\)</span>个数字的数组<span class="math inline">\(A​\)</span>，共需要进行<span class="math inline">\(n​\)</span>趟排序，对于第<span class="math inline">\(i​\)</span>趟，从序列<span class="math inline">\(A[i+1:n]​\)</span>中选出最小值与<span class="math inline">\(A[i]​\)</span>互换。选择排序时间复杂度为<span class="math inline">\(O(n^2)​\)</span>，空间复杂度为<span class="math inline">\(O(1)​\)</span>。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">selection_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> arr <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> len(arr) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    n = len(arr)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        flag = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> arr[i] &gt; arr[j]:</span><br><span class="line">                arr[i], arr[j] = arr[j], arr[i]</span><br><span class="line">                flag = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> flag:</span><br><span class="line">            <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<h2 id="插入排序">插入排序</h2>
+<p>选择排序，设包含<span class="math inline">\(n\)</span>个数字的数组<span class="math inline">\(A\)</span>，共需要进行<span class="math inline">\(n\)</span>趟排序，对于第<span class="math inline">\(i\)</span>趟，<span class="math inline">\(A[i]\)</span>与<span class="math inline">\(A[i-1]\)</span>、<span class="math inline">\(A[i-2]\)</span>、<span class="math inline">\(A[i-3]\)</span>、…、<span class="math inline">\(A[0]\)</span>进行比较，如果出现<span class="math inline">\(A[i]&lt;A[i-1]\)</span>，则互换位置，直到出现<span class="math inline">\(A[i]&gt;=A[i-1]\)</span>，第<span class="math inline">\(i\)</span>趟排序结束，插入排序时间复杂度为<span class="math inline">\(O(n^2)\)</span>，空间复杂度为<span class="math inline">\(O(1)\)</span>。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insertion_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> arr <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> len(arr) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    n = len(arr)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> arr[j] &lt; arr[j<span class="number">-1</span>]:</span><br><span class="line">                arr[j], arr[j<span class="number">-1</span>] = arr[j<span class="number">-1</span>], arr[j]</span><br><span class="line">            <span class="comment"># if arr[j] &gt;= arr[j-1]: element a[j] is sorted.</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h2 id="归并排序">归并排序</h2>
+<p>设包含<span class="math inline">\(n\)</span>个数字的数组<span class="math inline">\(A\)</span>，归并排序（以2路归并为例）可分为两步：分治和归并；</p>
+<ol type="1">
+<li>分治：将序列<span class="math inline">\(A[:n]\)</span>平均分为两个子序列<span class="math inline">\(A_1\)</span>和<span class="math inline">\(A_2\)</span>，继续将<span class="math inline">\(A_1\)</span>和<span class="math inline">\(A_2\)</span>分别平均分为两个子序列，依次递归直到每个子序列的元素个数小于等于2；</li>
+<li>归并：将每个子序列有序，再将相邻子序列合并，接着将每个子序列内部排列有序，再合并相邻子序列，如此递归，直只有一个子序列，即递归完成；</li>
+</ol>
+<p>递归代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(arr, left, right, temp)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> left &lt; right:</span><br><span class="line">        <span class="comment"># divide</span></span><br><span class="line">        middle = (left + right) // <span class="number">2</span></span><br><span class="line">        merge_sort(arr, left, middle, temp)</span><br><span class="line">        merge_sort(arr, middle+<span class="number">1</span>, right, temp) </span><br><span class="line">        <span class="comment"># merge</span></span><br><span class="line">        merge_sort_helper(arr, left, middle, right, temp)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort_helper</span><span class="params">(arr, left, middle, right, temp)</span>:</span></span><br><span class="line">    <span class="comment"># this merging algorithm is similar to merge two sorted linked list</span></span><br><span class="line">    i, j, pos = middle, right, right</span><br><span class="line">    <span class="keyword">while</span> i &gt;= left <span class="keyword">and</span> j &gt;= middle + <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> arr[i] &gt; arr[j]:</span><br><span class="line">            temp[pos] = arr[i]</span><br><span class="line">            i -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            temp[pos] = arr[j]</span><br><span class="line">            j -= <span class="number">1</span></span><br><span class="line">        pos -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> i &gt;= left:</span><br><span class="line">        temp[pos] = arr[i]</span><br><span class="line">        i, pos= i - <span class="number">1</span>, pos - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> j &gt;= middle + <span class="number">1</span>:</span><br><span class="line">        temp[pos] = arr[j]</span><br><span class="line">        j, pos = j - <span class="number">1</span>, pos - <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        arr[left: right + <span class="number">1</span>] = temp[left: right + <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>归并排序用递归实现，逻辑清晰，比较易懂。需要注意归并排序空间复杂度是<span class="math inline">\(O(nlog_{2}n)\)</span>。</p>
+<h2 id="快速排序">快速排序</h2>
+<p>设包含<span class="math inline">\(n\)</span>个数字的数组<span class="math inline">\(A\)</span>，随机选择一个元素<span class="math inline">\(A_i\)</span>，通过<code>partition</code>函数调整，使得<span class="math inline">\(A_i\)</span>左边的元素均小于<span class="math inline">\(A_i\)</span>，右边的元素均大于<span class="math inline">\(A_i\)</span>，接着递归<span class="math inline">\(A_i\)</span>左边子序列和<span class="math inline">\(A_i\)</span>右边子序列，最终时间复杂度为<span class="math inline">\(O(nlog_2n)\)</span>。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(arr, left, right)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> left &lt; right:</span><br><span class="line">        index = partition(arr, left, right)</span><br><span class="line">        quick_sort(arr, left, index - <span class="number">1</span>)</span><br><span class="line">        quick_sort(arr, index + <span class="number">1</span>, right)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(arr, left, right)</span>:</span></span><br><span class="line">    element = arr[left]</span><br><span class="line">    <span class="keyword">while</span> left &lt; right:</span><br><span class="line">        <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> arr[right] &gt;= element:</span><br><span class="line">            right -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> arr[right] &lt; element:</span><br><span class="line">            arr[left], arr[right] = arr[right], arr[left]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> arr[left] &lt;= element:</span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> arr[left] &gt; element:</span><br><span class="line">            arr[left], arr[right] = arr[right], arr[left]</span><br><span class="line">    <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+<p>用递归实现快速排序，代码逻辑也是比较清晰的，这是递归程序的一大优点，先调用<code>partition</code>函数将开头元素放到指定位置，再将左边部分和右半部分分别递归。</p>
+<h2 id="堆排序">堆排序</h2>
+<p>堆排序是不稳定算法，算法步骤如下：</p>
+<ol type="1">
+<li>初始化最大堆；</li>
+<li>将堆顶元素和数组末尾元素互换，再次调整最大堆；</li>
+<li>重复步骤2，直至整个数组都有序(即<span class="math inline">\(n\)</span>次构建最大堆)；</li>
+</ol>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">heap_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(len(arr)//<span class="number">2</span> - <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        self.adjust_heap(arr, index, len(arr) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(len(arr)<span class="number">-1</span>, <span class="number">0</span>, <span class="number">-1</span>):</span><br><span class="line">        arr[<span class="number">0</span>], arr[index] = arr[index], arr[<span class="number">0</span>]</span><br><span class="line">        adjust_heap(arr, <span class="number">0</span>, index - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adjust_heap</span><span class="params">(arr, root_pos, length)</span>:</span></span><br><span class="line">    node = <span class="number">2</span> * root_pos + <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> node &lt;= length:</span><br><span class="line">        <span class="keyword">if</span> node + <span class="number">1</span> &lt;= length <span class="keyword">and</span> arr[node + <span class="number">1</span>] &gt; arr[node]:</span><br><span class="line">            node = node + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> arr[root_pos] &lt; arr[node]:</span><br><span class="line">            arr[root_pos], arr[node] = arr[node], arr[root_pos]</span><br><span class="line">            root_pos = node</span><br><span class="line">            node = <span class="number">2</span> * root_pos + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># build maximum heap successfully.</span></span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>调整最大堆函数<code>adjust_heap</code>是堆排序的精华部分，时间复杂度是<span class="math inline">\(log_2n\)</span>；每运行一次，都会将最大值放至堆顶，再将堆顶元素&quot;沉底&quot;即可；算法总体复杂度是<span class="math inline">\(O(nlog_2 n)\)</span>。</p>
+<h2 id="希尔排序">希尔排序</h2>
+<p>希尔排序是比较特殊的一种排序算法，它可以看做是直接插入排序的改良版；希尔排序是通过不断调整步长来达到排序目的，当步长为1时，希尔排序便是直接插入排序。为了保证最终整个数列都有序，最后步长一定为1，其时间复杂度不确定，取决于步长选择策略，步长选择策略越差，其算法复杂度越接近于<span class="math inline">\(O(n^2)\)</span>;</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(self, arr)</span>:</span></span><br><span class="line">    increment = len(arr)</span><br><span class="line">    <span class="keyword">while</span> increment &gt; <span class="number">1</span>:</span><br><span class="line">        increment = increment // <span class="number">3</span> + <span class="number">1</span></span><br><span class="line">        <span class="comment"># the above is extremely similar to insertion-sort algorithm</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(increment, len(arr)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i, <span class="number">0</span>, -increment):</span><br><span class="line">                <span class="keyword">if</span> arr[j] &lt; arr[j - increment]:</span><br><span class="line">                    arr[j], arr[j - increment] = arr[j - increment], arr[j]</span><br></pre></td></tr></table></figure>
+<p>可以看出，上述代码步长选择策略为<span class="math inline">\(increment//3+1\)</span>，目前没有理论确定何种步长策略最优，在大量实验基础上，大概有个经验值；</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/春招/" rel="tag"># 春招</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/排序算法/" rel="tag"># 排序算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/07/暑期实习算法题-二叉树/" rel="next" title="暑期实习算法题-二叉树">
+                <i class="fa fa-chevron-left"></i> 暑期实习算法题-二叉树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">4.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">7.</span> <span class="nav-text">希尔排序</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
