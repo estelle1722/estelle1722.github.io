@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概念">
+<meta name="keywords" content="春招,算法题,字符串">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暑期实习算法题-字符串">
+<meta property="og:url" content="http://yoursite.com/2019/04/10/暑期实习算法题-字符串/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="概念">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/10/暑期实习算法题-字符串/pos.png">
+<meta property="og:updated_time" content="2019-04-10T09:17:22.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暑期实习算法题-字符串">
+<meta name="twitter:description" content="概念">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/10/暑期实习算法题-字符串/pos.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/10/暑期实习算法题-字符串/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>暑期实习算法题-字符串 | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/10/暑期实习算法题-字符串/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">暑期实习算法题-字符串
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-10 08:55:33 / 修改时间：17:17:22" itemprop="dateCreated datePublished" datetime="2019-04-10T08:55:33+08:00">2019-04-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/春招/" itemprop="url" rel="index"><span itemprop="name">春招</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念">概念</h2>
+<a id="more"></a>
+<ol type="1">
+<li>回文</li>
+<li>子串（连续）</li>
+<li>子序列（不连续）</li>
+<li>前缀树（Trie树）</li>
+<li>后缀树和后缀数组</li>
+<li>匹配</li>
+<li>字典序</li>
+</ol>
+<h2 id="常见类型">常见类型</h2>
+<ol type="1">
+<li>规则判断（转换可使用<code>try-catch</code>语句块）</li>
+</ol>
+<ul>
+<li>是否符合整数规则</li>
+<li>是否符合浮点数规则</li>
+<li>是否符合回文数规则</li>
+<li>是否符合回文数规则</li>
+</ul>
+<ol start="2" type="1">
+<li>数字运算</li>
+</ol>
+<ul>
+<li>模拟大整数加减法</li>
+</ul>
+<ol start="3" type="1">
+<li>与数组操作有关的类型</li>
+</ol>
+<ul>
+<li>与数组相关的调整、排序</li>
+<li>快排划分算法</li>
+</ul>
+<ol start="4" type="1">
+<li>字符计数</li>
+</ol>
+<ul>
+<li>哈希表</li>
+<li>固定长度数组</li>
+<li>滑动窗口、寻找最长无重复子串、计算变位词</li>
+</ul>
+<ol start="5" type="1">
+<li>动态规划问题</li>
+</ol>
+<ul>
+<li>最长公共子串</li>
+<li>最长公共子序列</li>
+<li>最长回文子串</li>
+<li>最长回文子序列</li>
+</ul>
+<ol start="6" type="1">
+<li>搜索类型（从一个字符串变为另外一个字符串的逻辑：宽度优先搜索） ## 案例</li>
+</ol>
+<h3 id="案例1判断一棵二叉树s是否是另一棵二叉树t的子树">案例1：判断一棵二叉树s是否是另一棵二叉树t的子树</h3>
+<h4 id="二叉树遍历完全相等子树">二叉树遍历+完全相等子树</h4>
+<p>用二叉树遍历的方式来判断是否是子树，即依次遍历二叉树s的节点，判断s的某一棵子树和t是否完全相等。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubtree</span><span class="params">(self, s: TreeNode, t: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">return</span> self.traverse(s, t)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, s: TreeNode, t: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> s <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">and</span> t <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">if</span> s <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> t <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> s.val == t.val <span class="keyword">and</span> self.helper(s.left, t.left) <span class="keyword">and</span> self.helper(s.right, t.right)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">traverse</span><span class="params">(self, s: TreeNode, t: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">return</span> s <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> (self.helper(s, t) <span class="keyword">or</span> self.traverse(s.left, t) <span class="keyword">or</span> self.traverse(s.right, t))</span><br></pre></td></tr></table></figure>
+<p>设二叉树s有<span class="math inline">\(M\)</span>个节点，二叉树t有<span class="math inline">\(N\)</span>个节点，上述算法时间复杂度是<span class="math inline">\(O(MxN)\)</span>。从上述代码依然可以看出，递归程序的简洁性和易读性。</p>
+<h4 id="二叉树序列化kmp算法">二叉树序列化+KMP算法</h4>
+<p>通过二叉树遍历再判断其子树是否完全相等的方式来解决子树问题，效率不是很高，主要存在子树节点的重复遍历和比较。另一种解决方案是将二叉树序列化成字符串，再比较t字符串是否是s字符串的子串；代码如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSubtree</span><span class="params">(self, s: TreeNode, t: TreeNode)</span> -&gt; bool:</span></span><br><span class="line">        serialized_s = self.serialize(s)</span><br><span class="line">        serialized_t = self.serialize(t)</span><br><span class="line">        index = serialized_s.find(serialized_t)</span><br><span class="line">        <span class="comment"># further judge for special cases such as s=[12], t=[2]</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span> <span class="keyword">if</span> index == <span class="number">-1</span> <span class="keyword">else</span> index == <span class="number">0</span> <span class="keyword">or</span> serialized_s[index - <span class="number">1</span>] == <span class="string">'!'</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">serialize</span><span class="params">(self, root: TreeNode)</span> -&gt; str:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'#'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> str(root.val) + <span class="string">'!'</span> + self.serialize(root.left) + <span class="string">'!'</span> + self.serialize(root.right) + <span class="string">'!'</span></span><br></pre></td></tr></table></figure></p>
+<p>设二叉树s有<span class="math inline">\(M\)</span>个节点，二叉树t有<span class="math inline">\(N\)</span>个节点，上述算法时间复杂度是<span class="math inline">\(O(M+N)\)</span>，可以说十分高效了。还需要注意的是：针对s=[12],t=[2]这样的测试用例，最后需要对公共子串起始位置进行进一步判断；</p>
+<h3 id="案例2变形词判断">案例2：变形词判断</h3>
+<p>对于两个字符串A和B，如果A和B中出现的字符种类相同且每种字符出现的次数相同，则A和B互为变形词；这种题目相对比较容易，可以使用HashMap，也可以使用固定长度的数组统计各个字符出现频次，再比较每个字符出现频率是否相等即可，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Transform</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chkTransform</span><span class="params">(self, A, lena, B, lenb)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> lena != lenb:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        freq_A, freq_B = [<span class="number">0</span>] * <span class="number">256</span>, [<span class="number">0</span>] * <span class="number">256</span></span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> A:</span><br><span class="line">            freq_A[ord(e)] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> B:</span><br><span class="line">            freq_B[ord(e)] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(freq_A)):</span><br><span class="line">            <span class="keyword">if</span> freq_A[i] != freq_B[i]:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h3 id="案例3旋转词">案例3：旋转词</h3>
+<p>如果一个字符串str，把字符串str前面任意部分挪到后面去形成的字符串叫做str的旋转词。比如str='1234'，str的旋转词有'2341'、'3412'和'4123'；给定两个字符串a和b，判断b是否为a的旋转词。这道题目也不比较简单，步骤如下：</p>
+<ol type="1">
+<li>判断a和b长度是否相等</li>
+<li>计算a+a，子串就是其所有旋转词</li>
+<li>判断字符串a+a中是否包含b</li>
+</ol>
+<p>代码如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rotation</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chkRotation</span><span class="params">(self, A, lena, B, lenb)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> lena != lenb:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        A += A</span><br><span class="line">        <span class="keyword">return</span> B <span class="keyword">in</span> A</span><br></pre></td></tr></table></figure></p>
+<h3 id="案例4给定一个字符串将其各个子部分逆序以空格隔开">案例4：给定一个字符串，将其各个子部分逆序（以空格隔开）</h3>
+<p>这道题比较简单，先将这个字符串逆序，然后将各个子部分（以空格分割）逆序即可。代码如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Reverse</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseSentence</span><span class="params">(self, A, n)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">' '</span>.join([ss[::<span class="number">-1</span>] <span class="keyword">for</span> ss <span class="keyword">in</span> A[::<span class="number">-1</span>].split(<span class="string">' '</span>)])</span><br></pre></td></tr></table></figure></p>
+<p>另外，给定一个字符串和一个整数i，将str[0:i]移到字符串右侧，str[i+1:]移到字符串左侧，这道题思路也是一样的。这道题要求，空间复杂度为<span class="math inline">\(O(1)\)</span>，时间复杂度为<span class="math inline">\(O(n)\)</span>；这道题要求空间复杂度为<span class="math inline">\(O(1)\)</span>，说明我们不能借助额外数组，只能在字符串内部进行调整。步骤如下：</p>
+<ol type="1">
+<li>将整个字符串逆序</li>
+<li>分别将前lens - i个字符和后i个字符逆序</li>
+</ol>
+<h3 id="案例5给定一个字符串类型数组strs请找到一个拼接顺序使得将所有字符串拼接起来的大字符字典序最小并返回这个大字符串">案例5：给定一个字符串类型数组strs，请找到一个拼接顺序，使得将所有字符串拼接起来的大字符字典序最小，并返回这个大字符串</h3>
+<p>这道题实际上是一道排序题目，只需要将整个字符串按照升序排列即可，只是不能简单按照<code>x&lt;y</code>排列，比如x='ba',y='b'，按照<code>x&lt;y</code>结果是<code>bba</code>，而实际上较小排列是<code>bab</code>，我们排序规则是<code>x+y&lt;y+x</code>，其他跟排序没差别，归并排序代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prior</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findSmallest</span><span class="params">(self, strs, n)</span>:</span></span><br><span class="line">        temp = [<span class="string">''</span>] * n</span><br><span class="line">        self.merge_sort(strs, <span class="number">0</span>, n - <span class="number">1</span>, temp)</span><br><span class="line">        print(strs)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span>.join(strs)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(self, strs, left, right, temp)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> left &lt; right:</span><br><span class="line">            middle = (left + right) // <span class="number">2</span></span><br><span class="line">            self.merge_sort(strs, left, middle, temp)</span><br><span class="line">            self.merge_sort(strs, middle + <span class="number">1</span>, right, temp)</span><br><span class="line">            self.merge(strs, left, middle, right, temp)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(self, strs, left, middle, right, temp)</span>:</span></span><br><span class="line">        start, end, pos =  middle, right, right</span><br><span class="line">        <span class="keyword">while</span> start &gt;= left <span class="keyword">and</span> end &gt;= middle + <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> strs[start] + strs[end] &gt; strs[end] + strs[start]:</span><br><span class="line">                temp[pos] = strs[start]</span><br><span class="line">                pos -= <span class="number">1</span></span><br><span class="line">                start -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                temp[pos] = strs[end]</span><br><span class="line">                pos -= <span class="number">1</span></span><br><span class="line">                end -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> start &gt;= left:</span><br><span class="line">            temp[pos] = strs[start]</span><br><span class="line">            pos, start = pos - <span class="number">1</span>, start - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> end &gt;= middle + <span class="number">1</span>:</span><br><span class="line">            temp[pos] = strs[end]</span><br><span class="line">            pos, end = pos - <span class="number">1</span>, end - <span class="number">1</span></span><br><span class="line">        print(temp)</span><br><span class="line"></span><br><span class="line">        strs[left: right + <span class="number">1</span>] = temp[left: right + <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="案例6给定一个字符串判断是否是有效的括号字符串">案例6：给定一个字符串，判断是否是有效的括号字符串</h3>
+<p>例如，<code>()</code>、<code>()()</code>、<code>(())</code>等是有效的，而<code>(()</code>不是有效括号字符串。用栈很合适，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parenthesis</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">chkParenthesis</span><span class="params">(self, A, n)</span>:</span></span><br><span class="line">        stack = list()</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> A:</span><br><span class="line">            <span class="keyword">if</span> e == <span class="string">'('</span>:</span><br><span class="line">                stack.append(e)</span><br><span class="line">            <span class="keyword">if</span> e == <span class="string">')'</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    stack.pop()</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> len(stack) == <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h3 id="案例7给定一个字符串返回最长无重复子串">案例7：给定一个字符串，返回最长无重复子串</h3>
+<p>这道题目看着像典型的动态规划题目，我们用<code>res[i]</code>表示以位置<span class="math inline">\(i\)</span>结尾的最长不重复子串，我们借用一个辅助变量<code>pre</code>和辅助哈希表<code>last_pos_dict</code>来解这道题，对于<span class="math inline">\(i\)</span>位置，其中<code>pre</code>记录以<span class="math inline">\(i-1\)</span>位置结尾的最长无重复子串的起始位置，<code>last_pos_dict</code>表示字符<span class="math inline">\(A[i](key)\)</span>上次出现的位置；有了这两个辅助变量，我们就可以分一下两种情况解题：</p>
+<ol type="1">
+<li>如果<code>pre&lt;=last_pos_dict[A[i]]</code>（示意图数轴），则对于<span class="math inline">\(i\)</span>位置，最长不重复子串长度为<code>res[i]=i-last_pos_dict[A[i]]</code>，同时更新<code>pre</code>；</li>
+<li>否则，<code>res[i]=res[i-1] + 1</code>（示意图数轴），同时更新<code>pre</code>；</li>
+</ol>
+<p><img src="/2019/04/10/暑期实习算法题-字符串/pos.png"></p>
+<p>以上过程最好画图比较好理解，实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DistinctSubstring</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestSubstring</span><span class="params">(self, A, n)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> n&lt;=<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> n</span><br><span class="line">        res, last_pos_dict, pre = [<span class="number">1</span>] * n, dict(), <span class="number">0</span></span><br><span class="line">        last_pos_dict[A[<span class="number">0</span>]] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> A[i] <span class="keyword">in</span> last_pos_dict:</span><br><span class="line">                last_pos = last_pos_dict[A[i]]</span><br><span class="line">                <span class="keyword">if</span> pre &lt;= last_pos:</span><br><span class="line">                    res[i] = i - last_pos</span><br><span class="line">                    pre = last_pos + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    res[i] = res[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res[i] = res[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">                pre = i - res[i]</span><br><span class="line"></span><br><span class="line">            last_pos_dict[A[i]] = i</span><br><span class="line">        <span class="keyword">return</span> max(res)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/春招/" rel="tag"># 春招</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/字符串/" rel="tag"># 字符串</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/暑期实习算法题-排序/" rel="next" title="暑期实习算法题-排序">
+                <i class="fa fa-chevron-left"></i> 暑期实习算法题-排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见类型"><span class="nav-number">2.</span> <span class="nav-text">常见类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#案例1判断一棵二叉树s是否是另一棵二叉树t的子树"><span class="nav-number">2.1.</span> <span class="nav-text">案例1：判断一棵二叉树s是否是另一棵二叉树t的子树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树遍历完全相等子树"><span class="nav-number">2.1.1.</span> <span class="nav-text">二叉树遍历+完全相等子树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树序列化kmp算法"><span class="nav-number">2.1.2.</span> <span class="nav-text">二叉树序列化+KMP算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例2变形词判断"><span class="nav-number">2.2.</span> <span class="nav-text">案例2：变形词判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例3旋转词"><span class="nav-number">2.3.</span> <span class="nav-text">案例3：旋转词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例4给定一个字符串将其各个子部分逆序以空格隔开"><span class="nav-number">2.4.</span> <span class="nav-text">案例4：给定一个字符串，将其各个子部分逆序（以空格隔开）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例5给定一个字符串类型数组strs请找到一个拼接顺序使得将所有字符串拼接起来的大字符字典序最小并返回这个大字符串"><span class="nav-number">2.5.</span> <span class="nav-text">案例5：给定一个字符串类型数组strs，请找到一个拼接顺序，使得将所有字符串拼接起来的大字符字典序最小，并返回这个大字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例6给定一个字符串判断是否是有效的括号字符串"><span class="nav-number">2.6.</span> <span class="nav-text">案例6：给定一个字符串，判断是否是有效的括号字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例7给定一个字符串返回最长无重复子串"><span class="nav-number">2.7.</span> <span class="nav-text">案例7：给定一个字符串，返回最长无重复子串</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
