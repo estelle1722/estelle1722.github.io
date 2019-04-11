@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="深度优先遍历（DFS）和宽度优先队列（BFS）">
+<meta name="keywords" content="算法题,栈,队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暑期实习算法题-栈和队列">
+<meta property="og:url" content="http://yoursite.com/2019/04/11/暑期实习算法题-栈和队列/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="深度优先遍历（DFS）和宽度优先队列（BFS）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-11T08:37:34.885Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暑期实习算法题-栈和队列">
+<meta name="twitter:description" content="深度优先遍历（DFS）和宽度优先队列（BFS）">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/11/暑期实习算法题-栈和队列/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>暑期实习算法题-栈和队列 | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/11/暑期实习算法题-栈和队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">暑期实习算法题-栈和队列
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-11 09:39:22 / 修改时间：16:37:34" itemprop="dateCreated datePublished" datetime="2019-04-11T09:39:22+08:00">2019-04-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/暑期实习/" itemprop="url" rel="index"><span itemprop="name">暑期实习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="深度优先遍历dfs和宽度优先队列bfs">深度优先遍历（DFS）和宽度优先队列（BFS）</h2>
+<a id="more"></a>
+<p>深度优先遍历可通过栈实现，宽度优先遍历可通过队列实现，说到这里，二叉树的先序遍历其实是一种DFS，而二叉树的层序遍历是一种BFS。</p>
+<h2 id="案例">案例</h2>
+<h3 id="案例一实现一个可以返回最小值实现get_min函数的栈">案例一：实现一个可以返回最小值实现<code>get_min</code>函数的栈</h3>
+<p>注意：这道题目还要求<code>pop</code>、<code>push</code>、<code>get_min</code>的时间复杂度为<span class="math inline">\(O(1)\)</span>； 这道题目还算比较简单的，用两个栈实现即可，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    stack1, stack2 = list(), list()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack1) &gt; <span class="number">0</span>:</span><br><span class="line">            self.stack2.append(min(self.stack1[<span class="number">-1</span>], node))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.stack2.append(node)</span><br><span class="line">        self.stack1.append(node)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack1) &gt; <span class="number">0</span>:</span><br><span class="line">            self.stack2.pop()</span><br><span class="line">            <span class="keyword">return</span> self.stack1.pop()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack1) &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> self.stack1[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">min</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack2) &gt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> self.stack2[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<h3 id="案例二用两个栈实现一个队列">案例二：用两个栈实现一个队列</h3>
+<p>用两个栈实现一个队列，这道题还是比较简单的题目，定义两个栈为s1，s2,步骤如下：</p>
+<ol type="1">
+<li>入栈操作时，直接压入s1;</li>
+<li>出栈操作时，如果s2不为空，则直接出栈s2返回；如果s2为空，则将s1所有元素都出栈，并压入s2，再将s2栈顶元素弹出；</li>
+</ol>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    stack1, stack2 = list(), list()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, node)</span>:</span></span><br><span class="line">        self.stack1.append(node)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack1) == <span class="number">0</span> <span class="keyword">and</span> len(self.stack2) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">if</span> len(self.stack2) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">while</span> len(self.stack1) != <span class="number">0</span>:</span><br><span class="line">                self.stack2.append(self.stack1.pop())</span><br><span class="line">        <span class="keyword">return</span> self.stack2.pop()</span><br></pre></td></tr></table></figure>
+<h3 id="案例三滑动窗口">案例三：滑动窗口</h3>
+<p>这道题记得在牛客网上有，当时好像还没做出来（~囧~），看完视频之后，秒懂，思路如下：</p>
+<ol type="1">
+<li>定义双端队列为<code>d</code>，双端队列队头元素始终存放滑动窗口最大值，遍历到位置<span class="math inline">\(i\)</span>时；当<code>d</code>为空时，直接从右端插入；否则从右端开始将元素出队，直到右端队尾元素大于位置<span class="math inline">\(i\)</span>元素；</li>
+<li>出队，当遍历位置大于等于<code>w-1</code>时，需要存储当前滑动窗口最大值，双端队列左端出队，如果其索引和当前位置之差大于等于<code>w</code>，则当前队头元素过期无效，再次弹出左端队头元素，作为当前滑动窗口最大值；</li>
+</ol>
+<p>上述算法时间复杂度和空间复杂度均是<span class="math inline">\(O(n)\)</span>。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SlideWindow</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">slide</span><span class="params">(self, arr, n, w)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        res, d = list(), deque()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">while</span> len(d) &gt; <span class="number">0</span> <span class="keyword">and</span> arr[index] &gt;= arr[d[<span class="number">-1</span>]]:</span><br><span class="line">                d.pop()</span><br><span class="line">            d.append(index)</span><br><span class="line">            <span class="keyword">if</span> index &gt;= w - <span class="number">1</span>:</span><br><span class="line">                <span class="comment"># note use while-loop rather than if-else block, </span></span><br><span class="line">                <span class="comment"># e.g., arr=[5, 5, 5, 5, 5, 1, 2, 3] and w = 3</span></span><br><span class="line">                <span class="keyword">while</span> index - d[<span class="number">0</span>] &gt;= w:</span><br><span class="line">                    d.popleft()</span><br><span class="line">                max_value_index = d[<span class="number">0</span>]</span><br><span class="line">                res.append(arr[max_value_index])</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h3 id="案例四给定一个没有重复的数组生成对应的maxtree">案例四：给定一个没有重复的数组，生成对应的<code>MaxTree</code></h3>
+<p>这道题目还是卡了我好久，现在详细解释下。题目如下：</p>
+<p>对于一个没有重复元素的整数数组，请用其中元素构造一棵MaxTree，MaxTree定义为一棵二叉树，其中的节点与数组元素一一对应，同时对于MaxTree的每棵子树，它的根的元素值为子树的最大值。现有一建树方法，对于数组中的每个元素，其在树中的父亲为数组中它左边比它大的第一个数和右边比它大的第一个数中更小的一个。若两边都不存在比它大的数，那么它就是树根。</p>
+<p>这道题目主要思路是先找出每个元素左边第一个大于它的元素和右边大于它的元素，从而得到每个节点的父节点，完成<code>MaxTree</code>的构建。因此，算法重点是如何找出每个元素第一个大于它的元素（以找出左边第一个大于各个元素为例），步骤如下：</p>
+<ol type="1">
+<li>对于位置<span class="math inline">\(i\)</span>，将栈中所有大于该元素的元素从栈顶弹出；</li>
+<li>此时，如果栈不为空，则栈顶元素就是左边第一个大于<span class="math inline">\(i\)</span>位置元素的元素；否则，该位置左边不存在大于该元素的元素，插入<span class="math inline">\(-1\)</span>；</li>
+</ol>
+<p>对于，找出各个元素右边第一个大于它的元素，我们可以从末尾开始遍历，算法过程就上述一样。需要注意的是，我们在这一步时，无须先得到右边大于各元素的第一个元素完成之后，再计算各个元素的父节点；按照定义，各个元素的父节点在右边只有两种可能：(1)<strong>右边存在满足条件的节点，左边不存在节点；</strong>(2)<strong>右边存在满足条件的节点，比左边满足条件的节点值要小；</strong>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaxTree</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buildMaxTree</span><span class="params">(self, A, n)</span>:</span></span><br><span class="line">        s1, res = list(), list()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">while</span> len(s1) &gt; <span class="number">0</span> <span class="keyword">and</span> A[s1[<span class="number">-1</span>]] &lt; A[index]:</span><br><span class="line">                s1.pop()</span><br><span class="line">            <span class="keyword">if</span> len(s1) == <span class="number">0</span>:</span><br><span class="line">                res.append(<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res.append(s1[<span class="number">-1</span>])</span><br><span class="line">            s1.append(index)</span><br><span class="line"></span><br><span class="line">        s1.clear()</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(n<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">while</span> len(s1) &gt; <span class="number">0</span> <span class="keyword">and</span> A[s1[<span class="number">-1</span>]] &lt; A[index]:</span><br><span class="line">                s1.pop()</span><br><span class="line">            <span class="keyword">if</span> len(s1) &gt; <span class="number">0</span> <span class="keyword">and</span> (res[index] == <span class="number">-1</span> <span class="keyword">or</span> A[s1[<span class="number">-1</span>]] &lt; A[res[index]]):</span><br><span class="line">                res[index] = s1[<span class="number">-1</span>]</span><br><span class="line">            s1.append(index)</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>在视频中，还证明了以上算法的可行性：(1)构建出来的是树而不是森林 (2)构建出来的树可以用二叉树表达，而非多叉树；证明如下：</p>
+<p>证明：</p>
+<p>(1)对于任意节点，都有唯一父节点（根节点除外）与之对应，因此构建出来的是一棵树，而非森林。</p>
+<p>(2)假设构建出来的树无法用二叉树表达，则一个根节点有多个孩子节点，不妨设任意节点<span class="math inline">\(N\)</span>有多个孩子节点，不妨假设有两个孩子节点都在右边，设其孩子节点分别为<span class="math inline">\(K1\)</span>和<span class="math inline">\(K2\)</span>，其序列可表示为<span class="math inline">\(...N...K1...K2\)</span>,显然<span class="math inline">\(K1\)</span>和<span class="math inline">\(K2\)</span>元素必然存在大小关系，不妨设<span class="math inline">\(K1&gt;K2\)</span>，则<span class="math inline">\(K2\)</span>右侧第一个大于它的元素是<span class="math inline">\(K1\)</span>而非<span class="math inline">\(N\)</span>，与假设矛盾，因此假设不成立，原假设成立。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/栈/" rel="tag"># 栈</a>
+          
+            <a href="/tags/队列/" rel="tag"># 队列</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/10/暑期实习算法题-字符串/" rel="next" title="暑期实习算法题-字符串">
+                <i class="fa fa-chevron-left"></i> 暑期实习算法题-字符串
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先遍历dfs和宽度优先队列bfs"><span class="nav-number">1.</span> <span class="nav-text">深度优先遍历（DFS）和宽度优先队列（BFS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例"><span class="nav-number">2.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#案例一实现一个可以返回最小值实现get_min函数的栈"><span class="nav-number">2.1.</span> <span class="nav-text">案例一：实现一个可以返回最小值实现get_min函数的栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例二用两个栈实现一个队列"><span class="nav-number">2.2.</span> <span class="nav-text">案例二：用两个栈实现一个队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例三滑动窗口"><span class="nav-number">2.3.</span> <span class="nav-text">案例三：滑动窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例四给定一个没有重复的数组生成对应的maxtree"><span class="nav-number">2.4.</span> <span class="nav-text">案例四：给定一个没有重复的数组，生成对应的MaxTree</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
