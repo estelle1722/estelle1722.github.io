@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这篇博客主要是来完成逻辑回归（Logistic Regression）的公式推导并借此回答面试过程中的常见问题。">
+<meta name="keywords" content="校招面试,机器学习,逻辑回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="校招面试考点-机器学习-逻辑回归">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/校招面试考点-机器学习-逻辑回归/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="这篇博客主要是来完成逻辑回归（Logistic Regression）的公式推导并借此回答面试过程中的常见问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/19/校招面试考点-机器学习-逻辑回归/sigmoid.jpg">
+<meta property="og:updated_time" content="2019-04-19T13:16:13.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="校招面试考点-机器学习-逻辑回归">
+<meta name="twitter:description" content="这篇博客主要是来完成逻辑回归（Logistic Regression）的公式推导并借此回答面试过程中的常见问题。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/19/校招面试考点-机器学习-逻辑回归/sigmoid.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/校招面试考点-机器学习-逻辑回归/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>校招面试考点-机器学习-逻辑回归 | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/19/校招面试考点-机器学习-逻辑回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">校招面试考点-机器学习-逻辑回归
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-19 16:34:58 / 修改时间：21:16:13" itemprop="dateCreated datePublished" datetime="2019-04-19T16:34:58+08:00">2019-04-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招面试/" itemprop="url" rel="index"><span itemprop="name">校招面试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博客主要是来完成逻辑回归（Logistic Regression）的公式推导并借此回答面试过程中的常见问题。 <a id="more"></a> 内容主要参考了两篇博客，根据自己的理解，整理如下：</p>
+<h2 id="模型定义">模型定义</h2>
+<p>逻辑回归虽然名字中带有回归二字，但实际上是用来做二分类的。给出逻辑回归的定义之前，我们先给出线性回归的定义：</p>
+<p><span class="math display">\[f(x)=w^Tx+b\]</span></p>
+<p>为了简化上式，我们令:</p>
+<p><span class="math display">\[w&#39;=\begin{pmatrix}
+w^T &amp; 1 
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+x&#39;=\begin{pmatrix}
+x  \\
+b
+\end{pmatrix}
+\]</span></p>
+<p>因此，我们将线性回归简化成：</p>
+<p><span class="math display">\[f(x)=w^Tx\]</span></p>
+<p>注意以下内容中出现的<span class="math inline">\(w\)</span>实际上指的是<span class="math inline">\(w&#39;\)</span>，同理<span class="math inline">\(x\)</span>实际上指的是<span class="math inline">\(x&#39;\)</span>。</p>
+<p>线性回归是最简单的线性回归模型，到这里，我们不禁要问，我们可以用回归模型来做分类吗？答案是可以的，以二分类问题，给定样本<span class="math inline">\(x\)</span>，我们设其预测结果为<span class="math inline">\(y\)</span>。我们可以设置一个阈值<span class="math inline">\(T\)</span>（<span class="math inline">\(threshold\)</span>）,当<span class="math inline">\(f(x)&gt;T\)</span>时，分类为<span class="math inline">\(1\)</span>；否则，分类为<span class="math inline">\(0\)</span>；用数学语言来表示，可以写成以下形式：</p>
+<p><span class="math display">\[
+y=\left\{\begin{matrix}
+1 &amp; f(x)\ge T \\ 
+0 &amp; else 
+\end{matrix}\right.
+\]</span></p>
+<p>这种方式也叫做感知机（<span class="math inline">\(Perceptron\)</span>）。</p>
+<p>另一种方式是将函数值<span class="math inline">\(f(x)\)</span>映射到概率，我们不妨设满足这一条件的映射为<span class="math inline">\(\sigma(x)\)</span>，考虑到函数值<span class="math inline">\(f(x)\in (-\infty, +\infty)\)</span>，我们可以将<span class="math inline">\(\sigma(x)\)</span>表示为：</p>
+<p><span class="math display">\[\sigma(x):(-\infty, +\infty) \rightarrow (0,1)\]</span></p>
+<p>实际上，恰好有一种<span class="math inline">\(sigmoid\)</span>函数完美符合以上条件，其数学表达式为：</p>
+<p><span class="math display">\[\sigma(x)=\frac{1}{1+e^{-x}}\]</span></p>
+<p>其函数图像如下图所示：</p>
+<p><img src="/2019/04/19/校招面试考点-机器学习-逻辑回归/sigmoid.jpg"></p>
+<p>实际上，在深度学习领域，该函数也称为激活函数。到这里，我们终于可以引出逻辑回归了，在线性回归基础上，加上Sigmoid函数，就组成我们今天要讲的主角：<strong>逻辑回归</strong>。</p>
+<p>在这里需要提醒的是，逻辑回归的假设条件为观测样本均独立服从伯努利分布（也叫0-1分布），因此，我们能使用<strong>最大似然估计(Maximum Likelihood Estimation，缩写为MLE)</strong>来求<span class="math inline">\(w\)</span>的最优解。上面已提到，逻辑回归是将函数值映射为事件发生的概率值。在此，我们还是以二分类为例，设事件发生为类别<span class="math inline">\(1\)</span>，设其概率为<span class="math inline">\(p\)</span>；则事件不发生为类别<span class="math inline">\(0\)</span>，设其概率为<span class="math inline">\(1-p\)</span>，该二分类写成数学表达式如下：</p>
+<p><span class="math display">\[
+P_{y=1}=p=\frac{1}{1+e^{-f(x)}}=\frac{1}{1+e^{-w^Tx}} \\
+P_{y=0}=1-p
+\]</span></p>
+<p>我们将样本<span class="math inline">\((x,y)\)</span>看做事件，则其发生的概率为：</p>
+<p><span class="math display">\[
+P(y|x)=\left\{\begin{matrix}
+p &amp; y=1\\ 
+1-p &amp; y =0 
+\end{matrix}\right.
+\]</span></p>
+<p>可以看出，我们将分类问题转化为概率形式。可将上式合并为：</p>
+<p><span class="math display">\[P(y|x)=p^y(1-p)^{1-y},x\in \{0,1\}\]</span></p>
+<h2 id="损失函数">损失函数</h2>
+<p>而在现实生活中，我们往往只能得到一些事件发生的样本，参数<span class="math inline">\(w\)</span>往往是所求。以抛硬币问题为例，我们将硬币重复抛<span class="math inline">\(n\)</span>次，我们可以知道正面朝上和反面朝上各多少次，硬币抛一次正面向上的概率为所求（注意：该问题满足逻辑回归的假设条件）。因此，我们可以将观测到的<span class="math inline">\(n\)</span>个样本（事件）分别为<span class="math inline">\((x_1,y_1)\)</span>，<span class="math inline">\((x_2,y_2)\)</span>，<span class="math inline">\((x_3,y_3)\)</span>，...，<span class="math inline">\((x_n,y_n)\)</span>。我们记以上<span class="math inline">\(n\)</span>个事件同时发生的概率为<span class="math inline">\(P_{总}\)</span>，由于以上<span class="math inline">\(n\)</span>个事件是独立同分布的，则：</p>
+<p><span class="math display">\[
+P_{总}=\coprod_{i=1}^{i=n}P(y_i|x_i)=\coprod_{i=1}^{i=n}p^{y_i}(1-p)^{(1-y_i)}
+\]</span></p>
+<p>为去掉指数函数，我们将上式写成对数形式，有：</p>
+<p><span class="math display">\[
+F(w)=P_{总}=\sum_{i=1}^{i=n} [y_i \ln p+(1-y_i)\ln(1-p)],y_i \in \{0,1\}
+\]</span></p>
+<p>上式中的<span class="math inline">\(F(w)\)</span>便是逻辑回归的损失函数（<span class="math inline">\(Loss\)</span> <span class="math inline">\(Function\)</span>）。逻辑回归的目标便是最大化<span class="math inline">\(F(w)\)</span>，为了与机器学习（深度学习）理论保持一致，可在<span class="math inline">\(F(w)\)</span>前加上负号。</p>
+<h2 id="优化过程-最大似然估计">优化过程-最大似然估计</h2>
+<p>定义损失函数之后，我们可根据最大似然估计的思想去求<span class="math inline">\(w\)</span>的最优解，根据最大似然估计的思想，<span class="math inline">\(F(w)\)</span>被叫做似然函数，求解<span class="math inline">\(w\)</span>的最优解可用表示为：</p>
+<p><span class="math display">\[
+w^{*} = \arg \max_w  F(w)=- \arg \min_w F(w).
+\]</span></p>
+<p>因此，<span class="math inline">\(w\)</span>的最优解便是使得似然函数<span class="math inline">\(F(w)\)</span>取得最大值的一组解。这里需要补充一点：<span class="math inline">\(F(w)\)</span>是一个连续凸函数（<span class="math inline">\(conveniently\)</span> <span class="math inline">\(convex\)</span>），这样的函数的有点是具有一个全局最优点，梯度下降法容易陷入局部最优点（鞍点），但是由于连续凸函数具有一个全局最优点，因此可放心使用梯度下降法来找到全局最优点。对于连续凸函数，在理论上，我们可以求<span class="math inline">\(F&#39;(w)\)</span>，然后令<span class="math inline">\(F&#39;(w)=0\)</span>求出最优解。</p>
+<p>接下来的优化过程主要是使用梯度下降法来找到<span class="math inline">\(w\)</span>的最优解，先简单介绍下常见的三种梯度下降：</p>
+<ul>
+<li>Batch Gradient Descent(BGD):BGD采用整个训练集的数据来计算损失函数对参数的梯度，主要缺点是计算起来非常慢。</li>
+<li>Stochastic Gradient Descent(SGD)：相对于BGD使用所有数据，SGD每次只使用一个样本进行梯度更新。</li>
+<li>Mini-Batch Gradient Descent(MBGD)：每一次利用一小批样本，即n个样本进行计算，这样它可以降低参数更新时的方差，收敛更稳定，另一方面可以充分地利用深度学习库中高度优化的矩阵操作来进行更有效的梯度计算。在深度学习领域，这是最常用的梯度下降优化算法。</li>
+</ul>
+<p>我们可使用SGD优化算法，接下来便是求得<span class="math inline">\(F(w)\)</span>对参数<span class="math inline">\(w\)</span>的梯度<span class="math inline">\(\Delta F(w)\)</span>，具体过程不赘述，具体可<a href="https://zhuanlan.zhihu.com/p/44591359" target="_blank" rel="noopener">参见</a>。最终，以BGD为例，我们可根据以下参数更新法则更新参数<span class="math inline">\(w\)</span>:</p>
+<p><span class="math display">\[
+w=w-\mu \Delta F(w,x_i,y_i)
+\]</span></p>
+<p>其中<span class="math inline">\(\mu\)</span>为步长。</p>
+<h2 id="面试常见问题">面试常见问题</h2>
+<p>以上便是逻辑回归的理论公式推导， 接下来针对面试中关于逻辑回归的常见问题，我们做一个简单总结：</p>
+<h3 id="逻辑回归损失函数">逻辑回归损失函数</h3>
+<p>逻辑回归损失函数是其极大似然函数，即<span class="math inline">\(F(w)\)</span>。</p>
+<h3 id="逻辑回归中参数求解方法">逻辑回归中参数求解方法</h3>
+<p>极大似然函数无法直接求解，在实际中我们使用梯度下降法不断接近其最优解，由于其损失函数是连续凸函数，因此用梯度下降法一定可以找到全局最优解而非局部最优解。</p>
+<h3 id="逻辑回归中为什么使用对数损失而不用平方损失">逻辑回归中为什么使用对数损失而不用平方损失</h3>
+<p>对于逻辑回归，这里所说的对数损失和极大似然是相同的。不使用平方损失的原因是，在使用Sigmoid函数作为正样本的概率时，同时将平方损失作为损失函数，这时所构造出来的损失函数是非凸的，不容易求解，容易得到其局部最优解。 而如果使用极大似然，其目标函数就是对数似然函数，该损失函数是关于未知参数的高阶连续可导的凸函数，便于求其全局最优解。</p>
+<h3 id="假设条件">假设条件</h3>
+<p>数据服从伯努利分布。 一个简单的伯努利分布的例子就是抛硬币，假设硬币被抛出正面的概论为 p，被抛出负面的概论为 1-p，则这些硬币抛出的正负两面所代表的随机变量即服从伯努利分布。</p>
+<h4 id="逻辑回归优缺点">逻辑回归优缺点</h4>
+<p>优点：</p>
+<ul>
+<li>形式简单，模型的可解释性非常好。从特征的权重可以看到不同的特征对最后结果的影响，某个特征的权重值比较高，那么这个特征最后对结果的影响会比较大。</li>
+<li>训练速度较快。分类的时候，计算量仅仅只和特征的数目相关。</li>
+<li>方便调整输出结果，通过调整阈值的方式。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>准确率欠佳。因为形式非常的简单，而现实中的数据非常复杂，因此，很难达到很高的准确性。</li>
+<li>很难处理数据不平衡的问题。</li>
+<li>无法自动的进行特征筛选。</li>
+<li>只能处理二分类问题。</li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>https://zhuanlan.zhihu.com/p/44591359</li>
+<li>https://zhuanlan.zhihu.com/p/46591702</li>
+<li>https://www.cnblogs.com/pinard/p/5970503.html</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招面试/" rel="tag"># 校招面试</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/逻辑回归/" rel="tag"># 逻辑回归</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/13/暑期实习算法题-动态规划/" rel="next" title="暑期实习算法题-动态规划">
+                <i class="fa fa-chevron-left"></i> 暑期实习算法题-动态规划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型定义"><span class="nav-number">1.</span> <span class="nav-text">模型定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化过程-最大似然估计"><span class="nav-number">3.</span> <span class="nav-text">优化过程-最大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试常见问题"><span class="nav-number">4.</span> <span class="nav-text">面试常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归损失函数"><span class="nav-number">4.1.</span> <span class="nav-text">逻辑回归损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归中参数求解方法"><span class="nav-number">4.2.</span> <span class="nav-text">逻辑回归中参数求解方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归中为什么使用对数损失而不用平方损失"><span class="nav-number">4.3.</span> <span class="nav-text">逻辑回归中为什么使用对数损失而不用平方损失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假设条件"><span class="nav-number">4.4.</span> <span class="nav-text">假设条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑回归优缺点"><span class="nav-number">4.4.1.</span> <span class="nav-text">逻辑回归优缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
