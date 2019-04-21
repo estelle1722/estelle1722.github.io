@@ -96,18 +96,20 @@
 
 
 
-  <meta name="description" content="MICCAI2019于4月3号结束，自己也投了两篇paper，一篇一作，一篇二作；">
-<meta name="keywords" content="MICCAI2019,科研总结">
+  <meta name="description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
+<meta name="keywords" content="校招面试,机器学习,支持向量机(SVM)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MICCAI2019-总结">
-<meta property="og:url" content="http://yoursite.com/2019/04/05/MICCAI2019-总结/index.html">
+<meta property="og:title" content="校招面试考点-机器学习-支持向量机">
+<meta property="og:url" content="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/index.html">
 <meta property="og:site_name" content="Zhang Rong">
-<meta property="og:description" content="MICCAI2019于4月3号结束，自己也投了两篇paper，一篇一作，一篇二作；">
+<meta property="og:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-19T13:17:03.383Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/svm_intro.jpg">
+<meta property="og:updated_time" content="2019-04-21T14:35:45.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MICCAI2019-总结">
-<meta name="twitter:description" content="MICCAI2019于4月3号结束，自己也投了两篇paper，一篇一作，一篇二作；">
+<meta name="twitter:title" content="校招面试考点-机器学习-支持向量机">
+<meta name="twitter:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/svm_intro.jpg">
 
 
 
@@ -115,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/05/MICCAI2019-总结/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/">
 
 
 
@@ -125,7 +127,7 @@
   };
 </script>
 
-  <title>MICCAI2019-总结 | Zhang Rong</title>
+  <title>校招面试考点-机器学习-支持向量机 | Zhang Rong</title>
   
 
 
@@ -345,7 +347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/05/MICCAI2019-总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhang Rong">
@@ -362,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MICCAI2019-总结
+          <h1 class="post-title" itemprop="name headline">校招面试考点-机器学习-支持向量机
 
               
             
@@ -388,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2019-04-05 17:56:50" itemprop="dateCreated datePublished" datetime="2019-04-05T17:56:50+08:00">2019-04-05</time>
+              <time title="创建时间：2019-04-20 20:26:09" itemprop="dateCreated datePublished" datetime="2019-04-20T20:26:09+08:00">2019-04-20</time>
             
 
             
@@ -405,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-19 21:17:03" itemprop="dateModified" datetime="2019-04-19T21:17:03+08:00">2019-04-19</time>
+                <time title="修改时间：2019-04-21 22:35:45" itemprop="dateModified" datetime="2019-04-21T22:35:45+08:00">2019-04-21</time>
               
             
           </span>
@@ -422,7 +424,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/心得总结/" itemprop="url" rel="index"><span itemprop="name">心得总结</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招面试/" itemprop="url" rel="index"><span itemprop="name">校招面试</span></a></span>
 
                 
                 
@@ -457,16 +459,144 @@
       
 
       
-        <p>MICCAI2019于4月3号结束，自己也投了两篇paper，一篇一作，一篇二作； <a id="more"></a> 一作那篇是上次MIDL被拒的做biomarker discovery；另外一篇是用triplet loss做small sample分类的，说起来这篇paper还是蛮极限的，前前后后只用了五天，通宵了两个晚上，也是尽力了。赶完MICCAI2019后，突然对科研这件事有了新的体会，还是想写个总结：</p>
+        <h2 id="写在前面">写在前面</h2>
+<p>支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：<a id="more"></a></p>
+<ul>
+<li>什么叫对偶问题，为什么要引出对偶问题？</li>
+<li>什么叫KKT条件，主要解决什么问题？</li>
+<li>支持向量机公式推导</li>
+<li>面试常见问题解答</li>
+</ul>
+<p><strong>注</strong>：文中出现了大量数学公式，按照惯例，矩阵需用粗体以便于标量区分，文中并未对此做区分，不太严谨，但是根据其意义，可推出文中出现符号是矩阵还是标量，此处还望理解。</p>
+<h2 id="svm概述">SVM概述</h2>
+<p>在解答上面四个问题之前，有必要先对支持向量机进行简单介绍。支持向量机是一个二分类模型，如下图所示，支持向量机的任务是将图中的红点和蓝点分开，单从下图中来看，<code>(b)</code>和<code>(c)</code>均已经完成该任务，都能将红点和蓝点分开。对应图中<code>A</code>和<code>B</code>两条直线，可看做是决策面，也可理解为分类器。如果考虑到潜在红色或者蓝点，从支持向量机的角度来看，<code>(b)</code>图中的分类器是优于<code>(a)</code>的。其主要依据是<code>(b)</code>图中间隔（即图中两条虚线与实线之间的距离）要大于<code>(a)</code>图。而支持向量机的目的，或者说其目标函数的最优解是找到一条直线，使得间隔最大。而其间隔越大，也就意味着该分类器鲁棒性更好，对未知样本的泛化性更佳。以上便是对支持向量机的最直观理解。接下来从数学角度，给出支持向量机的模型及其定义：</p>
+<p><img src="/2019/04/20/校招面试考点-机器学习-支持向量机/svm_intro.jpg" width="70%"></p>
+<h3 id="数学模型">数学模型</h3>
+<p>和上次对逻辑回归的理解一样，我们以最为简单的二维平面为例来进行所有的公式推导和数学建模。在二维平面内，一条直线可定义如下：</p>
+<p><span class="math display">\[
+\begin{equation}
+x_2=ax_1+b
+\end{equation}
+\]</span></p>
+<p>其中，<span class="math inline">\(a\)</span>为斜率，<span class="math inline">\(b\)</span>为截距。我们进行简单变形，可将其写成矩阵形式：</p>
+<p><span class="math display">\[
+\begin{equation}\label{equa1}
+w^Tx+\beta=0
+\end{equation},
+\]</span></p>
+<p>其中<span class="math inline">\(w=(a,-1)\)</span>是其法向量，<span class="math inline">\(x=(x_1,x_2)^T\)</span>。</p>
+<p>给定任意点<span class="math inline">\((x,y)\)</span>，该点到直线的距离<span class="math inline">\(d\)</span>为：</p>
+<p><span class="math display">\[
+d=\frac{|w^Tx+\beta|}{||w||}
+\]</span></p>
+<p>到这里，我们不禁要问以下问题：</p>
+<ul>
+<li>支持向量机的决策面要求能分开所有样本，那么如何定义决策面能正确分类一个样本？</li>
+<li>最优决策面受到支持向量的约束，那么如何找出支持向量？</li>
+</ul>
+<p>先来看第一个问题，设任意样本为<span class="math inline">\((x,y)\)</span>，显然<span class="math inline">\(y\in \{-1,1\}\)</span>，即，</p>
+<p><span class="math display">\[
+y=\begin{cases}
+ 1 &amp;  for\quad red\quad points \\ 
+-1 &amp;  for\quad blue\quad points 
+\end{cases}
+\]</span></p>
+<p>则有：</p>
+<p><span class="math display">\[
+\begin{equation}
+\left\{\begin{matrix}
+|w^T x+\beta|&gt;0 &amp;y=1 \\ 
+|w^T x+\beta|&lt;0 &amp; y=-1 
+\end{matrix}\right.
+\end{equation}
+\]</span></p>
+<p>在这里，我们先将上式两边同时除以<span class="math inline">\(|w|\)</span>，再将要求提高一点，设支持向量到最优决策面的距离为<span class="math inline">\(d\)</span>，则有：</p>
+<p><span class="math display">\[
+\begin{equation}
+\left\{\begin{matrix}
+\frac{|w^T x+\beta|}{||w||}&gt;d &amp;y=1 \\ 
+\frac{|w^T x+\beta|}{||w||}&lt;-d &amp; y=-1 
+\end{matrix}\right.
+\end{equation}
+\]</span></p>
+<p>我们再将上式两边除以<span class="math inline">\(d\)</span>，然后再化简得：</p>
+<p><span class="math display">\[
+\begin{equation}\label{svm_equ}
+\left\{\begin{matrix}
+|w&#39;^T x+\beta &#39;|&gt;1 &amp;y=1 \\ 
+|w&#39;^T x+\beta &#39;|&lt;-1 &amp; y=-1 
+\end{matrix}\right.
+\end{equation}
+\]</span></p>
+<p>其中， <span class="math display">\[
+\begin{align*}
+w&#39; &amp; = \frac{w^T}{d||w||}\\
+\beta &#39; &amp; = \frac{\beta}{d||w||} 
+\end{align*}
+\]</span></p>
+<p>可以看出，<span class="math inline">\(w&#39;\)</span>和<span class="math inline">\(\beta &#39;\)</span>与<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>决定的两个决策面是相同的，因为其法向量和偏移量都只是相差常数倍数关系。所以，为方便起见，下文中出现的<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>实质上指的是<span class="math inline">\(w&#39;\)</span>和<span class="math inline">\(\beta &#39;\)</span>。 最后，我们将公式<span class="math inline">\(\ref{svm_equ}\)</span>进一步精炼，有：</p>
+<p><span class="math display">\[
+\begin{equation}
+y|w^Tx+\beta|&gt;1,\forall y \in \{-1, +1\}
+\end{equation}
+\]</span></p>
+<h3 id="支持向量">支持向量</h3>
+<p>那么公式<span class="math inline">\(\ref{svm_equ}\)</span>什么时候会取<span class="math inline">\(+1\)</span>和<span class="math inline">\(-1\)</span>呢？答案是当样本<span class="math inline">\((x,y)\)</span>是支持向量时。此时，对于这些支持向量，我们有：</p>
+<p><span class="math display">\[
+\begin{equation}
+d=\frac{|w^Tx+\beta|}{||w||}=\frac{1}{||w||}
+\end{equation}
+\]</span></p>
+<p>而我们的目标是找到一组<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>，使得<span class="math inline">\(d\)</span>最大，也就等于最小化<span class="math inline">\(||w||^2\)</span>，到这里，我们可以给出支持向量机的数学模型表达式，如下：</p>
+<p><span class="math display">\[
+\begin{equation}
+    \begin{split}\label{object_func}
+        &amp;\min_{w,b} \frac{1}{2}||w||^2 \\
+        &amp;\text{s. t.} \,\, y_i|w^Tx_i+\beta|&gt;1, i=1,2,3,...,m
+    \end{split}
+\end{equation}
+\]</span></p>
+<p>以上便是支持向量机的数学表达。</p>
+<h2 id="目标函数求最优解">目标函数求最优解</h2>
+<p>上述公式可以看做是支持向量机的目标函数，而<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>则是待优化参数。上述可以看做是在约束条件（约束条件为不等式）情况下求解目标函数最优解。我们该怎么求解呢？</p>
+<h3 id="拉格朗日数乘法">拉格朗日数乘法</h3>
+<p>说到拉格朗日数乘法，我首先想到的是高等数学中有过介绍，是在等式约束条件下求解目标函数最优解的一种方法，当约束条件为等式时，我们可以使用拉格朗日数乘法求最优解，设目标函数为<span class="math inline">\(f(x)\)</span>，约束条件为<span class="math inline">\(g(x)=0\)</span>，则求解最优解步骤如下：</p>
+<ul>
+<li>构造拉格朗日函数<span class="math inline">\(h(x, \mu)=f(x)+\mu g(x)\)</span></li>
+<li>依次令<span class="math inline">\(\frac{\partial h(x, \mu)}{\partial x}=0\)</span>和<span class="math inline">\(\frac{\partial h(x,\mu)}{\partial \mu}=g(x)=0\)</span></li>
+<li>联立求解</li>
+</ul>
+<p>我们将拉格朗日数乘法推广到不等式，便引出了KKT条件，根据拉格朗日数乘法，我们同样可以构造出拉格朗日函数如下：</p>
+<p><span class="math display">\[
+L(w,\beta,\mu_i)=\frac{1}{||w||^2}+\sum_{i=1}^{i=m}\mu_i (y_if(x_i)-1)
+\]</span></p>
+<p>其中，最优解需要满足一下条件：</p>
+<p><span class="math display">\[
+\begin{equation}
+\left\{\begin{matrix}
+\frac{\partial{L(w,\beta,\mu_i)}}{\partial{w}} = 0&amp;  &amp; \\ 
+\frac{\partial{L(w,\beta,\mu_i)}}{\partial{\beta}} = 0\\
+ \mu_i\ge 0&amp;  &amp; \\
+y_if(x_i)-1\ge 0
+\end{matrix}\right.
+\end{equation}
+\]</span></p>
+<p>与等式条件下拉格朗日数乘法求解类似，以上条件便是对最优解的约束，也就是KKT条件。具体求解过程在此不赘述，可<a href="https://zhuanlan.zhihu.com/p/38163970" target="_blank" rel="noopener">参看</a>。</p>
+<h3 id="对偶问题">对偶问题</h3>
+<p>现在就剩下一个概念：对偶问题，在这里只做宏观理解，不做相关公式推导，简单来说，在不等式约束条件下，如果求原函数最优解比较困难时，我们希望能将约束条件去掉，进而可通过求导数方式求出其最优解。方法就是构造一个新函数，该新函数需要满足条件：在可行域范围内，新函数和原函数相同，而在可行域范围外，新函数趋近无穷大。在这种情况下，新函数与原函数同解。我们也就将求在不等式约束条件下的原函数最优解问题转化为在无约束条件下求新函数最优解问题。我们也就称这两个问题为对偶问题。在支持向量机求最优解过程中，我们新构造的拉格朗日函数，和原函数便是对偶问题，在这里需要说明的是，KKT约束条件是对最优解的约束，而不是对可行域的约束。</p>
+<p>到这里，支持向量机的理论推导基本完成。</p>
+<h2 id="面试常见问题">面试常见问题</h2>
+<p>在面试中，关于支持向量机，常见问题如下：</p>
 <ol type="1">
-<li>科研过程中，最重要是思考，做small-sample这篇主要用的是triplet loss，在7类和198类皮肤数据集上效果都还可以，突然想到，我最近也是用triplet loss做incremental learning，一直卡在15类分类，再对比实验室另外一个同学做的project，说明triplet loss做分类还是可行的，我的project还是有问题的。</li>
-<li>在你的project用到某一个模块或者加入一个新的loss term以解决某个问题之前，还是要达到对所使用模块非常熟悉的程度，而不仅仅是照搬过来embed到自己的project中；一旦出问题，很难准确定位到问题所在，从另一个角度来讲，就是出现一个问题，你很难对当前问题作出一个符合逻辑的解释；这一点，在科研过程中是非常重要的，对问题提出一个逻辑自洽的解释之后，接下来便可以做实验进行验证了；再举一个例子，就是在我的project中，用kNN在testing sets feature space中根据Euclidean distance计算accuracy，其实kNN可行是有一个假设条件：feature space比较致密，这也从另外一个角度说明，feature vector的维度不宜过大。</li>
-<li>需要多读paper，以前不是很明白，也没有花很多时间，现在突然觉得，读paper非常重要，这是idea的重要来源；刚入学时，有看到一篇关于如何做科研的推文，里面写道，做科研通常步骤是先确定一个issue或者topic，接着去读相关paper，总结出目前已有的方法，接着在已有方法上提出改进；现在对这段话有了更深的理解，读paper，看别人的idea，才能进一步提出自己的idea，想来这也符合人的认知规律，人只有在有一定输入的情况下，才能可能有输出，巧妇岂能无米之炊说的也是这个道理；读paper这件事最好放在run experiments时进行。</li>
-<li>在使用一个新的技术时，还是要从读paper开始，而不是先从code开始，这次train triplet loss便反过来了，因为先读paper有一个好处就是paper里一般会讲一些常见tricks，这是在code中急需注意到的，而且就算code是对paper的复现，所用到的数据集往往是最简单的数据集(如MNIST)，但是你自己的project中，不可能只是使用最简单的数据集；而且，对于最简单的数据集，事实往往是无任何tricks可言(怎么训练都能出比较好的结果)，这样就把一些问题给掩藏了。但是，当你用到你的project中时，这些问题多半会表现出来。其实，大部分问题，如果你事先知道tricks（如对feature做<span class="math inline">\(L_2-normalization\)</span>），是不会出现的，这次我训练triplet loss便遇到了这种情况，耗费了大量时间，让实验继续变得异常困难。</li>
-<li>最后，做科研这事，不要太急，慢慢来。</li>
+<li>为什么要将求解 SVM 的原始问题转换为其对偶问题？</li>
 </ol>
-<p>以上全是自己做科研一年来的体会，暂作总结经验教训。</p>
-<p>2019年4月4日于超算。</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li>https://zhuanlan.zhihu.com/p/24638007</li>
+<li>https://zhuanlan.zhihu.com/p/43827793</li>
+<li>https://www.zhihu.com/question/21094489/answer/117246987</li>
+<li>周志华·《机器学习》·第6章</li>
+</ul>
 
       
     </div>
@@ -490,9 +620,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MICCAI2019/" rel="tag"># MICCAI2019</a>
+            <a href="/tags/校招面试/" rel="tag"># 校招面试</a>
           
-            <a href="/tags/科研总结/" rel="tag"># 科研总结</a>
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/支持向量机-SVM/" rel="tag"># 支持向量机(SVM)</a>
           
         </div>
       
@@ -505,8 +637,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/05/hexo-删除文章/" rel="next" title="hexo-删除文章">
-                <i class="fa fa-chevron-left"></i> hexo-删除文章
+              <a href="/2019/04/19/校招面试考点-机器学习-逻辑回归/" rel="next" title="校招面试考点-机器学习-逻辑回归">
+                <i class="fa fa-chevron-left"></i> 校招面试考点-机器学习-逻辑回归
               </a>
             
           </div>
@@ -514,10 +646,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/07/暑期实习算法题-二叉树/" rel="prev" title="暑期实习算法题-二叉树">
-                暑期实习算法题-二叉树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -561,8 +689,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -706,6 +843,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#svm概述"><span class="nav-number">2.</span> <span class="nav-text">SVM概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学模型"><span class="nav-number">2.1.</span> <span class="nav-text">数学模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持向量"><span class="nav-number">2.2.</span> <span class="nav-text">支持向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数求最优解"><span class="nav-number">3.</span> <span class="nav-text">目标函数求最优解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日数乘法"><span class="nav-number">3.1.</span> <span class="nav-text">拉格朗日数乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.2.</span> <span class="nav-text">对偶问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试常见问题"><span class="nav-number">4.</span> <span class="nav-text">面试常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
