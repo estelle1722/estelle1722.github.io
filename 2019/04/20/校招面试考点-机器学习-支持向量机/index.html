@@ -105,7 +105,7 @@
 <meta property="og:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/svm_intro.jpg">
-<meta property="og:updated_time" content="2019-04-23T04:08:59.299Z">
+<meta property="og:updated_time" content="2019-04-23T07:12:44.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-支持向量机">
 <meta name="twitter:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-23 12:08:59" itemprop="dateModified" datetime="2019-04-23T12:08:59+08:00">2019-04-23</time>
+                <time title="修改时间：2019-04-23 15:12:44" itemprop="dateModified" datetime="2019-04-23T15:12:44+08:00">2019-04-23</time>
               
             
           </span>
@@ -592,10 +592,24 @@ y_if(x_i)-1\ge 0
 <li>拉普拉斯核</li>
 <li>Sigmoid核</li>
 </ul>
+<h2 id="软间隔">软间隔</h2>
+<p>在前面的讨论中，我们一直假设训练样本在样本空间或者特征空间内是线性可分的，然而，在显示任务中往往很难确定合适的核函数使得训练样本在特征空间中线性可分；缓解该问题的一个方式是允许支持向量机在一些样本中中出错，为此，要引入“软间隔”的概念，即存在某些样本不满足约束条件：</p>
+<p><span class="math display">\[
+\begin{equation}
+y_i(w^Tx_i+\beta)\geq 1
+\end{equation}
+\]</span></p>
+<p>与软间隔（Softmax Margin）相对应的是前面讨论的假设情况，称之为“硬间隔”（<code>Hard Margin</code>）。当然，在最大化间隔的同时，我们希望能够尽量减少不满足约束条件的样本，为此，目标函数变为：</p>
+<p><span class="math display">\[
+\begin{equation}\label{softmax_margin}
+\frac{1}{2}||w||^2+C\sum_{i=1}^m max(1-(w^Tx_i+\beta))
+\end{equation}
+\]</span></p>
+<p>其中，<span class="math inline">\(C\)</span>为超参数，第二项<span class="math inline">\(max\)</span>，我们称之为<code>hinge</code>损失。而第一项，在最大化间隔的同时，也对SVM参数进行了L2-normalization，因此，在SVM中，损失函数中本身就已加入了正则项。求解最优化的过程仍是构造拉格朗日函数，转化为其对偶问题求解。</p>
 <h2 id="面试常见问题">面试常见问题</h2>
 <p>在面试中，关于支持向量机，常见问题如下：</p>
 <ol type="1">
-<li>为什么要将求解 SVM 的原始问题转换为其对偶问题？</li>
+<li>为什么要将求解SVM的原始问题转换为其对偶问题？</li>
 </ol>
 <p>主要是原函数难以求最优解，反之，通过转换到其对偶问题，我们可以去解决一个相对简单的问题。我们的方法是把目标函数和约束全部融入一个新的函数，即拉格朗日函数，再通过这个函数来寻找最优点。</p>
 <ol start="2" type="1">
@@ -603,7 +617,7 @@ y_if(x_i)-1\ge 0
 </ol>
 <p>一般选择线性核和高斯核，也就是线性核与RB核。线性核：主要用于线性可分的情形，参数少，速度快，对于一般数据，分类效果已经很理想了。RBF 核：主要用于线性不可分的情形，参数多，分类结果非常依赖于参数。</p>
 <ol start="3" type="1">
-<li>为什么 SVM 要引入核函数</li>
+<li>为什么SVM要引入核函数</li>
 </ol>
 <p>当样本在原始空间线性不可分时，可将样本从原始空间映射到一个更高维的特征空间，使得样本在这个特征空间内线性可分。而引入这样的映射后，所要求解的对偶问题的求解中，无需求解真正的映射函数，而只需要知道其核函数。</p>
 <ol start="4" type="1">
@@ -614,11 +628,11 @@ y_if(x_i)-1\ge 0
 <li>为什么SVM对缺失数据敏感？</li>
 </ol>
 <p>这里说的缺失数据是指缺失某些特征数据，向量数据不完整。SVM没有处理缺失值的策略（决策树有）。而SVM希望样本在特征空间中线性可分，所以特征空间的好坏对SVM的性能很重要。缺失特征数据将影响训练结果的好坏。</p>
-<h2 id="lr-vs-svm">LR VS SVM</h2>
+<h2 id="lr-vs.-svm">LR VS. SVM</h2>
 <p>上篇对逻辑回归进行了简单总结，这里主要比较一下逻辑回归和SVM之间区别：</p>
 <ol type="1">
 <li><p>两者不同，本质还是loss函数不同；逻辑回归使用log损失，假设条件是样本服从伯努利分布，本质上是尽量拉近模型分布和监督信息分布之间的KL散度，而SVM使用Hinge损失，本质是最大化几何间隔，认为最大几何间隔的决策面是最优分类器。所以SVM只考虑除支持向量外的少量样本，而SVM需要考虑所有样本。</p></li>
-<li><p>逻辑回归可产生概率，而SVM不能；</p></li>
+<li><p>逻辑回归可产生概率，而SVM不能，欲得到概率输出需要进行特殊处理，此外，逻辑回归可直接多余多分类问题（用多个二分类处理），而支持向量机需进行推广。</p></li>
 <li><p>SVM依赖于数据的测度，而LR则不受影响。因为SVM是基于距离的，而LR是基于概率的，所以LR是不受数据不同维度测度不同的影响，因此在SVM中对特征scalar进行normalization对于SVM非常有必要。</p></li>
 <li><p>SVM会用核函数而LR一般不用核函数的原因:SVM转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，这个在进行复杂核函数计算时优势很明显，能够大大简化模型和计算量。 而LR则每个点都需要两两计算核函数，计算量太过庞大。</p></li>
 <li><p>根据经验来看，对于小规模数据集，SVM的效果要好于LR，但是大数据中，SVM的计算复杂度受到限制，而LR因为训练简单，可以在线训练，所以经常会被大量采用。</p></li>
@@ -888,7 +902,7 @@ y_if(x_i)-1\ge 0
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#svm概述"><span class="nav-number">2.</span> <span class="nav-text">SVM概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学模型"><span class="nav-number">2.1.</span> <span class="nav-text">数学模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持向量"><span class="nav-number">2.2.</span> <span class="nav-text">支持向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数求最优解"><span class="nav-number">3.</span> <span class="nav-text">目标函数求最优解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日数乘法"><span class="nav-number">3.1.</span> <span class="nav-text">拉格朗日数乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.2.</span> <span class="nav-text">对偶问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试常见问题"><span class="nav-number">4.</span> <span class="nav-text">面试常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lr-vs-svm"><span class="nav-number">5.</span> <span class="nav-text">LR VS SVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#svm概述"><span class="nav-number">2.</span> <span class="nav-text">SVM概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学模型"><span class="nav-number">2.1.</span> <span class="nav-text">数学模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持向量"><span class="nav-number">2.2.</span> <span class="nav-text">支持向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数求最优解"><span class="nav-number">3.</span> <span class="nav-text">目标函数求最优解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日数乘法"><span class="nav-number">3.1.</span> <span class="nav-text">拉格朗日数乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题"><span class="nav-number">3.2.</span> <span class="nav-text">对偶问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔"><span class="nav-number">4.</span> <span class="nav-text">软间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试常见问题"><span class="nav-number">5.</span> <span class="nav-text">面试常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lr-vs.-svm"><span class="nav-number">6.</span> <span class="nav-text">LR VS. SVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">7.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
