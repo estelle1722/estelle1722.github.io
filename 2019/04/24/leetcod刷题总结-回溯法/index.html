@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这篇博客主要想结合自己在LeetCode上用回溯法解决的算法题，总结下回溯法代码模板和解题思路。">
+<meta name="keywords" content="校招笔试,算法题,回溯法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcod刷题总结-回溯法">
+<meta property="og:url" content="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="这篇博客主要想结合自己在LeetCode上用回溯法解决的算法题，总结下回溯法代码模板和解题思路。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/leetcode46.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/stringABC.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/tree.jpg">
+<meta property="og:updated_time" content="2019-04-26T09:46:26.682Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="leetcod刷题总结-回溯法">
+<meta name="twitter:description" content="这篇博客主要想结合自己在LeetCode上用回溯法解决的算法题，总结下回溯法代码模板和解题思路。">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/leetcode46.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>leetcod刷题总结-回溯法 | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/24/leetcod刷题总结-回溯法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">leetcod刷题总结-回溯法
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-24 17:22:50" itemprop="dateCreated datePublished" datetime="2019-04-24T17:22:50+08:00">2019-04-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-26 17:46:26" itemprop="dateModified" datetime="2019-04-26T17:46:26+08:00">2019-04-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博客主要想结合自己在LeetCode上用回溯法解决的算法题，总结下回溯法代码模板和解题思路。 <a id="more"></a></p>
+<h2 id="回溯法">回溯法</h2>
+<p>回溯法可以看做是暴力搜索法的一种，对于某些计算问题而言，回溯法是一种可以找出所有（或一部分）解的一般性算法，尤其适用于约束满足问题（在解决约束满足问题时，我们逐步构造更多的候选解，并且在确定某一部分候选解不可能补全成正确解之后放弃继续搜索这个部分候选解本身及其可以拓展出的子候选解，转而测试其他的部分候选解）。</p>
+<p>在经典的教科书中，通常以<a href="https://zh.wikipedia.org/wiki/%E5%85%AB%E7%9A%87%E5%90%8E%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">八皇后问题</a>来讲解回溯法，作为一种经典示例，八皇后问题非常适合使用回溯法解决：<strong>求满足一定约束条件的全部（部分）解</strong>。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况：</p>
+<ul>
+<li>找到一个可能存在的正确的答案</li>
+<li>在尝试了所有可能的分步方法后宣告该问题没有答案</li>
+</ul>
+<p><strong>在最坏的情况下，回溯法会导致一次复杂度为指数时间的计算</strong>，正是由于回溯法容易导致算法复杂度非常高，在实际使用过程中，回溯法往往又会与剪枝同时出现。</p>
+<p>回溯法可以理解为一种深度优先搜索（DFS），结合递归函数实现，其算法流程可用以下伪代码表示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">backtracking</span><span class="params">(...)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 结束递归的条件</span></span><br><span class="line">    <span class="keyword">if</span> (Accepted) &#123;</span><br><span class="line">        <span class="comment">/* ... 将满足约束条件的可行解加入结果集中*/</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 继续递归 在搜索空间中找到所有候选项</span></span><br><span class="line">    <span class="keyword">for</span>(s in &#123;Candidates&#125;)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/*... 加入当前候选项 */</span></span><br><span class="line">        backtracking(...);</span><br><span class="line">        <span class="comment">/*... backtrack 回溯 */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="典型例题">典型例题</h2>
+<p>下面结合具体题目加强对回溯法的进一步理解。希望能对回溯法有一个更为深入的理解，后续如果遇到典型例题，将进行进一步更新。主要结合以下典型例题进行总结：</p>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/permutations/" target="_blank" rel="noopener">LeetCode 46.Permutations</a></li>
+<li><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">LeetCode 17.Letter Combinations of a Phone Number</a></li>
+<li><a href="https://leetcode.com/problems/combination-sum" target="_blank" rel="noopener">LeetCode 39.Combination Sum</a></li>
+<li><a href="https://leetcode.com/problems/combination-sum-ii" target="_blank" rel="noopener">LeetCode 40.Combination Sum II</a></li>
+<li><a href="https://leetcode.com/problems/permutations-ii/" target="_blank" rel="noopener">LeetCode 47.Permutations II</a></li>
+<li><a href="https://leetcode.com/problems/generate-parentheses/" target="_blank" rel="noopener">LeetCode 22.Generate Parentheses</a></li>
+</ol>
+<p>以上问题均可用回溯法（Backtracking）解决，不同的是第六道题还涉及到剪枝。</p>
+<h3 id="leetcode-46.permutations">LeetCode 46.Permutations</h3>
+<p>这道题目，简单来说，给定一个无重复数字的序列，求其全排列。这道题目可用回溯法解决，我们可以固定前<span class="math inline">\(i-1\)</span>个位置，将第<span class="math inline">\(i\)</span>个位置依次与第<span class="math inline">\(i+1\)</span>，<span class="math inline">\(i+1\)</span>，<span class="math inline">\(i+2\)</span>，...，<span class="math inline">\(n\)</span>个位置交换，再回溯到上一步，继续递归。示意图如下：</p>
+<p><img src="/2019/04/24/leetcod刷题总结-回溯法/leetcode46.png" width="95%"></p>
+<p>我们以序列<code>ABC</code>为例，可用以下递归树来表示其递归过程：</p>
+<p><img src="/2019/04/24/leetcod刷题总结-回溯法/stringABC.png" width="95%"></p>
+<p>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">permute</span><span class="params">(self, nums: List[int])</span> -&gt; List[List[int]]:</span></span><br><span class="line">        res = list()</span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        self.helper(<span class="number">0</span>, nums, res)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, pos, nums, res)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> pos == len(nums):</span><br><span class="line">            <span class="keyword">if</span> nums <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">                res.append(nums.copy())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(pos, len(nums)):</span><br><span class="line">                nums[i], nums[pos] = nums[pos], nums[i]</span><br><span class="line">                self.helper(pos + <span class="number">1</span>, nums, res)</span><br><span class="line">                nums[i], nums[pos] = nums[pos], nums[i]</span><br></pre></td></tr></table></figure>
+<p>LeetCode47题和本题解法完全一样，在此不赘述。</p>
+<h3 id="leetcode-17.letter-combinations-of-a-phone-number">LeetCode 17.Letter Combinations of a Phone Number</h3>
+<p>这道题目看着是给出了一个新的情景，归根究底，依旧是给定字符串数组，求其全排列。如，给定字符串<code>abc</code>和<code>de</code>，假设从两字符串各取一个字符组成一个新字符串，求出其所有可能。显而易见，一共有<span class="math inline">\(3\times 2=6\)</span>种，分别为<code>ad</code>、<code>ae</code>、<code>bd</code>、<code>be</code>、<code>cd</code>和<code>ce</code>。这道题也可用回溯法求解。类似于两个两个位置，第一个位置从<code>abc</code>中选择，第二个位置从<code>de</code>中选择，选出一个全排列之后，使用回溯法，继续穷举对应位置的所有可能，直至搜索完所有可能。搜索树可用下图表示：</p>
+<p><img src="/2019/04/24/leetcod刷题总结-回溯法/tree.jpg" width="50%"></p>
+<p>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">letterCombinations</span><span class="params">(self, digits: str)</span> -&gt; List[str]:</span></span><br><span class="line">        res = list()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> len(digits) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        maps = &#123;<span class="string">'2'</span>: <span class="string">'abc'</span>, <span class="string">'3'</span>: <span class="string">'def'</span>, <span class="string">'4'</span>: <span class="string">'ghi'</span>, <span class="string">'5'</span>: <span class="string">'jkl'</span>, <span class="string">'6'</span>: <span class="string">'mno'</span>, <span class="string">'7'</span>: <span class="string">'pqrs'</span>, <span class="string">'8'</span>: <span class="string">'tuv'</span>, <span class="string">'9'</span>: <span class="string">'wxyz'</span>&#125;</span><br><span class="line">        strs = list()</span><br><span class="line">        <span class="keyword">for</span> d <span class="keyword">in</span> digits:</span><br><span class="line">            strs.append(maps[d])</span><br><span class="line">        temp = [<span class="string">''</span>]</span><br><span class="line">        self.helper(strs, <span class="number">0</span>, temp, res)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res        </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, strs, pos, temp, res)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> pos == len(strs):</span><br><span class="line">            res.append(temp[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> s <span class="keyword">in</span> strs[pos]:</span><br><span class="line">                temp[<span class="number">0</span>] += s</span><br><span class="line">                self.helper(strs, pos + <span class="number">1</span>, temp, res)</span><br><span class="line">                temp[<span class="number">0</span>] = temp[<span class="number">0</span>][:pos]</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-39.combination-sum">LeetCode 39.Combination Sum</h3>
+<p>这道题大意是给定一个函数不同数字的数组和一个整数值，求用数组内数字组成该整数的所有可能。这道题其实和<a href="https://wax8280.github.io/2016/10/17/844/" target="_blank" rel="noopener">换零钱</a>挺像的。不限每个数字使用的次数，设每个数字分别为<span class="math inline">\(x_1,x_2,x_3,...,x_n\)</span>，目标整数为<span class="math inline">\(y\)</span>，使用对应数字的个数分别为<span class="math inline">\(a_1,a_2,a_3,...,a_n\)</span>，此题则相当于求解方程：</p>
+<p><span class="math display">\[a_1x_1+a_2x_2+a_3x_3+...+a_nx_n=y\]</span></p>
+<p>可用回溯法解决，简单来说，就是依次穷举<span class="math inline">\(a_n\)</span>的值，然后递归回溯到上一层即可。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum</span><span class="params">(self, candidates, target: int)</span>:</span></span><br><span class="line">        res, temp = list(), list()</span><br><span class="line">        candidates.sort()</span><br><span class="line">        self.helper(<span class="number">0</span>, target, candidates, res, temp)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, last_pos, target, candidates, res, temp)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> target &lt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> target == <span class="number">0</span> <span class="keyword">and</span> temp <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">                    res.append(temp.copy())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> index <span class="keyword">in</span> range(last_pos, len(candidates)):</span><br><span class="line">                temp.append(candidates[index])</span><br><span class="line">                self.helper(index, target - candidates[index], candidates, res, temp)</span><br><span class="line">                temp.pop()</span><br></pre></td></tr></table></figure>
+<p><code>LeetCode 40.Combination Sum II</code>只是在本地基础上加了一个限制就是，就是每个数字至多使用1次（这里也可以理解为剪枝），说来也简单，就是另外设置一个数组，记录每个数字出现的次数，当次数小于1次时，才继续递归探索，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">combinationSum2</span><span class="params">(self, candidates: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        res, temp, occurrences = list(), list(), [<span class="number">0</span>] * len(candidates)</span><br><span class="line">        <span class="keyword">if</span> len(candidates) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        </span><br><span class="line">        candidates.sort()</span><br><span class="line">        self.helper(<span class="number">0</span>, target, candidates, res, temp, occurrences)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, last_pos, target, candidates, res, temp, occurrences)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> target &lt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> target == <span class="number">0</span> <span class="keyword">and</span> temp <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">                    res.append(temp.copy())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> index <span class="keyword">in</span> range(last_pos, len(candidates)):</span><br><span class="line">                temp.append(candidates[index])</span><br><span class="line">                occurrences[index] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> occurrences[index] &lt;= <span class="number">1</span>:</span><br><span class="line">                    self.helper(index, target - candidates[index], candidates, res, temp, occurrences)</span><br><span class="line">                occurrences[index] -= <span class="number">1</span></span><br><span class="line">                temp.pop()</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-22.generate-parentheses">LeetCode 22.Generate Parentheses</h3>
+<p>这道题给定数字<span class="math inline">\(n\)</span>，求<span class="math inline">\(n\)</span>个<code>(</code>和<code>)</code>所有能组成的合法的只包含左、右括号的字符串。这道题也是一道典型回溯问题，用回溯的角度来理解，就是有<span class="math inline">\(2n\)</span>个位置，每个位置可用左括号或者右括号填充，求所有长度为<span class="math inline">\(2n\)</span>的合法字符串。该问题搜索空间规模为<span class="math inline">\(2^n\)</span>，难点在于添加了一个约束条件：组成的字符串需合法，这里就需要对搜索树进行剪枝了，在这里直接给出边界条件：</p>
+<ol type="1">
+<li>搜索到当前位置，<code>)</code>出现的次数不能超过<span class="math inline">\(n\)</span>，一旦超过，最终势必会出现多余的<code>)</code>无法匹配。</li>
+<li>搜索到当前位置，<code>)</code>出现的次数不能超过<code>(</code>，一旦超过，左边多余的<code>)</code>无法与右边的<code>(</code>匹配。</li>
+</ol>
+<p>在是否进行下一步搜索之前，加入以上条件判断即可，一旦违反上述条件，搜索提前结束。完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generateParenthesis</span><span class="params">(self, n: int)</span> -&gt; List[str]:</span></span><br><span class="line">        res = list()</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        counts = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">        self.helper(<span class="string">''</span>, n * <span class="number">2</span>, counts, res)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, cur, n, counts, res)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(cur) == n:</span><br><span class="line">            res.append(cur)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> c <span class="keyword">in</span> [<span class="string">'('</span>, <span class="string">')'</span>]:</span><br><span class="line">                occured_char = <span class="number">0</span> <span class="keyword">if</span> c == <span class="string">'('</span> <span class="keyword">else</span> <span class="number">1</span></span><br><span class="line">                </span><br><span class="line">                counts[occured_char] += <span class="number">1</span></span><br><span class="line">                cur += c</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> counts[occured_char] &lt;= n//<span class="number">2</span> <span class="keyword">and</span> counts[<span class="number">1</span>] &lt;= counts[<span class="number">0</span>] :</span><br><span class="line">                    self.helper(cur, n, counts, res)</span><br><span class="line">                cur = cur[: len(cur) - <span class="number">1</span>]     </span><br><span class="line">                counts[occured_char] -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li>https://blog.csdn.net/zxzxzx0119/article/details/81452269</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/回溯法/" rel="tag"># 回溯法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/23/校招面试考点-机器学习-决策树/" rel="next" title="校招面试考点-机器学习-决策树">
+                <i class="fa fa-chevron-left"></i> 校招面试考点-机器学习-决策树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/24/面试非技术问题汇总/" rel="prev" title="面试非技术问题汇总">
+                面试非技术问题汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回溯法"><span class="nav-number">1.</span> <span class="nav-text">回溯法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#典型例题"><span class="nav-number">2.</span> <span class="nav-text">典型例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode-46.permutations"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode 46.Permutations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode-17.letter-combinations-of-a-phone-number"><span class="nav-number">2.2.</span> <span class="nav-text">LeetCode 17.Letter Combinations of a Phone Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode-39.combination-sum"><span class="nav-number">2.3.</span> <span class="nav-text">LeetCode 39.Combination Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode-22.generate-parentheses"><span class="nav-number">2.4.</span> <span class="nav-text">LeetCode 22.Generate Parentheses</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

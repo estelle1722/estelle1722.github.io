@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这篇博客主要分析以下两个关于序列化二叉树题目：">
+<meta name="keywords" content="校招笔试,算法题,栈,递归,二叉树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode 331.Verify Preorder Serialization of a Binary Tree">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="这篇博客主要分析以下两个关于序列化二叉树题目：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-26T10:32:51.551Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="leetcode 331.Verify Preorder Serialization of a Binary Tree">
+<meta name="twitter:description" content="这篇博客主要分析以下两个关于序列化二叉树题目：">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>leetcode 331.Verify Preorder Serialization of a Binary Tree | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">leetcode 331.Verify Preorder Serialization of a Binary Tree
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 11:07:01 / 修改时间：18:32:51" itemprop="dateCreated datePublished" datetime="2019-04-26T11:07:01+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博客主要分析以下两个关于序列化二叉树题目：<a id="more"></a></p>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree" target="_blank" rel="noopener">LeetCode 331.Verify Preorder Serialization of a Binary Tree</a></li>
+<li><a href="https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84?tpId=13&amp;tqId=11214&amp;tPage=1&amp;rp=1&amp;ru=/ta/coding-interviews&amp;qru=/ta/coding-interviews/question-ranking" target="_blank" rel="noopener">剑指Offer: 序列化二叉树</a></li>
+</ol>
+<p>这两道题目是很类似的，都是有关于序列化二叉树的，一道来自LeetCode，一道来自剑指Offer；剑指Offer那道题涉及到两个小问题，给定二叉树，怎么将其序列化（二叉树转字符串），又如何将其反序列化（字符串转二叉树）？LeetCode那道题是给定一个字符串，判断其能否形成一个二叉树。</p>
+<h2 id="剑指offer-序列化二叉树">剑指Offer: 序列化二叉树</h2>
+<p>先来说说剑指Offer那道题目，我们以序列<code>12##34###</code>为例，说明其构造过程，我们都可以将序列结构看做是<code>根节点-左子树-右子树</code>，构造过程如下：</p>
+<ol type="1">
+<li><code>1</code>为根节点，接下来字符串可分为两部分，分别代表其左子树和右子树。</li>
+<li><code>2</code>为根节点的左子树，接下来的两个<code>##</code>分别为其左子树和右子树，以<code>2</code>为根节点的子树构造完成。</li>
+<li><code>3</code>是根节点的右子树。</li>
+<li><code>4</code>是<code>3</code>的左子树。</li>
+<li>接下来的两个<code>#</code>分别为<code>4</code>的左右子树，以<code>4</code>为根节点的子树构造完成。</li>
+<li>最后<code>#</code>是<code>3</code>的右子树。</li>
+</ol>
+<p>到此，二叉树反序列化完整，我们用<code>createTree(ss, index)</code>函数来表示以<code>ss[index]</code>为根节点的二叉树，返回值为两个，第一个为根节点指针，第二个为该二叉树最后一个节点的下一个节点（即下一次构造二叉树的起始节点），从上述构造过程可用递归函数实现。完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Serialize</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'$'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> str(root.val) + <span class="string">','</span> + self.Serialize(root.left) + <span class="string">','</span> + self.Serialize(root.right)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">createTree</span><span class="params">(self, ss, index)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> ss[index] == <span class="string">'$'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span>, index + <span class="number">1</span></span><br><span class="line">        root = TreeNode(int(ss[index]))</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line">        root.left, index = self.createTree(ss, index)</span><br><span class="line">        root.right, index = self.createTree(ss, index)</span><br><span class="line">        <span class="keyword">return</span> root, index</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Deserialize</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        ss = s.split(<span class="string">','</span>)</span><br><span class="line">        <span class="keyword">return</span> self.createTree(ss, <span class="number">0</span>)[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode-331.verify-preorder-serialization-of-a-binary-tree">LeetCode 331.Verify Preorder Serialization of a Binary Tree</h2>
+<p>这道题，我提供两种实现：递归和栈。相对而言，栈实现效率更高，结合Python，代码可读性也更强。</p>
+<h3 id="递归函数">递归函数</h3>
+<p>这道题还是可以沿用上面构造二叉树的思路进行，核心仍旧是函数<code>createTree(ss, index)</code>，初始<code>index=0</code>，依旧是返回两个值：</p>
+<ol type="1">
+<li>第一个值表示以<code>ss[index]</code>为根节点能否构造二叉树</li>
+<li>第二个值表示下一次构造二叉树的其实节点（与上面含义一致）</li>
+</ol>
+<p>不难想象，我们以<code>index=0</code>位置构造二叉树，如果整个序列构成一颗二叉树，则函数<code>createTree(ss, index)</code>第一个返回值为<code>True</code>，第二个返回值为<code>ss</code>字符串长度；否则，要么第一个返回值为<code>False</code>，第二个值小于<code>ss</code>字符串长度。在此之前，可以先处理一些边界（必要）条件（例如，二叉树的叶子节点个数等于非叶子节点加1），另外，如果左子树并不能构造为一棵二叉树，可提前结束程序，完成剪枝。最终，完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValidSerialization</span><span class="params">(self, preorder: str)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> preorder <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> len(preorder) == <span class="number">0</span> <span class="keyword">or</span> (len(preorder) == <span class="number">1</span> <span class="keyword">and</span> preorder[<span class="number">0</span>] == <span class="string">'#'</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        preorder = preorder.split(<span class="string">','</span>)</span><br><span class="line">        n = len(preorder)</span><br><span class="line">        <span class="keyword">if</span> preorder[<span class="number">0</span>] == <span class="string">'#'</span> <span class="keyword">or</span> n % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">or</span> preorder.count(<span class="string">'#'</span>) != (n + <span class="number">1</span>) // <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        res = self.helper(<span class="number">0</span>, <span class="number">0</span>, preorder)</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>] <span class="keyword">and</span> res[<span class="number">1</span>] == n</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, index, root, preorder)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> preorder[index] == <span class="string">'#'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span>, index + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> preorder[root] == <span class="string">'#'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span>, index + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        root = index</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        left, index = self.helper(index, root, preorder)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> left:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span>, index</span><br><span class="line">        </span><br><span class="line">        right, index = self.helper(index, root, preorder)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left <span class="keyword">and</span> right, index</span><br></pre></td></tr></table></figure>
+<h3 id="栈">栈</h3>
+<p>使用栈来解决此问题的思路与递归思路稍有不同，更准确的说，更为简单一些。依次遍历序列，将字符压入到栈中，如果栈顶出现两个<code>#</code>，则将两个<code>#</code>和一个数字弹出（组成一个完整<code>根节点-左孩子-右孩子</code>结构），再将一个<code>#</code>压入栈中，遍历整个序列完成之后，判断最后栈中是否仅仅剩下一个<code>#</code>；以序列<code>123####</code>为例，遍历过程中栈中状态为：</p>
+<ol type="1">
+<li>stack = [1]</li>
+<li>stack = [1,2]</li>
+<li>stack = [1,2,3]</li>
+<li>stack = [1,2,3,#]</li>
+<li>stack = [1,2,3,#,#] 将栈顶两个<code>#</code>和<code>3</code>弹出，再将<code>#</code>压入栈中，栈中元素为： stack = [1,2,#]</li>
+<li>stack = [1,2,#,#] 将栈顶两个<code>#</code>和<code>2</code>弹出，再将<code>#</code>压入栈中，栈中元素为： stack = [1,#]</li>
+<li>stack = [1,#,#] 将栈顶两个<code>#</code>和<code>1</code>弹出，再将<code>#</code>压入栈中，栈中元素为： stack = [#]</li>
+</ol>
+<p>遍历完整，最终栈中只剩下一个<code>#</code>，因此，上述序列能反序列化成二叉树。完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValidSerialization</span><span class="params">(self, preorder)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type preorder: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        stack = []</span><br><span class="line">        top = <span class="number">-1</span></span><br><span class="line">        preorder = preorder.split(<span class="string">','</span>)</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> preorder:</span><br><span class="line">            stack.append(s)</span><br><span class="line">            top += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span>(self.endsWithTwoHashes(stack,top)):</span><br><span class="line">                h = stack.pop()</span><br><span class="line">                top -= <span class="number">1</span></span><br><span class="line">                h = stack.pop()</span><br><span class="line">                top -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> top &lt; <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">                h = stack.pop()</span><br><span class="line">                stack.append(<span class="string">'#'</span>)</span><br><span class="line">        <span class="keyword">if</span> len(stack) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">0</span>] == <span class="string">'#'</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">endsWithTwoHashes</span><span class="params">(self,stack,top)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> top&lt;<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> stack[top]==<span class="string">'#'</span> <span class="keyword">and</span> stack[top<span class="number">-1</span>]==<span class="string">'#'</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考链接">参考链接</h2>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/discuss/78560/Simple-Python-solution-using-stack.-With-Explanation." target="_blank" rel="noopener">Simple Python solution using Stack with Explanation</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/栈/" rel="tag"># 栈</a>
+          
+            <a href="/tags/递归/" rel="tag"># 递归</a>
+          
+            <a href="/tags/二叉树/" rel="tag"># 二叉树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/24/面试非技术问题汇总/" rel="next" title="面试非技术问题汇总">
+                <i class="fa fa-chevron-left"></i> 面试非技术问题汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#剑指offer-序列化二叉树"><span class="nav-number">1.</span> <span class="nav-text">剑指Offer: 序列化二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-331.verify-preorder-serialization-of-a-binary-tree"><span class="nav-number">2.</span> <span class="nav-text">LeetCode 331.Verify Preorder Serialization of a Binary Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#递归函数"><span class="nav-number">2.1.</span> <span class="nav-text">递归函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈"><span class="nav-number">2.2.</span> <span class="nav-text">栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
