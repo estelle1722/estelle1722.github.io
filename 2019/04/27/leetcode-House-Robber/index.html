@@ -96,18 +96,20 @@
 
 
 
-  <meta name="description" content="这篇博客主要针对面试过程中的非技术问题（例如，自我介绍、个人最大的缺点等）进行总结：">
-<meta name="keywords" content="校招面试,非技术性问题">
+  <meta name="description" content="这篇博客主要针对以下两个问题：  LeetCode 198.House Robber LeetCode 213.House Robber II">
+<meta name="keywords" content="校招笔试,算法题,数组,动态规划">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面试非技术问题汇总">
-<meta property="og:url" content="http://yoursite.com/2019/04/24/面试非技术问题汇总/index.html">
+<meta property="og:title" content="leetcode:House Robber">
+<meta property="og:url" content="http://yoursite.com/2019/04/27/leetcode-House-Robber/index.html">
 <meta property="og:site_name" content="Zhang Rong">
-<meta property="og:description" content="这篇博客主要针对面试过程中的非技术问题（例如，自我介绍、个人最大的缺点等）进行总结：">
+<meta property="og:description" content="这篇博客主要针对以下两个问题：  LeetCode 198.House Robber LeetCode 213.House Robber II">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-28T12:06:06.468Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/27/leetcode-House-Robber/leetcode198.png">
+<meta property="og:updated_time" content="2019-04-28T12:06:12.437Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面试非技术问题汇总">
-<meta name="twitter:description" content="这篇博客主要针对面试过程中的非技术问题（例如，自我介绍、个人最大的缺点等）进行总结：">
+<meta name="twitter:title" content="leetcode:House Robber">
+<meta name="twitter:description" content="这篇博客主要针对以下两个问题：  LeetCode 198.House Robber LeetCode 213.House Robber II">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/27/leetcode-House-Robber/leetcode198.png">
 
 
 
@@ -115,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/24/面试非技术问题汇总/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/27/leetcode-House-Robber/">
 
 
 
@@ -125,7 +127,7 @@
   };
 </script>
 
-  <title>面试非技术问题汇总 | Zhang Rong</title>
+  <title>leetcode:House Robber | Zhang Rong</title>
   
 
 
@@ -345,7 +347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/24/面试非技术问题汇总/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/27/leetcode-House-Robber/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhang Rong">
@@ -362,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">面试非技术问题汇总
+          <h1 class="post-title" itemprop="name headline">leetcode:House Robber
 
               
             
@@ -388,7 +390,7 @@
                 
               
 
-              <time title="创建时间：2019-04-24 21:54:09" itemprop="dateCreated datePublished" datetime="2019-04-24T21:54:09+08:00">2019-04-24</time>
+              <time title="创建时间：2019-04-27 21:34:50" itemprop="dateCreated datePublished" datetime="2019-04-27T21:34:50+08:00">2019-04-27</time>
             
 
             
@@ -405,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-28 20:06:06" itemprop="dateModified" datetime="2019-04-28T20:06:06+08:00">2019-04-28</time>
+                <time title="修改时间：2019-04-28 20:06:12" itemprop="dateModified" datetime="2019-04-28T20:06:12+08:00">2019-04-28</time>
               
             
           </span>
@@ -422,7 +424,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招面试/" itemprop="url" rel="index"><span itemprop="name">校招面试</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
 
                 
                 
@@ -457,8 +459,33 @@
       
 
       
-        <p>这篇博客主要针对面试过程中的非技术问题（例如，自我介绍、个人最大的缺点等）进行总结：</p>
+        <p>这篇博客主要针对以下两个问题：</p>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/house-robber/submissions/" target="_blank" rel="noopener">LeetCode 198.House Robber</a></li>
+<li><a href="https://leetcode.com/problems/house-robber-ii/" target="_blank" rel="noopener">LeetCode 213.House Robber II</a></li>
+</ol>
 <a id="more"></a>
+<p><code>LeetCode 198.House Robber</code>题意如下：</p>
+<p><img src="/2019/04/27/leetcode-House-Robber/leetcode198.png" width="70%"></p>
+<p>大意是说有一个小偷晚上打算去一个社区，这个社区的房子之间是有防盗系统的，如果相邻房子被盗，则会报警，之后小偷会被抓住。这里是站在小偷角度，如果偷到最多的钱但是不触发报警系统。这道题，我最先想到的是回溯法，因为每个房子只有两中状态，偷/不偷。那么搜索空间便是有穷的，就转化为在约束条件下的最优解问题。回溯法实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    curValues, res = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, pos, visited, nums)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> pos == len(nums):</span><br><span class="line">            self.res = max(self.res, self.curValues)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            visited[pos] = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">if</span> pos == <span class="number">0</span> <span class="keyword">or</span> <span class="keyword">not</span> visited[pos - <span class="number">1</span>]:</span><br><span class="line">                self.curValues += nums[pos]</span><br><span class="line">                self.helper(pos + <span class="number">1</span>, visited, nums)</span><br><span class="line">                self.curValues -= nums[pos]</span><br><span class="line">            visited[pos] = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">            self.helper(pos + <span class="number">1</span>, visited, nums)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, nums)</span> -&gt; int:</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        self.helper(<span class="number">0</span>, [<span class="literal">False</span>] * n, nums)</span><br><span class="line">        <span class="keyword">return</span> self.res</span><br></pre></td></tr></table></figure>
+<p>实际上，这道题并不关心那个房子被偷了，或者说不关系最优解时每个房子是否被偷的状态。因此，回溯法这种暴力搜索的时间复杂度就显得非常高了，设给定<span class="math inline">\(n\)</span>个元素，则上面回溯法的时间复杂度为<span class="math inline">\(O(2^n)\)</span>。上面提到，我们并不关心具体每个房子的状态，我们可以用动态规划思路解决该题。按题意，到第<span class="math inline">\(i\)</span>个房子时，有两个选择：偷/不偷。那么到该位置的最优解便是两种状态下的较优者。设<code>dp[i]</code>表示到达第<span class="math inline">\(i\)</span>个位置时偷到的钱的最大值（偷/不偷），状态转移方程可写为：</p>
+<p><span class="math display">\[
+\begin{cases}
+dp[i] = nums[0]&amp; \text{ if } i=0 \\ 
+max(nums[0], nums[1]) &amp; \text{ if } i= 1\\
+max(dp[i-2] + nums[i], dp[i - 1]) &amp; \text{ if } i\ge 2
+\end{cases}
+\]</span></p>
+<p>有了状态转移方程，代码就比较容易写了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>]</span><br><span class="line">        dp = [<span class="number">0</span>] * len(nums)</span><br><span class="line">        dp[<span class="number">0</span>], dp[<span class="number">1</span>] = nums[<span class="number">0</span>], max(nums[<span class="number">0</span>], nums[<span class="number">1</span>])</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> dp[<span class="number">-1</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n):</span><br><span class="line">            dp[i] = max(dp[i - <span class="number">2</span>] + nums[i], dp[i - <span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<p><code>LeetCode 213.House Robber II</code>在上一题基础上加了约束条件：所有房子形成一个环形。这就意味着，如果第一个房子和最后一个房子同时被偷，依然会触发报警系统。由于第一个房子的特殊性，处理这道题的思路，依然是对第一个房子状态穷举：</p>
+<ol type="1">
+<li>偷：如果偷第一个房子，那么接下来第二个房子到倒数第二个房子组成的序列处理方法就转化为上一题</li>
+<li>不偷：如果不偷第一个房子，那么剩下所有房子组成的序列处理方法也转化为上一题</li>
+</ol>
+<p>最后，我们取其最大值返回即可。实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rob</span><span class="params">(self, nums)</span> -&gt; int:</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> max(nums)</span><br><span class="line"></span><br><span class="line">        dp1, dp2 = [<span class="number">0</span>] * n, [<span class="number">0</span>] * n</span><br><span class="line">        <span class="comment"># 偷第一家</span></span><br><span class="line">        dp1[<span class="number">0</span>], dp1[<span class="number">1</span>] = nums[<span class="number">0</span>], nums[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n - <span class="number">1</span>):</span><br><span class="line">            dp1[i] = dp1[i - <span class="number">2</span>] + nums[i] <span class="keyword">if</span> dp1[i - <span class="number">2</span>] + nums[i] &gt; dp1[i - <span class="number">1</span>] <span class="keyword">else</span> dp1[i - <span class="number">1</span>]</span><br><span class="line">                </span><br><span class="line">        <span class="comment"># 不偷第一家</span></span><br><span class="line">        dp2[<span class="number">0</span>], dp2[<span class="number">1</span>] = <span class="number">0</span>, nums[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n):</span><br><span class="line">            dp2[i] = dp2[i - <span class="number">2</span>] + nums[i] <span class="keyword">if</span> dp2[i - <span class="number">2</span>] + nums[i] &gt; dp2[i - <span class="number">1</span>] <span class="keyword">else</span> dp2[i - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> max(dp1[n - <span class="number">2</span>], dp2[n - <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -482,9 +509,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/校招面试/" rel="tag"># 校招面试</a>
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
           
-            <a href="/tags/非技术性问题/" rel="tag"># 非技术性问题</a>
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/数组/" rel="tag"># 数组</a>
+          
+            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
           
         </div>
       
@@ -497,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/24/leetcod刷题总结-回溯法/" rel="next" title="leetcod刷题总结-回溯法">
-                <i class="fa fa-chevron-left"></i> leetcod刷题总结-回溯法
+              <a href="/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/" rel="next" title="leetcode 331.Verify Preorder Serialization of a Binary Tree">
+                <i class="fa fa-chevron-left"></i> leetcode 331.Verify Preorder Serialization of a Binary Tree
               </a>
             
           </div>
@@ -507,8 +538,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/" rel="prev" title="leetcode 331.Verify Preorder Serialization of a Binary Tree">
-                leetcode 331.Verify Preorder Serialization of a Binary Tree <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/27/leetcode-Maximum-Subarray-and-Maximum-Product-Subarray/" rel="prev" title="leetcode:Maximum Subarray and Maximum Product Subarray">
+                leetcode:Maximum Subarray and Maximum Product Subarray <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
