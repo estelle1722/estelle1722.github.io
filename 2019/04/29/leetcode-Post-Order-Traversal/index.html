@@ -97,17 +97,20 @@
 
 
   <meta name="description" content="这篇博客主要针对二叉树后续遍历进行总结：">
-<meta name="keywords" content="计算机视觉、医学影像">
+<meta name="keywords" content="校招笔试,算法题,二叉树,后序遍历">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode-Post-Order-Traversal">
 <meta property="og:url" content="http://yoursite.com/2019/04/29/leetcode-Post-Order-Traversal/index.html">
 <meta property="og:site_name" content="Zhang Rong">
 <meta property="og:description" content="这篇博客主要针对二叉树后续遍历进行总结：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-29T06:51:17.507Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/29/leetcode-Post-Order-Traversal/multilevellinkedlist.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/29/leetcode-Post-Order-Traversal/multilevellinkedlistflattened.png">
+<meta property="og:updated_time" content="2019-04-30T10:22:36.582Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode-Post-Order-Traversal">
 <meta name="twitter:description" content="这篇博客主要针对二叉树后续遍历进行总结：">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/29/leetcode-Post-Order-Traversal/multilevellinkedlist.png">
 
 
 
@@ -388,16 +391,46 @@
                 
               
 
-              <time title="创建时间：2019-04-29 14:48:45 / 修改时间：14:51:17" itemprop="dateCreated datePublished" datetime="2019-04-29T14:48:45+08:00">2019-04-29</time>
+              <time title="创建时间：2019-04-29 14:48:45" itemprop="dateCreated datePublished" datetime="2019-04-29T14:48:45+08:00">2019-04-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-30 18:22:36" itemprop="dateModified" datetime="2019-04-30T18:22:36+08:00">2019-04-30</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -433,6 +466,21 @@
 <li><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="noopener">114. Flatten Binary Tree to Linked List</a></li>
 <li><a href="https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/" target="_blank" rel="noopener">430. Flatten a Multilevel Doubly Linked List</a></li>
 </ol>
+<p>这种题目的通用模板可用以下伪代码表示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">traverse</span><span class="params">(root)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> root:</span><br><span class="line">        traverse(root.left)</span><br><span class="line">        traverse(root.right)</span><br><span class="line"></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        your code</span></span><br><span class="line"><span class="string">        """</span></span><br></pre></td></tr></table></figure>
+<p><strong>剑指Offer. 二叉树的镜像</strong></p>
+<p>这一道题目可直接套用上面模板，先访问左子树、右子树，然后互换左右子树节点相对比较简单，容易理解。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.val = x</span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Mirror</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            self.Mirror(root.left)</span><br><span class="line">            self.Mirror(root.right)</span><br><span class="line">            root.left, root.right = root.right, root.left</span><br></pre></td></tr></table></figure>
+<p><strong>114. Flatten Binary Tree to Linked List</strong></p>
+<p>这道题目也是可以直接套用上面模板，不同的是，如何调整根节点和左右子树之间指针指向。如果左子树不为空，则找到左子树最右端叶子节点，将该叶子节点右孩子与根节点右孩子相连，最后将根节点右指针指向左孩子，并将左孩子指针置为空。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.val = x</span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flatten</span><span class="params">(self, root: TreeNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify root in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            self.flatten(root.left)</span><br><span class="line">            self.flatten(root.right)</span><br><span class="line">            <span class="keyword">if</span> root.left <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">                leftSubTree, leftLeaf = root.left, root.left</span><br><span class="line">                <span class="keyword">while</span> leftLeaf.right <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                    leftLeaf = leftLeaf.right</span><br><span class="line">                leftLeaf.right = root.right</span><br><span class="line">                root.right, root.left = leftSubTree, <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<p><strong>430. Flatten a Multilevel Doubly Linked List</strong></p>
+<p>这道题目粗一看上去有点可怕，举个例子，需要将上图转化为下图结构：</p>
+<p><img src="/2019/04/29/leetcode-Post-Order-Traversal/multilevellinkedlist.png" width="60%"></p>
+<p><img src="/2019/04/29/leetcode-Post-Order-Traversal/multilevellinkedlistflattened.png" width="100%"></p>
+<p>其实，如果我们将题目中<code>child</code>指针看做是左孩子指针，<code>next</code>看做是右孩子指针，那么这题就转化为上面一题了，或者说在上一题的基础上需要额外调整<code>prev</code>指针。思路和上一题完全一样，只是需要注意，如果根节点的<code>next</code>指针不为空，则需要将其<code>next</code>指针指向节点的<code>prev</code>指针指向根节点；另外，就是根节点的<code>child</code>指针节点的prev指针需要指向根节点。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a Node.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, val, prev, next, child)</span>:</span></span><br><span class="line">        self.val = val</span><br><span class="line">        self.prev = prev</span><br><span class="line">        self.next = next</span><br><span class="line">        self.child = child</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flatten</span><span class="params">(self, head: <span class="string">'Node'</span>)</span> -&gt; 'Node':</span></span><br><span class="line">        self.helper(head)</span><br><span class="line">        <span class="keyword">return</span> head</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, head)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> head:</span><br><span class="line">            self.helper(head.next)</span><br><span class="line">            self.helper(head.child)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> head.child:</span><br><span class="line">                childSub, childNode = head.child, head.child</span><br><span class="line">                <span class="keyword">while</span> childNode.next:</span><br><span class="line">                    childNode = childNode.next</span><br><span class="line">                childNode.next = head.next</span><br><span class="line">                <span class="keyword">if</span> head.next:</span><br><span class="line">                    head.next.prev = childNode</span><br><span class="line">                childSub.prev = head</span><br><span class="line">                head.next, head.child  = childSub, <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<p>待续更新~</p>
 
       
     </div>
@@ -453,6 +501,18 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/二叉树/" rel="tag"># 二叉树</a>
+          
+            <a href="/tags/后序遍历/" rel="tag"># 后序遍历</a>
+          
+        </div>
       
 
       
@@ -623,7 +683,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
