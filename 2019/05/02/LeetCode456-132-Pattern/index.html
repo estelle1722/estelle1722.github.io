@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="LeetCode456:132 Pattern这道题目真的是做了好久啊。现在来总结下：">
+<meta name="keywords" content="校招笔试,算法题,栈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode456:132 Pattern">
+<meta property="og:url" content="http://yoursite.com/2019/05/02/LeetCode456-132-Pattern/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="LeetCode456:132 Pattern这道题目真的是做了好久啊。现在来总结下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-03T08:05:29.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode456:132 Pattern">
+<meta name="twitter:description" content="LeetCode456:132 Pattern这道题目真的是做了好久啊。现在来总结下：">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/02/LeetCode456-132-Pattern/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LeetCode456:132 Pattern | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/02/LeetCode456-132-Pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode456:132 Pattern
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-02 23:23:12" itemprop="dateCreated datePublished" datetime="2019-05-02T23:23:12+08:00">2019-05-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-03 16:05:29" itemprop="dateModified" datetime="2019-05-03T16:05:29+08:00">2019-05-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://leetcode.com/problems/132-pattern/" target="_blank" rel="noopener">LeetCode456:132 Pattern</a>这道题目真的是做了好久啊。现在来总结下：</p>
+<a id="more"></a>
+<h2 id="leetcode456132-pattern">LeetCode456:132 Pattern</h2>
+<p>这道题目还是出得蛮好的，有梯度，也有区分度，既有直接暴力搜索（时间复杂度<span class="math inline">\(O^3\)</span>，然后并不AC），也有优化过了的暴力搜索（时间复杂度<span class="math inline">\(O(n^2)\)</span>，也不AC），只有借助于栈实现的<span class="math inline">\(O(n)\)</span>时间复杂度算法才被AC。</p>
+<h3 id="暴力法">暴力法</h3>
+<p>这道题目的关键在于查找三个数的顺序，最简单的暴力法是不讲究查找顺序的，直接用三层循环，完全是暴力搜索，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find132pattern</span><span class="params">(self, nums)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, len(nums)):</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(j + <span class="number">1</span>, len(nums)):</span><br><span class="line">                    <span class="keyword">if</span> nums[k] &lt; nums[j] <span class="keyword">and</span> nums[i] &lt; nums[k] :</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<p>上面这种算法非常暴力，直接搜索所有可能，然后再判断，算法复杂度为<span class="math inline">\(O(n^3)\)</span>，想想也知道不会被AC。那就得优化该算法呗，比如，如果出现连续值，就直接跳过，比如，当出现两个两个1时，<span class="math inline">\(i\)</span>遍历到第二个1时，则直接跳过。单就结果来看，并没啥实质性改观，依然无法被AC。</p>
+<h3 id="先找最小值a_i">先找最小值<span class="math inline">\(a_i\)</span></h3>
+<p>那么，我们怎么将算法复杂度从<span class="math inline">\(O(n^3)\)</span>降低到<span class="math inline">\(O(n^2)\)</span>呢？我们可以想象，如果我们先找最小的数，也就是<span class="math inline">\(a_i\)</span>，依旧无法找到符合条件的三元组，那么可以断定，该数组中肯定不存在满足题意的三元组了。也就是说，我们可以先遍历数组，以查找最大的第二个数<span class="math inline">\(a_j\)</span>，同时将前<span class="math inline">\(j\)</span>个数中的最小值设为<span class="math inline">\(a_i\)</span>，然后再用一层循环查找<span class="math inline">\(a_k\)</span>，最后来逐个判断是否有满足条件的三元组。这样，用两层循环便可以解决该问题，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find132pattern</span><span class="params">(self, nums)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        minValue = sys.maxsize</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            minValue = min(minValue, nums[j])</span><br><span class="line">            <span class="keyword">if</span> minValue == nums[j]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(len(nums) - <span class="number">1</span>, j, <span class="number">-1</span>):</span><br><span class="line">                <span class="keyword">if</span> nums[k] &lt; nums[j] <span class="keyword">and</span> minValue &lt; nums[k] :</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h3 id="先找最小值a_i和最大值a_j">先找最小值<span class="math inline">\(a_i\)</span>和最大值<span class="math inline">\(a_j\)</span></h3>
+<p>上述做法依旧还有优化的空间，那就是只是尽量选了最小的数作为<span class="math inline">\(a_i\)</span>，并没有对<span class="math inline">\(a_j\)</span>和<span class="math inline">\(a_k\)</span>进行限制，依旧是暴力搜索。下面，我们可进一步对<span class="math inline">\(a_j\)</span>进行限制，即尽量选较大的的值作为<span class="math inline">\(a_j\)</span>，这样更容易选出三元素，从而达到进一步优化的目的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find132pattern</span><span class="params">(self, nums)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; len(nums):</span><br><span class="line">            <span class="comment"># 找最小值ai</span></span><br><span class="line">            <span class="keyword">while</span> i + <span class="number">1</span> &lt; len(nums) <span class="keyword">and</span> nums[i] &gt;= nums[i + <span class="number">1</span>]:</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 找最大值aj</span></span><br><span class="line">            j = i + <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> j + <span class="number">1</span> &lt; len(nums) <span class="keyword">and</span> nums[j] &lt;= nums[j + <span class="number">1</span>]:</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            k = j + <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> k &lt; len(nums):</span><br><span class="line">                <span class="keyword">if</span> nums[i] &lt; nums[k] <span class="keyword">and</span> nums[k] &lt; nums[j]:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">            i = i + <span class="number">1</span>        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h3 id="辅助栈找a_k-a_j对">辅助栈找<span class="math inline">\(&lt;a_k, a_j&gt;\)</span>对</h3>
+<p>但是以上算法时间复杂度依旧为<span class="math inline">\(O(n^2)\)</span>，依旧无法AC。上面算法都是一次选择一个值，下面我们可以借助栈来选出&lt;<span class="math inline">\(a_k\)</span>,<span class="math inline">\(a_j\)</span>&gt;组成的键值对。借助栈，我们可遍历数组（注意是逆序遍历），将比<span class="math inline">\(nums[i]\)</span>大于的数均放入栈中，例如数组<code>[1,4,2,3,5]</code>，将<code>2,3,5</code>均压入栈中，初始化<span class="math inline">\(a_k\)</span>（程序中用<code>thrid</code>表示）为最小的数（Python中为<code>float('-inf')</code>）：</p>
+<ol type="1">
+<li>当<span class="math inline">\(nums[i]\)</span>大于栈顶元素时，即遇到<code>4</code>时，我们需要将栈顶元素<code>2</code>和<code>3</code>弹出，将<code>3</code>作为<span class="math inline">\(a_k\)</span>，因为显然<code>3</code>作为<span class="math inline">\(a_k\)</span>比<code>2</code>更优，更容易选出三元组</li>
+<li>一旦出现<span class="math inline">\(nums[i] &lt; a_k\)</span>，程序结束，返回True</li>
+</ol>
+<p>当数组为<code>[1,4,2,3,5]</code>时，栈状态如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">元素</th>
+<th style="text-align: center;">栈状态以及<span class="math inline">\(a_k\)</span></th>
+<th style="text-align: center;">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">[5],<span class="math inline">\(a_k=-inf\)</span></td>
+<td style="text-align: center;">空栈，直接压入栈</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">[5,3],<span class="math inline">\(a_k=-inf\)</span></td>
+<td style="text-align: center;">3&lt;栈顶元素5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">[5,3,2],<span class="math inline">\(a_k=-inf\)</span></td>
+<td style="text-align: center;">2&lt;栈顶元素5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">[5,4],<span class="math inline">\(a_k=3\)</span></td>
+<td style="text-align: center;">4&gt;栈顶元素2，依次弹出2,3，依次更新<span class="math inline">\(a_k\)</span>，将4压入栈中</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"><span class="math inline">\(1&lt; a_k =3\)</span>，找到三元组，程序结束，返回True</td>
+</tr>
+</tbody>
+</table>
+<p>完整代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find132pattern</span><span class="params">(self, nums)</span> -&gt; bool:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        stack = list()</span><br><span class="line">        thrid = float(<span class="string">'-inf'</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums) - <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>):    </span><br><span class="line">            <span class="keyword">if</span> nums[i] &lt; thrid:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">while</span> len(stack) <span class="keyword">and</span> nums[i] &gt; stack[<span class="number">-1</span>]:</span><br><span class="line">                thrid = stack.pop()</span><br><span class="line">                </span><br><span class="line">            stack.append(nums[i])</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，借助栈，我们也可以用辅助栈找<span class="math inline">\(&lt;a_i, a_j&gt;\)</span>对，但是这种方式比不上先找<span class="math inline">\(&lt;a_k, a_j&gt;\)</span>对，主要是找<span class="math inline">\(&lt;a_k, a_j&gt;\)</span>对时，只要出现数组元素比<span class="math inline">\(a_k\)</span>就表示找到三元组了，但是对于<span class="math inline">\(&lt;a_i, a_j&gt;\)</span>对，出现数组元素比<span class="math inline">\(a_i\)</span>大，并不能保证栈中比<span class="math inline">\(a_i\)</span>大的元素中一定存在比当前遍历元素大，即无法保证<span class="math inline">\(a_j&gt;a_k\)</span>一定成立。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/栈/" rel="tag"># 栈</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/LeetCode49-Group-Anagrams/" rel="next" title="LeetCode49:Group Anagrams ">
+                <i class="fa fa-chevron-left"></i> LeetCode49:Group Anagrams 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/03/LeetCode560-Subarray-Sum-Equals-K/" rel="prev" title="LeetCode560:Subarray Sum Equals K">
+                LeetCode560:Subarray Sum Equals K <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode456132-pattern"><span class="nav-number">1.</span> <span class="nav-text">LeetCode456:132 Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#暴力法"><span class="nav-number">1.1.</span> <span class="nav-text">暴力法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先找最小值a_i"><span class="nav-number">1.2.</span> <span class="nav-text">先找最小值\(a_i\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先找最小值a_i和最大值a_j"><span class="nav-number">1.3.</span> <span class="nav-text">先找最小值\(a_i\)和最大值\(a_j\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#辅助栈找a_k-a_j对"><span class="nav-number">1.4.</span> <span class="nav-text">辅助栈找\(&lt;a_k, a_j&gt;\)对</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

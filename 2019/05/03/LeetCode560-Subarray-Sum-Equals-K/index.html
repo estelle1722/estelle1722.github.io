@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="LeetCode560. Subarray Sum Equals K这道题做了很久，顺便总结了同类型题目如下：">
+<meta name="keywords" content="校招笔试,算法题,哈希表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode560:Subarray Sum Equals K">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/LeetCode560-Subarray-Sum-Equals-K/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="LeetCode560. Subarray Sum Equals K这道题做了很久，顺便总结了同类型题目如下：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-03T09:16:42.200Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode560:Subarray Sum Equals K">
+<meta name="twitter:description" content="LeetCode560. Subarray Sum Equals K这道题做了很久，顺便总结了同类型题目如下：">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/LeetCode560-Subarray-Sum-Equals-K/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LeetCode560:Subarray Sum Equals K | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/LeetCode560-Subarray-Sum-Equals-K/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode560:Subarray Sum Equals K
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-03 14:52:29 / 修改时间：17:16:42" itemprop="dateCreated datePublished" datetime="2019-05-03T14:52:29+08:00">2019-05-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="noopener">LeetCode560. Subarray Sum Equals K</a>这道题做了很久，顺便总结了同类型题目如下：</p>
+<a id="more"></a>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="noopener">LeetCode560. Subarray Sum Equals K</a></li>
+<li><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener">LeetCode1. Two Sum</a></li>
+<li><a href="https://leetcode.com/problems/3sum/" target="_blank" rel="noopener">LeetCode15. 3Sum</a></li>
+<li><a href="https://leetcode.com/problems/3sum-closest" target="_blank" rel="noopener">LeetCode16.3Sum Closest</a></li>
+<li><a href="https://leetcode.com/problems/4sum" target="_blank" rel="noopener">LeetCode18.4Sum</a></li>
+</ol>
+<h2 id="leetcode560.-subarray-sum-equals-k">LeetCode560. Subarray Sum Equals K</h2>
+<p>先说<code>LeetCode560. Subarray Sum Equals K</code>这道题，这道题目最先想到的是设置双指针再通过移动双指针来解决该问题（具体可参见我另外一篇博客：<a href="/2019/04/30/leetcode-Two-Pointers-Binary-Search/" title="[leetcode:Two Pointers/Binary Search]">[leetcode:Two Pointers/Binary Search]</a> ），主要原因还是本题给出的数组有正有负，并不全都是正数。</p>
+<p>这道题也是也是很有梯次，有时间复杂度<span class="math inline">\(O(n^3)\)</span>的暴力破解法，也有时间复杂度<span class="math inline">\(O(n^2)\)</span>的优化方法，也有线性时间复杂度借助辅助哈希表实现的AC算法，和<a href="https://leetcode.com/problems/132-pattern/" target="_blank" rel="noopener">LeetCode456:132 Pattern</a>这道题一样，只有线性复杂度的算法才能被AC。</p>
+<h3 id="on3时间复杂度暴力破解法"><span class="math inline">\(O(n^3)\)</span>时间复杂度暴力破解法</h3>
+<p>最直接的算法是设置两个节点，然后计算两个节点确定的连续子数组的和，并与K作比较，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">            res = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, len(nums)):</span><br><span class="line">                    <span class="keyword">if</span> sum(nums[i: j]) = K:</span><br><span class="line">                        res += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h3 id="on2时间复杂度on空间复杂度算法"><span class="math inline">\(O(n^2)\)</span>时间复杂度<span class="math inline">\(O(n)\)</span>空间复杂度算法</h3>
+<p>上面算法时间复杂度还是过高，我们需要优化。我们设<code>sums[i]</code>表示<code>sum(nums[:i])</code>，则<code>sum(nums[i:j])=sums[j]-sum[i]</code>，因此我们可以先计算数组<code>sums</code>，再通过循环来判断任意<code>i</code>和<code>j</code>位置之间的连续子数组之和是否为<code>K</code>。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># sums[i] denotes sum(nums[:i])</span></span><br><span class="line">        sums = [<span class="number">0</span>] * (len(nums) + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, len(sums)):</span><br><span class="line">            sums[i] = sums[i - <span class="number">1</span>] + nums[i - <span class="number">1</span>]</span><br><span class="line">            </span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(sums)):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, len(sums)):</span><br><span class="line">                <span class="keyword">if</span> sums[j] - sums[i] == k:</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>显然，上述算法时间复杂度为<span class="math inline">\(O(n^2)\)</span>，空间复杂度为<span class="math inline">\(O(n)\)</span>。</p>
+<h3 id="on2时间复杂度o1空间复杂度算法"><span class="math inline">\(O(n^2)\)</span>时间复杂度<span class="math inline">\(O(1)\)</span>空间复杂度算法</h3>
+<p>上述算法时间复杂度是<span class="math inline">\(O(n^2)\)</span>，但是还需要额外辅助空间，因此，我们不禁想：能不能不需要额外空间呢？答案是存在的。我们只需要选定一个起点，记为<code>start</code>，接下来我们从<code>start+1</code>位置开始遍历，并不断累加遍历到的元素值，设该值为<code>sums</code>，遍历到任意位置为<code>end</code>，则sums始终表示<code>start</code>和<code>end</code>之间连续子数组的和。那么判断<code>sums</code>是否等于<code>K</code>即可，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            sums = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i, len(nums)):</span><br><span class="line">                sums += nums[j]</span><br><span class="line">                <span class="keyword">if</span> sums == k:</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>显然，该算法的时间复杂度是<span class="math inline">\(O(n^2)\)</span>，空间复杂度是<span class="math inline">\(O(1)\)</span>。</p>
+<h3 id="借助哈希表实现on时间复杂度on空间复杂度算法">借助哈希表实现<span class="math inline">\(O(n)\)</span>时间复杂度<span class="math inline">\(O(n)\)</span>空间复杂度算法</h3>
+<p>上面三种算法均无法AC，主要还是因为时间复杂度过大（<span class="math inline">\(O(n^2)\)</span>）。归根究底，还是因为多个位置需要多次遍历，那么我们能不能之遍历一次数组呢？</p>
+<p>还是接着上面降到的：我们设<code>sums[i]</code>表示<code>sum(nums[:i])</code>，则<code>sum(nums[i:j])=sums[j]-sum[i]</code>。那么，我们遍历到<code>j</code>位置时，我们可以通过累加来得到<code>sums[j]</code>，设为<code>s</code>，即<code>sums[j]=s</code>，那么我们可以借助哈希表记住<code>sums[i]</code>，因此，我们只需要遍历一次数组。</p>
+<p>设当前遍历到<code>j</code>位置，其和为<code>s</code>，那么我们需要在前面找到一个<code>sums[i]</code>，使得<code>sums[j]-sums[i]=K</code>。因此，我们只需要判断前面所有的<code>sums[i]</code>是否存在和为<code>s-K</code>的子序列，在这里，我们通过哈希表中是否有和为<code>s-K</code>的<code>key</code>来判断。最后，我们来更新当前<code>s</code>出现的次数，需要注意的是哈希表初始添加<code>&lt;0,1&gt;</code>的键值对。整个代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        res, s, maps = <span class="number">0</span>, <span class="number">0</span>, collections.defaultdict(int)</span><br><span class="line">        maps[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            s += nums[i]</span><br><span class="line">            <span class="keyword">if</span> s - k <span class="keyword">in</span> maps:</span><br><span class="line">                res += maps[s - k]</span><br><span class="line">            maps[s] = maps[s] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>这道题的优化思路和<a href="https://leetcode.com/problems/132-pattern" target="_blank" rel="noopener">LeetCode456.132 Pattern</a>非常像，本题用哈希表来记住前面<code>sums[i]</code>出现的种类和次数，而<code>LeetCode456.132 Pattern</code>则是通过栈来保持当前最优的<span class="math inline">\(&lt;a_j,a_k&gt;\)</span>对。详情可参见我的博客：<a href="/2019/05/02/LeetCode456-132-Pattern/" title="[LeetCode456:132 Pattern]">[LeetCode456:132 Pattern]</a></p>
+<h2 id="leetcode1leetcode15和leetcode18">LeetCode1，LeetCode15和LeetCode18</h2>
+<p>这三道题，本质上来讲解题思路是一模一样的。都是借助哈希表来降低算法复杂度，即用空间换时间。借用哈希表，<code>LeetCode1</code>是将算法复杂度从<span class="math inline">\(O(n^2)\)</span>降低到<span class="math inline">\(O(n)\)</span>，<code>LeetCode15</code>是将<span class="math inline">\(O(n^3)\)</span>将低到<span class="math inline">\(O(n^2)\)</span>，<code>LeetCode18</code>是将<span class="math inline">\(O(n^4)\)</span>降低到<span class="math inline">\((n^3)\)</span>。</p>
+<h3 id="leetcode1">LeetCode1</h3>
+<p>这道题目找数组中两个数之和为<code>target</code>对应的索引。通过一次遍历，使用哈希表存储前面已经出现的数字及其索引。遍历到位置<code>i</code>时，只需要判断<code>target-i</code>是否已经出现即可，这道题目相对简单，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        </span><br><span class="line">        maps = dict()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            <span class="keyword">if</span> target - nums[index] <span class="keyword">in</span> maps:</span><br><span class="line">                <span class="keyword">return</span> maps[target - nums[index]], index</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                maps[nums[index]] = index</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>, <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<h3 id="leetcode15和leetcode18">LeetCode15和LeetCode18</h3>
+<p>这道题目可暴力破解，在此不赘述了，无法AC。这里还是要用哈希表。我们先任意选定一个起点，设为<code>i</code>，我们固定终点为数组最后一个元素，也就是说，我们外层循环遍历<code>i</code>，内层循环用于确定位置<code>i</code>到末尾的子序列中是否存在题目要找的三元组，在此之前，因为题目要找所有不重复的三元组，因此还是要先对数组排序。那么，在内层循环中，我们设迭代变量为<code>j</code>，我们用哈希表记录位置<code>i</code>和<code>j</code>之间出现的元素值，接下来我们只需要判断<code>-nums[i]-nums[j]</code>是否在哈希表中出现即可。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        res = []</span><br><span class="line">        nums.sort()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i - <span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            maps = dict()</span><br><span class="line">            j = i + <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> j &lt; len(nums):</span><br><span class="line">                req = -nums[i] - nums[j]</span><br><span class="line">                <span class="keyword">if</span> req <span class="keyword">in</span> maps:</span><br><span class="line">                    res.append([nums[i], req, nums[j]])</span><br><span class="line">                    <span class="keyword">while</span> j &lt; len(nums) - <span class="number">1</span> <span class="keyword">and</span> nums[j] == nums[j + <span class="number">1</span>]:</span><br><span class="line">                        j += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    maps[nums[j]] = j</span><br><span class="line"></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p><code>LeetCode18</code>和<code>LeetCode15</code>思路一模一样，只是需要固定两个位置，然后同样用哈希表记录第二个位置和第四个位置之间出现的元素，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fourSum</span><span class="params">(self, nums: List[int], target: int)</span> -&gt; List[List[int]]:</span></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        <span class="keyword">if</span> len(nums) == <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">return</span> [nums] <span class="keyword">if</span> sum(nums) == target <span class="keyword">else</span> res</span><br><span class="line">        </span><br><span class="line">        nums.sort()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i - <span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, len(nums) - <span class="number">2</span>):</span><br><span class="line">                maps = dict()</span><br><span class="line">                k = j + <span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> k &lt; len(nums):</span><br><span class="line">                    req = target -nums[i] - nums[j] - nums[k]</span><br><span class="line">                    <span class="keyword">if</span> req <span class="keyword">in</span> maps:</span><br><span class="line">                        found = [nums[i], nums[j], req, nums[k]]</span><br><span class="line">                        <span class="keyword">if</span> found <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">                            res.append(found)</span><br><span class="line">                        <span class="keyword">while</span> k &lt; len(nums) - <span class="number">1</span> <span class="keyword">and</span> nums[k] == nums[k+<span class="number">1</span>]:</span><br><span class="line">                            k += <span class="number">1</span></span><br><span class="line">                        <span class="keyword">while</span> j &lt; len(nums) - <span class="number">1</span> <span class="keyword">and</span> nums[j] == nums[j+<span class="number">1</span>]:</span><br><span class="line">                            j += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        maps[nums[k]] = k</span><br><span class="line">                    k += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode16.3sum-closest">LeetCode16.3Sum Closest</h2>
+<p><code>LeetCode16.3Sum Closest</code>这道题目和上面算法还是不一样的，因此单独讨论。虽然同样也可以直接暴力破解，这道题目是先排序，然后依次遍历每个位置，由于数组有序，接下来只需要用折半查找法思想来找出固定当前位置，找出与目标值最接近的三元组。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(self, nums, target)</span>:</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> sum(nums)</span><br><span class="line"></span><br><span class="line">        res = sum(nums[:<span class="number">3</span>])</span><br><span class="line">        nums.sort()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(n):</span><br><span class="line"></span><br><span class="line">            left, right = index + <span class="number">1</span>, n - <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> left &lt; right:</span><br><span class="line">                s = nums[index] + nums[left] + nums[right]</span><br><span class="line">                <span class="keyword">if</span> s == target:</span><br><span class="line">                    <span class="keyword">return</span> s</span><br><span class="line">                <span class="keyword">elif</span> s &gt; target:</span><br><span class="line">                    <span class="keyword">while</span> right &gt; <span class="number">0</span> <span class="keyword">and</span> nums[right] == nums[right - <span class="number">1</span>]:</span><br><span class="line">                        right -= <span class="number">1</span></span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">while</span> left &lt; n - <span class="number">1</span> <span class="keyword">and</span> nums[left] == nums[left + <span class="number">1</span>]:</span><br><span class="line">                        left += <span class="number">1</span></span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                    </span><br><span class="line">                <span class="keyword">if</span> abs(s - target) &lt; abs(res - target):</span><br><span class="line">                    res = s</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>上述算法时间复杂度为<span class="math inline">\(O(nlog n)\)</span>说到这里，想想上面两道题目也可以使用本题算法去解，但是复杂度就比较高了。例如<code>LeetCode15. 3Sum</code>，你需要固定两个位置（两层循环），然后通过折半查找法来找，这样的时间复杂度将达到<span class="math inline">\(O(n^2logn)\)</span>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/哈希表/" rel="tag"># 哈希表</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/02/LeetCode456-132-Pattern/" rel="next" title="LeetCode456:132 Pattern">
+                <i class="fa fa-chevron-left"></i> LeetCode456:132 Pattern
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode560.-subarray-sum-equals-k"><span class="nav-number">1.</span> <span class="nav-text">LeetCode560. Subarray Sum Equals K</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#on3时间复杂度暴力破解法"><span class="nav-number">1.1.</span> <span class="nav-text">\(O(n^3)\)时间复杂度暴力破解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on2时间复杂度on空间复杂度算法"><span class="nav-number">1.2.</span> <span class="nav-text">\(O(n^2)\)时间复杂度\(O(n)\)空间复杂度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on2时间复杂度o1空间复杂度算法"><span class="nav-number">1.3.</span> <span class="nav-text">\(O(n^2)\)时间复杂度\(O(1)\)空间复杂度算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#借助哈希表实现on时间复杂度on空间复杂度算法"><span class="nav-number">1.4.</span> <span class="nav-text">借助哈希表实现\(O(n)\)时间复杂度\(O(n)\)空间复杂度算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode1leetcode15和leetcode18"><span class="nav-number">2.</span> <span class="nav-text">LeetCode1，LeetCode15和LeetCode18</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode1"><span class="nav-number">2.1.</span> <span class="nav-text">LeetCode1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode15和leetcode18"><span class="nav-number">2.2.</span> <span class="nav-text">LeetCode15和LeetCode18</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode16.3sum-closest"><span class="nav-number">3.</span> <span class="nav-text">LeetCode16.3Sum Closest</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
