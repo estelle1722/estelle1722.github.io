@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Zhang Rong">
 <meta property="og:description" content="前言 动态规划属于算法题中比较偏难的题目，解题核心在于递推方程，但是这样也有一个问题，就是能否解题的关键在于能否找到递推方程，因而解题结果往往只有两种结果（能解出/解不出），而没有中间结果。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-13T14:49:47.675Z">
+<meta property="og:updated_time" content="2019-05-11T12:57:46.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="暑期实习算法题-动态规划">
 <meta name="twitter:description" content="前言 动态规划属于算法题中比较偏难的题目，解题核心在于递推方程，但是这样也有一个问题，就是能否解题的关键在于能否找到递推方程，因而解题结果往往只有两种结果（能解出/解不出），而没有中间结果。">
@@ -388,12 +388,24 @@
                 
               
 
-              <time title="创建时间：2019-04-13 10:04:27 / 修改时间：22:49:47" itemprop="dateCreated datePublished" datetime="2019-04-13T10:04:27+08:00">2019-04-13</time>
+              <time title="创建时间：2019-04-13 10:04:27" itemprop="dateCreated datePublished" datetime="2019-04-13T10:04:27+08:00">2019-04-13</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-11 20:57:46" itemprop="dateModified" datetime="2019-05-11T20:57:46+08:00">2019-05-11</time>
               
             
           </span>
@@ -460,7 +472,7 @@
 <li>当<span class="math inline">\(a_1=1\)</span>时，计算用剩下面值货币有多少种解法组成目标为<span class="math inline">\(y-a[0]\)</span> ...</li>
 <li>当<span class="math inline">\(a_1=y//[x_1]\)</span>时，计算用剩下面值货币有多少种解法组成目标为<span class="math inline">\(y-a_1·a[0]\)</span></li>
 </ul>
-<p>显然，上述过程可用递归表示，用函数<code>helper(index, arr, aim, res)</code>表示用面值<code>arr[index:]</code>换到目标钱数的解法种数，代码如下：</p>
+<p>显然，上述过程可用递归表示，用函数<code>helper(index, arr, aim, res)</code>表示用面值<code>arr[index:]</code>换到目标钱数<code>aim</code>的解法种数，代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exchange</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">countWays</span><span class="params">(self, penny, n, aim)</span>:</span></span><br><span class="line">        res = [<span class="number">0</span>]</span><br><span class="line">        self.helper(<span class="number">0</span>, penny, aim, res)</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(self, index, penny, aim, res)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> index == len(penny):</span><br><span class="line">            res[<span class="number">0</span>] += <span class="number">1</span> <span class="keyword">if</span> aim == <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> i * penny[index] &lt;= aim:</span><br><span class="line">                self.helper(index + <span class="number">1</span>, penny, aim - i * penny[index], res)</span><br><span class="line">                i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>显然，上述代码冗余很多, 例如，测试用例为<code>[1,2,4],3,3</code>时，在使用2张1元和1张2元情况下，后续都是求解<code>helper(2, arr, 2, res)</code>。</p>
 <h4 id="思路二记忆搜索">思路二：记忆搜索</h4>
@@ -470,7 +482,12 @@
 <p>动态规划，设数组<code>dp</code>为行数为<span class="math inline">\(n\)</span>，列数为<span class="math inline">\(aim+1\)</span>的二维矩阵，<code>dp[i][j]</code>表示使用前<span class="math inline">\(i\)</span>种面值货币换成<span class="math inline">\(j\)</span>的种数，则有： <span class="math display">\[dp[i][j]=\sum_{k=0}^{k=aim//arr[i]} dp[i-1][aim-k*arr[i]],i\geq 1,j\geq 1\]</span></p>
 <p>代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Exchange</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">countWays</span><span class="params">(self, penny, n, aim)</span>:</span></span><br><span class="line">        res = [<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># n行aim列 a[i][j]表示用arr[i:]换j共有多少种解法</span></span><br><span class="line">        dp = [[<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(aim + <span class="number">1</span>)] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            dp[i][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i * penny[<span class="number">0</span>] &lt;= aim:</span><br><span class="line">            dp[<span class="number">0</span>][i * penny[<span class="number">0</span>]] = <span class="number">1</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, aim + <span class="number">1</span>):</span><br><span class="line">                k = <span class="number">0</span></span><br><span class="line">                <span class="keyword">while</span> k * penny[i] &lt;= j:</span><br><span class="line">                    dp[i][j] += dp[i<span class="number">-1</span>][j - k * penny[i]]</span><br><span class="line">                    k += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> dp[n<span class="number">-1</span>][aim]</span><br></pre></td></tr></table></figure>
-<p>可以看出，记忆搜索和动态规划都是一种用空间换时间的算法，都能够实现提高效率的效果。</p>
+<p>可以看出，记忆搜索和动态规划都是一种用空间换时间的算法，都能够实现提高效率的效果。最后总结一句，这道题目和<a href="https://blog.csdn.net/qq_38410730/article/details/81667885" target="_blank" rel="noopener">0-1背包问题</a>是一模一样的，在<code>0-1</code>背包问题中，<code>dp[i][j]</code>表示当前有前<span class="math inline">\(i\)</span>种物品可供选择，背包剩余容量为<span class="math inline">\(j\)</span>时，背包能装下的最大价值。另外，感觉出现有<strong>显式说明定义域、搜索空间和优化目标的，往往可以试试建立二维数组，动态规划</strong>，比如：</p>
+<ol type="1">
+<li><a href="https://blog.csdn.net/qq_38410730/article/details/81667885" target="_blank" rel="noopener">0-1背包问题</a></li>
+<li>换硬币求换取方案综述（案例一）</li>
+<li><a href="https://leetcode.com/problems/edit-distance/" target="_blank" rel="noopener">LeetCode 72. Edit Distance</a></li>
+</ol>
 
       
     </div>
@@ -592,7 +609,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN,_en,default">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/smile.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本次博客主要结合以下两道题目进行分析总结：">
+<meta name="keywords" content="校招笔试,算法题,动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="322.Coin Change&#x2F;279.Perfect Squares">
+<meta property="og:url" content="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/index.html">
+<meta property="og:site_name" content="Zhang Rong">
+<meta property="og:description" content="本次博客主要结合以下两道题目进行分析总结：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/leetcode279.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/leetcode322.png">
+<meta property="og:updated_time" content="2019-05-11T14:01:35.634Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="322.Coin Change&#x2F;279.Perfect Squares">
+<meta name="twitter:description" content="本次博客主要结合以下两道题目进行分析总结：">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/leetcode279.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>322.Coin Change/279.Perfect Squares | Zhang Rong</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zhang Rong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">一个有想法的程序猿</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/11/322-Coin-Change-279-Perfect-Squares/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhang Rong">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Rong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">322.Coin Change/279.Perfect Squares
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-11 19:37:44 / 修改时间：22:01:35" itemprop="dateCreated datePublished" datetime="2019-05-11T19:37:44+08:00">2019-05-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本次博客主要结合以下两道题目进行分析总结： <a id="more"></a></p>
+<ol type="1">
+<li><a href="https://leetcode.com/problems/perfect-squares/" target="_blank" rel="noopener">279.Perfect Squares</a></li>
+<li><a href="https://leetcode.com/problems/coin-change/" target="_blank" rel="noopener">322.Coin Change</a></li>
+</ol>
+<h2 id="leetcode-279.perfect-squares">LeetCode 279.Perfect Squares</h2>
+<p>题目如下：</p>
+<p><img src="/2019/05/11/322-Coin-Change-279-Perfect-Squares/leetcode279.png" width="70%"></p>
+<h3 id="时间复杂度on2">时间复杂度<span class="math inline">\(O(n^2)\)</span></h3>
+<p>这道题思路比较明确，使用动态规划。关键是状态转移方程，我们用<code>dp[i]</code>表示组成数字<span class="math inline">\(i\)</span>最少需要的平方数个数。我最先想到的动态规划方程如下：</p>
+<p><span class="math display">\[
+dp[i]=min(dp[j] + dp[i- j]) \qquad j: 1 \rightarrow i//2
+\]</span></p>
+<p>给定数字<span class="math inline">\(n\)</span>，初始状态下，对于小于<span class="math inline">\(n\)</span>的平方数<span class="math inline">\(i\)</span>，有<span class="math inline">\(dp[i]=1\)</span>；代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        dp = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(int(n ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">            dp[i ** <span class="number">2</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> dp[i] != <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, i//<span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    dp[i] = min(dp[i], dp[j] + dp[i - j])</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="时间复杂度onsqrtn">时间复杂度<span class="math inline">\(O(n\sqrt{n})\)</span></h3>
+<p>上述算法时间复杂度为<span class="math inline">\(O(n^2)\)</span>，OJ判定TLE，没有AC。问题出在第二层<code>for</code>循环，这种方式近乎于遍历穷举，不够高效。更为高效的搜索方式是将数字<span class="math inline">\(i\)</span>分解为一个完全平方数<span class="math inline">\(j\)</span>和另外一个数<span class="math inline">\(i-j\)</span>，因此状态转移方程为：</p>
+<p><span class="math display">\[
+dp[i]=min(1 + dp[i- j]) \qquad j \in S
+\]</span></p>
+<p>其中，<span class="math inline">\(S\)</span>表示所有小于<span class="math inline">\(n\)</span>的平方数组成的集合。 代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> n == int(n**<span class="number">0.5</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        dp = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>)]</span><br><span class="line">        square = [i**<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(int(n**<span class="number">0.5</span>)+<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> square:</span><br><span class="line">                <span class="keyword">if</span> i-item&lt;<span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dp[i] = min(dp[i],dp[i-item]+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+<p>上述算法时间度为<span class="math inline">\(O(n\sqrt{n})\)</span>，OJ判定TLE，没有AC。后来看了别人AC的代码，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span>    </span><br><span class="line">    _dp = [<span class="number">0</span>]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        dp = self._dp</span><br><span class="line">        <span class="keyword">while</span> len(dp) &lt;= n:</span><br><span class="line">            dp.append(min(dp[len(dp)-i*i] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int(len(dp)**<span class="number">0.5</span>+<span class="number">1</span>))) + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+<p>看了下，这里的算法复杂度还是<span class="math inline">\(O(n\sqrt{n})\)</span>，和第二种算法是一样的，在第二种算法中，一旦变量<code>item</code>大于变量<code>i</code>，第二层循环退出。后来自己比较以下三种代码写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares1</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> n == int(n**<span class="number">0.5</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        dp = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>)]</span><br><span class="line">        square = [i**<span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(int(n**<span class="number">0.5</span>)+<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,n+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> square:</span><br><span class="line">                <span class="keyword">if</span> i-item&lt;<span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    dp[i] = min(dp[i],dp[i-item]+<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares2</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        dp = [<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">while</span> len(dp) &lt;= n:</span><br><span class="line">            temp = float(<span class="string">'inf'</span>)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int(len(dp) ** <span class="number">0.5</span>) + <span class="number">1</span>):</span><br><span class="line">                temp = min(temp, dp[len(dp) - i * i])</span><br><span class="line">            dp.append(temp)</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares3</span><span class="params">(self, n: int)</span> -&gt; int:</span></span><br><span class="line">        dp = [<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">while</span> len(dp) &lt;= n:</span><br><span class="line">            dp.append(min(dp[len(dp) - i * i] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, int(len(dp) ** <span class="number">0.5</span> + <span class="number">1</span>))) + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+<p>输入<code>18967</code>做测试，函数<code>numSquares1</code>、<code>numSquares2</code>和<code>numSquares3</code>运行时间分别为：<code>0.904s</code>、<code>0.796s</code>和<code>0.553s</code>，后两者实现算法其实完全一样的，但是运行时间差了<code>0.243s</code>，在这里，我只想说，Python代码运行效率真的是有点低（囧~）。也说明这道题的TestCase里还是有大量比较大的数的。第二种算法才没被AC。</p>
+<h2 id="leetcode-322.coin-change">LeetCode 322.Coin Change</h2>
+<p>再来看看<code>LeetCode322.Coin Change</code>，题目如下：</p>
+<p><img src="/2019/05/11/322-Coin-Change-279-Perfect-Squares/leetcode322.png" width="70%"></p>
+<p>这道题目思路可以说和上一题一模一样，都是使用DP解题，另外，在状态转移方程方面，也是非常像的；设<span class="math inline">\(dp[i]\)</span>表示组成面值<span class="math inline">\(i\)</span>所需要的最少基础货币数量，则：</p>
+<p><span class="math display">\[
+dp[i]=min(1 + dp[i- j]) \qquad j \in S
+\]</span></p>
+<p>其中<span class="math inline">\(S\)</span>表示组成目标面值的基础硬币组成的集合。直观理解就是，对于组成目标面值<span class="math inline">\(i\)</span>所需的最小硬币数量，我们可以在基础货币中选一个出来，假设其面值为<span class="math inline">\(j\)</span>，而剩下的面值<span class="math inline">\(i-j\)</span>是已知的。因此，我们只需要在这些组成方案中，选出<code>dp[i-j]</code>的最小值。和上面思路以上，动态转移方程也可写作：</p>
+<p><span class="math display">\[
+dp[i]=min(dp[j] + dp[i- j]) \qquad j: 1 \rightarrow i-1
+\]</span></p>
+<p>显然，这种搜索方法近似于穷举，效率较低，时间复杂度较高；另外一种方法就是使用回溯法求解，相当于求解方程：</p>
+<p><span class="math display">\[
+x_1a_1 + x_2a_2+···+x_na_n=y
+\]</span></p>
+<p>解空间中<span class="math inline">\(x_1+x_2+···+x_n\)</span>的最小值。其中<span class="math inline">\(S=\{a_1,a_2,...,a_n\}\)</span>。这种算法时间复杂度也很高，为了降低时间复杂度，可以加入<code>Cache</code>。以上三种算法代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dpCoinChange1</span><span class="params">(self, coins, amount)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        动态规划 优化搜索空间</span></span><br><span class="line"><span class="string">        :type coins: List[int]</span></span><br><span class="line"><span class="string">        :type amount: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(coins) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        dp = [sys.maxsize] * (<span class="number">1</span> + amount)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(coins)):</span><br><span class="line">            <span class="keyword">if</span> coins[i] &lt;= amount:</span><br><span class="line">                dp[coins[i]] = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, amount + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> coins:</span><br><span class="line">                <span class="keyword">if</span> i - item &gt;= <span class="number">0</span>:</span><br><span class="line">                    dp[i] = min(dp[i], dp[i - item] + <span class="number">1</span>)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span> <span class="keyword">if</span> dp[<span class="number">-1</span>] == sys.maxsize <span class="keyword">else</span> dp[<span class="number">-1</span>]</span><br><span class="line">                 </span><br><span class="line">                </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dpCoinChange2</span><span class="params">(self, coins, amount)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        动态规划 暴力搜索空间</span></span><br><span class="line"><span class="string">        :type coins: List[int]</span></span><br><span class="line"><span class="string">        :type amount: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(coins) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        dp = [sys.maxsize] * (<span class="number">1</span> + amount)</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(coins)):</span><br><span class="line">            <span class="keyword">if</span> coins[i] &lt;= amount:</span><br><span class="line">                dp[coins[i]] = <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1</span> + amount):</span><br><span class="line">            temp = sys.maxsize</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, i):</span><br><span class="line">                temp = min(temp, dp[j] + dp[i - j])</span><br><span class="line">            dp[i] = temp</span><br><span class="line">        print(dp)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span> <span class="keyword">if</span> dp[<span class="number">-1</span>] == sys.maxsize <span class="keyword">else</span> dp[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line">    res = sys.maxsize</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backtrackingCoinChange</span><span class="params">(self, coins, amount)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        回溯</span></span><br><span class="line"><span class="string">        :type coins: List[int]</span></span><br><span class="line"><span class="string">        :type amount: int</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(coins) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        self.dfs(<span class="number">0</span>, amount, coins, [<span class="number">0</span>] * len(coins))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span> <span class="keyword">if</span> self.res == sys.maxsize <span class="keyword">else</span> self.res</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self, pos, amount, coins, counts)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> pos == len(coins):</span><br><span class="line">            <span class="keyword">if</span> amount == <span class="number">0</span>:</span><br><span class="line">                self.res = min(self.res, sum(counts))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            index = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> amount - index * coins[pos] &gt;= <span class="number">0</span>:</span><br><span class="line">                counts[pos] = index</span><br><span class="line">                self.dfs(pos + <span class="number">1</span>, amount - index * coins[pos], coins, counts)</span><br><span class="line">                index += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/校招笔试/" rel="tag"># 校招笔试</a>
+          
+            <a href="/tags/算法题/" rel="tag"># 算法题</a>
+          
+            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/07/leetcode-215-Kth-Largest-Element-in-an-Array/" rel="next" title="leetcode 215. Kth Largest Element in an Array">
+                <i class="fa fa-chevron-left"></i> leetcode 215. Kth Largest Element in an Array
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhang Rong</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhangrong1722" title="GitHub &rarr; https://github.com/zhangrong1722" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:zhangr258@mail2.sysu.edu.cn" title="E-Mail &rarr; mailto:zhangr258@mail2.sysu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-279.perfect-squares"><span class="nav-number">1.</span> <span class="nav-text">LeetCode 279.Perfect Squares</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度on2"><span class="nav-number">1.1.</span> <span class="nav-text">时间复杂度\(O(n^2)\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度onsqrtn"><span class="nav-number">1.2.</span> <span class="nav-text">时间复杂度\(O(n\sqrt{n})\)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-322.coin-change"><span class="nav-number">2.</span> <span class="nav-text">LeetCode 322.Coin Change</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Rong</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
