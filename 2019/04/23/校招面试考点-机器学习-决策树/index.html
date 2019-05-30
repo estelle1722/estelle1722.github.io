@@ -96,19 +96,21 @@
 
 
 
-  <meta name="description" content="参考资料  周志华《机器学习》第四章">
+  <meta name="description" content="定义及其构建 决策树是一类常见机器学习算法，决策树构建过程可以理解为决策过程；算法流程如下图所示：  可以看出，上述过程是一个递归过程；三种情况会导致构建树过程结束：  当前节点包含的样本全属于同一类别 属性集为空，或者在当前样本所有属性上取值都相同 样本集为空  在第2种情况下，将当前节点标记为叶节点，将其类别设标记为所含样本最多的类别（实际上，这种情况下所有样本类别都相同）；第3种情况下，同样">
 <meta name="keywords" content="校招面试,机器学习,决策树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="校招面试考点-机器学习-决策树">
 <meta property="og:url" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/index.html">
 <meta property="og:site_name" content="blogs of Rong Zhang">
-<meta property="og:description" content="参考资料  周志华《机器学习》第四章">
+<meta property="og:description" content="定义及其构建 决策树是一类常见机器学习算法，决策树构建过程可以理解为决策过程；算法流程如下图所示：  可以看出，上述过程是一个递归过程；三种情况会导致构建树过程结束：  当前节点包含的样本全属于同一类别 属性集为空，或者在当前样本所有属性上取值都相同 样本集为空  在第2种情况下，将当前节点标记为叶节点，将其类别设标记为所含样本最多的类别（实际上，这种情况下所有样本类别都相同）；第3种情况下，同样">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/decision_tree.jpeg">
-<meta property="og:updated_time" content="2019-05-29T07:46:24.296Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/datasets.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/tree.jpeg">
+<meta property="og:updated_time" content="2019-05-29T13:13:25.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-决策树">
-<meta name="twitter:description" content="参考资料  周志华《机器学习》第四章">
+<meta name="twitter:description" content="定义及其构建 决策树是一类常见机器学习算法，决策树构建过程可以理解为决策过程；算法流程如下图所示：  可以看出，上述过程是一个递归过程；三种情况会导致构建树过程结束：  当前节点包含的样本全属于同一类别 属性集为空，或者在当前样本所有属性上取值都相同 样本集为空  在第2种情况下，将当前节点标记为叶节点，将其类别设标记为所含样本最多的类别（实际上，这种情况下所有样本类别都相同）；第3种情况下，同样">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/decision_tree.jpeg">
 
 
@@ -407,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-29 15:46:24" itemprop="dateModified" datetime="2019-05-29T15:46:24+08:00">2019-05-29</time>
+                <time title="修改时间：2019-05-29 21:13:25" itemprop="dateModified" datetime="2019-05-29T21:13:25+08:00">2019-05-29</time>
               
             
           </span>
@@ -459,7 +461,89 @@
       
 
       
-        <p><img src="/2019/04/23/校招面试考点-机器学习-决策树/decision_tree.jpeg" width="70%"></p>
+        <h2 id="定义及其构建">定义及其构建</h2>
+<p>决策树是一类常见机器学习算法，决策树构建过程可以理解为决策过程；算法流程如下图所示：</p>
+<p><img src="/2019/04/23/校招面试考点-机器学习-决策树/decision_tree.jpeg" width="70%"></p>
+<p>可以看出，上述过程是一个递归过程；三种情况会导致构建树过程结束：</p>
+<ol type="1">
+<li>当前节点包含的样本全属于同一类别</li>
+<li>属性集为空，或者在当前样本所有属性上取值都相同</li>
+<li>样本集为空</li>
+</ol>
+<p>在第2种情况下，将当前节点标记为叶节点，将其类别设标记为所含样本最多的类别（实际上，这种情况下所有样本类别都相同）；第3种情况下，同样将当前节点标记为叶节点，不过将其类别设为其父节点所含样本最多的类别；不同的是，情形2是利用当前节点的后验分布，而情形3则是把父节点分布作为当前节点先验分布；</p>
+<h2 id="划分选择">划分选择</h2>
+<p>决策树关键是如何选择最优划分属性，目前主要有三种标准：</p>
+<ol type="1">
+<li>信息增益，典型代表为ID3</li>
+<li>增益率，典型代表为C4.5</li>
+<li>Gini系数，典型代表为CART决策树</li>
+</ol>
+<h3 id="id3">ID3</h3>
+<p>假设当前当前样本集合中<span class="math inline">\(D\)</span>中第<span class="math inline">\(k\)</span>类样本所占比例为<span class="math inline">\(p_k(k=1,2,...,|\mathcal{Y}|)\)</span>，则<span class="math inline">\(D\)</span>的信息熵定义为：</p>
+<p><span class="math display">\[
+Ent(D)=-\sum_{k=1}^{|\mathcal{Y}|}p_k\log_2 {p_k}
+\]</span></p>
+<p>假定属性<span class="math inline">\(a\)</span>中有<span class="math inline">\(V\)</span>个可能取值{<span class="math inline">\(a^1,a^2,...,a^V\)</span>}，若利用<span class="math inline">\(a\)</span>来对样本集<span class="math inline">\(D\)</span>进行划分，则会产生<span class="math inline">\(V\)</span>个分支节点，其中第<span class="math inline">\(V\)</span>个节点包含样本集中所有当前属性取值为<span class="math inline">\(a^V\)</span>的样本，记为<span class="math inline">\(D^v\)</span>；接着给分支节点分配权重<span class="math inline">\(\frac{|D^v|}{|D|}\)</span>，于是，我们可以计算出<span class="math inline">\(a\)</span>属性对样本集<span class="math inline">\(D\)</span>进行划分所获得的“信息增益”(information gain)：</p>
+<p><span class="math display">\[
+Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)
+\]</span></p>
+<p>以下表中西瓜数据为例：</p>
+<p><img src="/2019/04/23/校招面试考点-机器学习-决策树/datasets.jpeg" width="60%"></p>
+<p>可以看到，该数据集一共有17个训练样本，用以学习一棵能预测一个瓜是不是好瓜的决策树。显然，<span class="math inline">\(|\mathcal{Y}|=2\)</span>，在构建决策树之前，根节点中好瓜比例<span class="math inline">\(p_1=\frac{8}{17}\)</span>，坏瓜比例<span class="math inline">\(p_2=\frac{9}{17}\)</span>；有：</p>
+<p><span class="math display">\[
+Ent(D)=-\sum_{k=1}^{2}p_k\log_2 {p_k}=-(\frac{8}{17}\log_2{\frac{8}{17}}+\frac{9}{17}\log_2{\frac{9}{17}})=0.998
+\]</span></p>
+<p>以属性“色泽”为例，它有三个可能的取值：{青绿，乌黑，浅白}，使用该属性对<span class="math inline">\(D\)</span>进行划分，分别记为<span class="math inline">\(D^1(色泽=青绿)\)</span>，<span class="math inline">\(D^2(色泽=乌黑)\)</span>，<span class="math inline">\(D^3(色泽=浅白)\)</span>；则三个分支对样本集<span class="math inline">\(D\)</span>产生的信息增益为：</p>
+<p><span class="math display">\[
+Ent(D^1)=-(\frac{3}{6}\log_2{\frac{3}{6}}+\frac{3}{6}\log_2{\frac{3}{6}})=1.000\\
+Ent(D^2)=-(\frac{4}{6}\log_2{\frac{4}{6}}+\frac{2}{6}\log_2{\frac{2}{6}})=0.918\\
+Ent(D^3)=-(\frac{1}{5}\log_2{\frac{1}{5}}+\frac{4}{5}\log_2{\frac{4}{5}})=0.722
+\]</span></p>
+<p>因此，属性划分“色泽”对样本集产生的信息增益为：</p>
+<p><span class="math display">\[
+\begin{align*}
+Gain(D,色泽)&amp;=Ent(D)-\sum_{v=1}^{3}\frac{|D^v|}{|D|}Ent(D^v)\\
+           &amp;=0.998-(\frac{6}{17}\times 1.000+\frac{6}{17}\times 0.918+\frac{5}{17}\times 0.722)\\
+           &amp;=0.109
+\end{align*}
+\]</span></p>
+<p>类似的，我们可以计算出其他属性的信息增益：</p>
+<p><span class="math display">\[
+\begin{align*}
+Gain(D,根蒂)=0.143\qquad Gain(D,敲声)=0.141\\
+Gain(D,纹理)=0.381\qquad Gain(D,脐部)=0.289
+\end{align*}
+\]</span></p>
+<p>显然，属性“纹理”信息增益最大，因此，将属性“纹理”作为划分属性，下图为基于属性“纹理”对根节点进行划分的结果：</p>
+<p><img src="/2019/04/23/校招面试考点-机器学习-决策树/tree.jpeg" width="50%"></p>
+<p>在这里需要注意的是，<span class="math inline">\((纹理=模糊)\)</span>分支决策结果为<span class="math inline">\(坏瓜\)</span>，符合算法流程中导致决策树构造结束的情况2：当前样本所有属性上取值都相同（<span class="math inline">\(坏瓜\)</span>）。类似的，对每个分支节点进行上述操作，便可完成决策树的构建。</p>
+<h3 id="c4.5">C4.5</h3>
+<p>信息增益准则对取值数目较多的属性有所偏好，为减少这种偏好可能带来的不利影响，C4.5决策树算法不使用信息增益，而是使用增益率；增益率定义为：</p>
+<p><span class="math display">\[
+Gain\_ratio(D,a)=\frac{Gain(D,a)}{IV(a)},
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+IV(a)=-\sum_{v=1}^{V} \frac{|D^v|}{|D|}\log_2{\frac{|D^v|}{|D|}}
+\]</span></p>
+<h3 id="cart">CART</h3>
+<p>CART决策树使用“基尼系数”(Gini index)来选择划分属性，数据集<span class="math inline">\(D\)</span>的纯度可用基尼值来度量：</p>
+<p><span class="math display">\[
+\begin{align*}
+Gini(D) &amp;=\sum_{k=1}^{|\mathcal{Y}|} \sum_{k&#39;=k} p_k p_{k&#39;}\\
+&amp;=1-\sum_{k=1}^{|\mathcal{Y}|} p^2_k
+\end{align*}
+\]</span></p>
+<p>属性<span class="math inline">\(a\)</span>的基尼系数可定义为：</p>
+<p><span class="math display">\[
+Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
+\]</span></p>
+<p>与信息增益和增益率不同的是，选择基尼系数最小的作为最优划分。</p>
+<h2 id="剪枝处理">剪枝处理</h2>
+<p>剪枝（pruning）是决策树学习算法对付“过拟合”的主要手段.在决策树学习中，为了尽可能正确分类训练样本，结点划分过程将不断重复，有时会造成决策树分支过多，这时就可能因训练样本学得“太好”了，以致于把训练集自身的一些特点当作所有数据都具有的一般性质而导致过拟合.因此，可通过主动去掉一些分支来降低过拟合的风险.</p>
+<p>决策树剪枝的基本策略有“预剪枝”和“后剪枝”。预剪枝是指在决策树生成过程中，对每个结点在划分前先进行估计，若当前结点的划分不能带来决策树泛化性能提升，则停止划分并将当前结点标记为叶结点；后剪枝则是先从训练集生成一棵完整的决策树，然后自底向上地对非叶结点进行考察，若将该结点对应的子树替换为叶结点能带来决策树泛化性能提醒，则将该子树替换为叶子节点。</p>
+<h2 id="缺省值处理">缺省值处理</h2>
+<p>处理缺少属性值最简单保留的策略是直接不用有缺省值的样本，更为合理的策略是赋给该节点所有对应训练实例中该属性最常见的值，另一种复杂的情况是为该节点每个可能出现的值赋予一个概率。在ID3中，计算属性<span class="math inline">\(a\)</span>信息增益时，可以理解为对去掉属性<span class="math inline">\(a\)</span>缺失样本之后的样本集计算信息增益。</p>
 <p><strong>参考资料</strong></p>
 <ol type="1">
 <li>周志华《机器学习》第四章</li>
@@ -560,8 +644,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -576,7 +669,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -735,6 +828,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义及其构建"><span class="nav-number">1.</span> <span class="nav-text">定义及其构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#划分选择"><span class="nav-number">2.</span> <span class="nav-text">划分选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id3"><span class="nav-number">2.1.</span> <span class="nav-text">ID3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c4.5"><span class="nav-number">2.2.</span> <span class="nav-text">C4.5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cart"><span class="nav-number">2.3.</span> <span class="nav-text">CART</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪枝处理"><span class="nav-number">3.</span> <span class="nav-text">剪枝处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺省值处理"><span class="nav-number">4.</span> <span class="nav-text">缺省值处理</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
