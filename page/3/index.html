@@ -342,6 +342,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rong Zhang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blogs of Rong Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/" class="post-title-link" itemprop="url">leetcode 331.Verify Preorder Serialization of a Binary Tree</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-26 11:07:01 / 修改时间：18:32:51" itemprop="dateCreated datePublished" datetime="2019-04-26T11:07:01+08:00">2019-04-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/校招笔试/" itemprop="url" rel="index"><span itemprop="name">校招笔试</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这篇博客主要分析以下两个关于序列化二叉树题目：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/26/leetcode-331-Verify-Preorder-Serialization-of-a-Binary-Tree/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/24/面试非技术问题汇总/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -762,7 +929,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-29 21:13:25" itemprop="dateModified" datetime="2019-05-29T21:13:25+08:00">2019-05-29</time>
+                <time title="修改时间：2019-07-09 19:00:35" itemprop="dateModified" datetime="2019-07-09T19:00:35+08:00">2019-07-09</time>
               
             
           </span>
@@ -889,19 +1056,23 @@ Gini(D) &amp;=\sum_{k=1}^{|\mathcal{Y}|} \sum_{k&#39;=k} p_k p_{k&#39;}\\
 &amp;=1-\sum_{k=1}^{|\mathcal{Y}|} p^2_k
 \end{align*}
 \]</span></p>
-<p>属性<span class="math inline">\(a\)</span>的基尼系数可定义为：</p>
+<p>基尼值反映了从数据集中随机抽取两个样本，其类别标记不一致的概率，因此基尼值越小，则数据集纯度越高。属性<span class="math inline">\(a\)</span>的基尼系数可定义为：</p>
 <p><span class="math display">\[
 Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
 \]</span></p>
 <p>与信息增益和增益率不同的是，选择基尼系数最小的作为最优划分。</p>
+<p>那么到底使用基尼指数还是熵来进行属性划分选择呢？其实大部分时候它们两种属性划分选择方式所生产的决策树基本相同，但gini值的计算更快一些，因此在sklrean中默认的划分方式就是gini指数，默认的决策树是CART树；但是gini指数的划分趋向于孤立数据集中数量多的类，将它们分到一个树叶中，而熵偏向于构建一颗平衡的树，也就是数量多的类可能分散到不同的叶子中去了。</p>
 <h2 id="剪枝处理">剪枝处理</h2>
 <p>剪枝（pruning）是决策树学习算法对付“过拟合”的主要手段.在决策树学习中，为了尽可能正确分类训练样本，结点划分过程将不断重复，有时会造成决策树分支过多，这时就可能因训练样本学得“太好”了，以致于把训练集自身的一些特点当作所有数据都具有的一般性质而导致过拟合.因此，可通过主动去掉一些分支来降低过拟合的风险.</p>
 <p>决策树剪枝的基本策略有“预剪枝”和“后剪枝”。预剪枝是指在决策树生成过程中，对每个结点在划分前先进行估计，若当前结点的划分不能带来决策树泛化性能提升，则停止划分并将当前结点标记为叶结点；后剪枝则是先从训练集生成一棵完整的决策树，然后自底向上地对非叶结点进行考察，若将该结点对应的子树替换为叶结点能带来决策树泛化性能提醒，则将该子树替换为叶子节点。</p>
+<p>很明显，预剪枝技术抑制了很多分支的展开，这降低过拟合的同时还减少了训练时间，但是却存在欠拟合的风险；预剪枝基于“贪心”策略，往往可以达到局部最优解却不能达到全局最优解，也就是说预剪枝生成的决策树不一定是最佳的决策树。XGBoost和lightGBM使用的树就是预剪枝的CART决策树，这能保证他们的训练速度较快，但是无法保证准确率。</p>
+<p>后剪枝技术通常比预剪枝保留了更多的分支，它是自底向上的剪枝，因此它的欠拟合风险较小，泛化能力往往优于预剪枝，然而因为总是要完全生长一棵树，这就要花费很多时间训练了，数据集规模大、维度高时并不适用实际应用。</p>
 <h2 id="缺省值处理">缺省值处理</h2>
 <p>处理缺少属性值最简单保留的策略是直接不用有缺省值的样本，更为合理的策略是赋给该节点所有对应训练实例中该属性最常见的值，另一种复杂的情况是为该节点每个可能出现的值赋予一个概率。在ID3中，计算属性<span class="math inline">\(a\)</span>信息增益时，可以理解为对去掉属性<span class="math inline">\(a\)</span>缺失样本之后的样本集计算信息增益。</p>
 <p><strong>参考资料</strong></p>
 <ol type="1">
 <li>周志华《机器学习》第四章</li>
+<li>https://zhuanlan.zhihu.com/p/32053821</li>
 </ol>
 
           
@@ -1021,7 +1192,7 @@ Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-23 15:12:44" itemprop="dateModified" datetime="2019-04-23T15:12:44+08:00">2019-04-23</time>
+                <time title="修改时间：2019-07-02 16:08:42" itemprop="dateModified" datetime="2019-07-02T16:08:42+08:00">2019-07-02</time>
               
             
           </span>
@@ -1972,185 +2143,6 @@ Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/暑期实习算法题-排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Rong Zhang">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blogs of Rong Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/08/暑期实习算法题-排序/" class="post-title-link" itemprop="url">暑期实习算法题-排序</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-08 17:03:22" itemprop="dateCreated datePublished" datetime="2019-04-08T17:03:22+08:00">2019-04-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-09 21:16:57" itemprop="dateModified" datetime="2019-04-09T21:16:57+08:00">2019-04-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/春招/" itemprop="url" rel="index"><span itemprop="name">春招</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="冒泡排序">冒泡排序</h2>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/08/暑期实习算法题-排序/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2197,7 +2189,7 @@ Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2303,7 +2295,11 @@ Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

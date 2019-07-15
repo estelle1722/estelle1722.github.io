@@ -97,14 +97,14 @@
 
 
   <meta name="description" content="本篇博客主要解释贝叶斯分类器及其相关概念：">
-<meta name="keywords" content="校招面试,机器学习,支持向量机(SVM)">
+<meta name="keywords" content="校招面试,机器学习,贝叶斯分类器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="校招面试考点-机器学习-朴素贝叶斯">
 <meta property="og:url" content="http://yoursite.com/2019/05/29/校招面试考点-机器学习-朴素贝叶斯/index.html">
 <meta property="og:site_name" content="blogs of Rong Zhang">
 <meta property="og:description" content="本篇博客主要解释贝叶斯分类器及其相关概念：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-30T03:48:25.310Z">
+<meta property="og:updated_time" content="2019-05-30T04:51:04.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-朴素贝叶斯">
 <meta name="twitter:description" content="本篇博客主要解释贝叶斯分类器及其相关概念：">
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-30 11:48:25" itemprop="dateModified" datetime="2019-05-30T11:48:25+08:00">2019-05-30</time>
+                <time title="修改时间：2019-05-30 12:51:04" itemprop="dateModified" datetime="2019-05-30T12:51:04+08:00">2019-05-30</time>
               
             
           </span>
@@ -459,8 +459,89 @@
       
         <p>本篇博客主要解释贝叶斯分类器及其相关概念：</p>
 <a id="more"></a>
+<h2 id="先验概率-后验概率-贝叶斯公式">先验概率 后验概率 贝叶斯公式</h2>
+<ul>
+<li>先验概率：事件发生前的预判概率。可以是基于历史数据的统计，可以由背景常识得出，也可以是人的主观观点给出。一般都是单独事件概率;</li>
+<li>后验概率：事件发生后求的反向条件概率；或者说，基于先验概率求得的反向条件概率。概率形式与条件概率相同。</li>
+</ul>
+<p>贝叶斯公式：</p>
+<p><span class="math display">\[
+\begin{equation}
+P(y|x)=\frac{P(x|y)P(y)}{P(x)}
+\end{equation}
+\]</span></p>
+<p>其中：</p>
+<ul>
+<li><span class="math inline">\(P(y|x)\)</span>是后验概率，也是求解目标；</li>
+<li><span class="math inline">\(P(x|y)\)</span>是条件概率，又叫似然概率，一般是通过历史统计数据得到，在实际分类问题中，由训练集数据给出；</li>
+<li><span class="math inline">\(P(y)\)</span>是先验概率，一般都是人主观给出的。贝叶斯公式中的先验概率一般特指它；</li>
+</ul>
 <h2 id="数学模型">数学模型</h2>
+<p>以分类问题为例，假设有<span class="math inline">\(N\)</span>中可能的类别标记，即<span class="math inline">\(\mathcal{Y}=\{c_1,c_2,...,c_N\}\)</span>,<span class="math inline">\(\lambda_{i,j}\)</span>是将一个真实标记为<span class="math inline">\(c_j\)</span>的样本误分类为<span class="math inline">\(c_i\)</span>所产生的损失，可以理解为指示函数，基于后验概率<span class="math inline">\(P(c_i|x)\)</span>可获得将样本<span class="math inline">\(x\)</span>分类为<span class="math inline">\(c_i\)</span>所产生的期望损失，则贝叶斯分类模型的目标函数为：</p>
+<p><span class="math display">\[
+\begin{equation}
+R(c_i|x)=\sum_{i=1}^{N}\lambda_{ij}P(c_j|x)
+\end{equation}
+\]</span></p>
+<p>而目标是找一个判定准则<span class="math inline">\(h:\mathcal{X}\rightarrow \mathcal{Y}\)</span>以最小化目标函数：</p>
+<p><span class="math display">\[
+\begin{equation}
+R(h)=\mathbb E_x [R(h(x)|x)]
+\end{equation}
+\]</span></p>
+<p>定义，</p>
+<p><span class="math display">\[
+\begin{equation}
+\lambda_{i,j}=\begin{cases}
+ &amp;0 \text{ if } i=j \\ 
+ &amp;1 \text{ else }
+\end{cases}
+\end{equation}
+\]</span></p>
+<p>则，</p>
+<p><span class="math display">\[
+\begin{equation}
+R(c|x)=1-P(c|x)
+\end{equation}
+\]</span></p>
+<p>于是，最优贝叶斯分类器为</p>
+<p><span class="math display">\[
+\begin{equation}
+    h^*(x)=\mathop{\arg\max}_{c\in\mathcal{Y}} P(c|x)
+\end{equation}
+\]</span></p>
+<p>即对每个样本<span class="math inline">\(x\)</span>，选择能使后验概率<span class="math inline">\(P(c|x)\)</span>最大的类别标记。基于贝叶斯公式，</p>
+<p><span class="math display">\[
+\begin{equation}\label{bayes}
+P(c|x)=\frac{P(x|c)P(c)}{P(x)}
+\end{equation}
+\]</span></p>
 <h2 id="朴素贝叶斯分类器">朴素贝叶斯分类器</h2>
+<p>从公式<span class="math inline">\(\ref{bayes}\)</span>知，基于贝叶斯公式估计后验概率<span class="math inline">\(P(c|x)\)</span>难点主要在于条件概率<span class="math inline">\(P(x|c)\)</span>是所有属性上的联合分布，难以从有限训练样本上直接得到。为避开这个障碍，朴素贝叶斯分类器假设属性条件独立。基于该假设，公式<span class="math inline">\(\ref{bayes}\)</span>可写作：</p>
+<p><span class="math display">\[
+\begin{equation}\label{naive_bayes}
+P(c|x)=\frac{P(x|c)P(c)}{P(x)}=\frac{P(c)}{P(x)}\prod_{i=1}^{d}P(x_i|c)
+\end{equation}
+\]</span></p>
+<p>其中，<span class="math inline">\(d\)</span>表示属性数目，<span class="math inline">\(x_i\)</span>表示在第<span class="math inline">\(i\)</span>个属性上的取值。对于所有类来说<span class="math inline">\(P(x)\)</span>相同，因此基于公式<span class="math inline">\(\ref{naive_bayes}\)</span>的贝叶斯分类器为：</p>
+<p><span class="math display">\[
+\begin{equation}
+    h_{nb}(x)=\mathop{\arg\max}_{c\in\mathcal{Y}} P(c) \prod_{i=1}^{d}P(x_i|c)
+\end{equation}
+\]</span></p>
+<p>显然，朴素贝叶斯分类器的训练过程就是基于训练集<span class="math inline">\(D\)</span>来估计类先验概率<span class="math inline">\(P(c)\)</span>并为每个属性估计条件概率<span class="math inline">\(P(x_i|c)\)</span>。令<span class="math inline">\(D_c\)</span>表示第<span class="math inline">\(c\)</span>类样本组成的集合。对于离散型属性而言，则可比较容易估计先验概率：</p>
+<p><span class="math display">\[
+P(c)=\frac{|D_c|}{|D|}
+\]</span></p>
+<p>对离散型属性而言，令<span class="math inline">\(D_{c,x_i}\)</span>表示类别<span class="math inline">\(c\)</span>中第<span class="math inline">\(i\)</span>个属性取值为<span class="math inline">\(x_i\)</span>的样本集合，则条件概率：</p>
+<p><span class="math display">\[
+P(x_i|c)=\frac{|D_{c,x_i}|}{|D_c|}
+\]</span></p>
+<p>对于连续属性可考虑概率密度函数，假定<span class="math inline">\(p(x_i|c)\in \mathcal{N}(\mu_{c,i},\sigma^2_{c,i})\)</span>，其中<span class="math inline">\(\mu_{c,i}\)</span>和<span class="math inline">\(\sigma^2_{c,i}\)</span>分别表示第<span class="math inline">\(c\)</span>类样本在第<span class="math inline">\(i\)</span>个属性上去取值的均值和方差，则有</p>
+<p><span class="math display">\[
+p(x_i|c)=\frac{1}{\sqrt{2\pi}\sigma_{c,i}}exp(-\frac{(x_i-\mu_{c,i})^2}{2\sigma^2_{c,i}})
+\]</span></p>
+<p>通过以上理论，就可以在训练集上计为每个属性估计条件概率<span class="math inline">\(P(x_i|c)\)</span>；具体例子可参看西瓜书P151。</p>
 <p><strong>参考资料</strong></p>
 <ol type="1">
 <li>周志华《机器学习》第七章</li>
@@ -492,7 +573,7 @@
           
             <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
           
-            <a href="/tags/支持向量机-SVM/" rel="tag"># 支持向量机(SVM)</a>
+            <a href="/tags/贝叶斯分类器/" rel="tag"># 贝叶斯分类器</a>
           
         </div>
       
@@ -586,7 +667,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -692,7 +773,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -756,7 +841,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学模型"><span class="nav-number">1.</span> <span class="nav-text">数学模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">2.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#先验概率-后验概率-贝叶斯公式"><span class="nav-number">1.</span> <span class="nav-text">先验概率 后验概率 贝叶斯公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学模型"><span class="nav-number">2.</span> <span class="nav-text">数学模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯分类器"><span class="nav-number">3.</span> <span class="nav-text">朴素贝叶斯分类器</span></a></li></ol></div>
             
 
           </div>

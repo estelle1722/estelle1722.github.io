@@ -105,7 +105,7 @@
 <meta property="og:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/20/校招面试考点-机器学习-支持向量机/svm_intro.jpg">
-<meta property="og:updated_time" content="2019-04-23T07:12:44.945Z">
+<meta property="og:updated_time" content="2019-07-02T08:08:42.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-支持向量机">
 <meta name="twitter:description" content="写在前面 支持向量机（SVM）是面试过程中的高频考点，现在参考三篇知乎文章以及周志华《机器学习》第六章，主要关注一下四个问题：">
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-23 15:12:44" itemprop="dateModified" datetime="2019-04-23T15:12:44+08:00">2019-04-23</time>
+                <time title="修改时间：2019-07-02 16:08:42" itemprop="dateModified" datetime="2019-07-02T16:08:42+08:00">2019-07-02</time>
               
             
           </span>
@@ -556,7 +556,7 @@ d=\frac{|w^Tx+\beta|}{||w||}=\frac{1}{||w||}
     \end{split}
 \end{equation}
 \]</span></p>
-<p>以上便是支持向量机的数学表达。</p>
+<p>以上便是支持向量机的数学表达，其中，约束条件是对直线的约束，即要求<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>决定的直线能将所有样本都能分开（这在实际情况下很难满足，因此才有了软间隔的概念），在此情况下，损失函数只涉及到支持向量，我们希望支持向量离直线尽可能远。</p>
 <h2 id="目标函数求最优解">目标函数求最优解</h2>
 <p>上述公式可以看做是支持向量机的目标函数，而<span class="math inline">\(w\)</span>和<span class="math inline">\(\beta\)</span>则是待优化参数。上述可以看做是在约束条件（约束条件为不等式）情况下求解目标函数最优解。我们该怎么求解呢？</p>
 <h3 id="拉格朗日数乘法">拉格朗日数乘法</h3>
@@ -568,7 +568,7 @@ d=\frac{|w^Tx+\beta|}{||w||}=\frac{1}{||w||}
 </ul>
 <p>我们将拉格朗日数乘法推广到不等式，便引出了KKT条件，根据拉格朗日数乘法，我们同样可以构造出拉格朗日函数如下：</p>
 <p><span class="math display">\[
-L(w,\beta,\mu_i)=\frac{1}{||w||^2}+\sum_{i=1}^{i=m}\mu_i (y_if(x_i)-1)
+L(w,\beta,\mu_i)=\frac{1}{2}||w||^2+\sum_{i=1}^{i=m}\mu_i (y_if(x_i)-1)
 \]</span></p>
 <p>其中，最优解需要满足一下条件：</p>
 <p><span class="math display">\[
@@ -602,7 +602,7 @@ y_i(w^Tx_i+\beta)\geq 1
 <p>与软间隔（Softmax Margin）相对应的是前面讨论的假设情况，称之为“硬间隔”（<code>Hard Margin</code>）。当然，在最大化间隔的同时，我们希望能够尽量减少不满足约束条件的样本，为此，目标函数变为：</p>
 <p><span class="math display">\[
 \begin{equation}\label{softmax_margin}
-\frac{1}{2}||w||^2+C\sum_{i=1}^m max(1-(w^Tx_i+\beta))
+\frac{1}{2}||w||^2+C\sum_{i=1}^m max(0, 1-(w^Tx_i+\beta))
 \end{equation}
 \]</span></p>
 <p>其中，<span class="math inline">\(C\)</span>为超参数，第二项<span class="math inline">\(max\)</span>，我们称之为<code>hinge</code>损失。而第一项，在最大化间隔的同时，也对SVM参数进行了L2-normalization，因此，在SVM中，损失函数中本身就已加入了正则项。求解最优化的过程仍是构造拉格朗日函数，转化为其对偶问题求解。</p>
@@ -631,10 +631,10 @@ y_i(w^Tx_i+\beta)\geq 1
 <h2 id="lr-vs.-svm">LR VS. SVM</h2>
 <p>上篇对逻辑回归进行了简单总结，这里主要比较一下逻辑回归和SVM之间区别：</p>
 <ol type="1">
-<li><p>两者不同，本质还是loss函数不同；逻辑回归使用log损失，假设条件是样本服从伯努利分布，本质上是尽量拉近模型分布和监督信息分布之间的KL散度，而SVM使用Hinge损失，本质是最大化几何间隔，认为最大几何间隔的决策面是最优分类器。所以SVM只考虑除支持向量外的少量样本，而SVM需要考虑所有样本。</p></li>
+<li><p>两者不同，本质还是loss函数不同；逻辑回归使用log损失，假设条件是样本服从伯努利分布，本质上是尽量拉近模型分布和监督信息分布之间的KL散度，而SVM使用Hinge损失，本质是最大化几何间隔，认为最大几何间隔的决策面是最优分类器。所以SVM只考虑除支持向量外的少量样本，而逻辑回归需要考虑所有样本。</p></li>
 <li><p>逻辑回归可产生概率，而SVM不能，欲得到概率输出需要进行特殊处理，此外，逻辑回归可直接多余多分类问题（用多个二分类处理），而支持向量机需进行推广。</p></li>
 <li><p>SVM依赖于数据的测度，而LR则不受影响。因为SVM是基于距离的，而LR是基于概率的，所以LR是不受数据不同维度测度不同的影响，因此在SVM中对特征scalar进行normalization对于SVM非常有必要。</p></li>
-<li><p>SVM会用核函数而LR一般不用核函数的原因:SVM转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，这个在进行复杂核函数计算时优势很明显，能够大大简化模型和计算量。 而LR则每个点都需要两两计算核函数，计算量太过庞大。</p></li>
+<li><p>SVM会用核函数而LR一般不用核函数的原因:SVM转化为对偶问题后，分类只需要计算与少数几个支持向量的距离，这个在进行复杂核函数计算时优势很明显，能够大大简化模型和计算量。 而LR则每个点都需要计算核函数，计算量太过庞大。</p></li>
 <li><p>根据经验来看，对于小规模数据集，SVM的效果要好于LR，但是大数据中，SVM的计算复杂度受到限制，而LR因为训练简单，可以在线训练，所以经常会被大量采用。</p></li>
 </ol>
 <h2 id="参考链接">参考链接</h2>
@@ -766,7 +766,7 @@ y_i(w^Tx_i+\beta)\geq 1
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -872,7 +872,11 @@ y_i(w^Tx_i+\beta)\geq 1
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
