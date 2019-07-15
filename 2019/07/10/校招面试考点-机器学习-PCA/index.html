@@ -97,14 +97,14 @@
 
 
   <meta name="description" content="这篇博客主要来简单介绍PCA数学原理：">
-<meta name="keywords" content="校招面试,机器学习,XGBoost">
+<meta name="keywords" content="校招面试,机器学习,PCA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="校招面试考点-机器学习-PCA">
 <meta property="og:url" content="http://yoursite.com/2019/07/10/校招面试考点-机器学习-PCA/index.html">
 <meta property="og:site_name" content="blogs of Rong Zhang">
 <meta property="og:description" content="这篇博客主要来简单介绍PCA数学原理：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-10T12:02:29.662Z">
+<meta property="og:updated_time" content="2019-07-10T13:34:16.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-PCA">
 <meta name="twitter:description" content="这篇博客主要来简单介绍PCA数学原理：">
@@ -388,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2019-07-10 19:52:44 / 修改时间：20:02:29" itemprop="dateCreated datePublished" datetime="2019-07-10T19:52:44+08:00">2019-07-10</time>
+              <time title="创建时间：2019-07-10 19:52:44 / 修改时间：21:34:16" itemprop="dateCreated datePublished" datetime="2019-07-10T19:52:44+08:00">2019-07-10</time>
             
 
             
@@ -445,8 +445,54 @@
       
 
       
-        <p>这篇博客主要来简单介绍PCA数学原理： <a id="more"></a> ## 矩阵相乘意义</p>
-<p>在介绍PCA数学原理之前，先来介绍矩阵相乘的数学意义：设A为</p>
+        <p>这篇博客主要来简单介绍PCA数学原理： <a id="more"></a></p>
+<h2 id="矩阵相乘意义">矩阵相乘意义</h2>
+<p>在介绍PCA数学原理之前，先来介绍矩阵相乘的数学意义：设<span class="math inline">\(A\)</span>为<span class="math inline">\(r\times m\)</span>矩阵，<span class="math inline">\(B\)</span>为<span class="math inline">\(m\times n\)</span>矩阵，令： <span class="math display">\[
+C_{r\times n}=A_{r\times m}·B_{m \times n}
+\]</span> 则上述矩阵乘法可表示将B中<span class="math inline">\(n\)</span>个<span class="math inline">\(m\)</span>维向量（即列向量）映射到以B中<span class="math inline">\(r\)</span>个<span class="math inline">\(m\)</span>维向量为基（即行向量）的新空间下坐标（即<span class="math inline">\(C\)</span>)，需要注意的是如果<span class="math inline">\(r&lt; m\)</span>，则<span class="math inline">\(m\)</span>决定了变换后的维度，因此，矩阵乘法也可理解为降维。</p>
+<h2 id="降维的数学表达">降维的数学表达</h2>
+<h3 id="方差">方差</h3>
+<p>以二维降低到一维为例，为了尽可能保留原始信息，我们希望降维结果在一维空间里尽可能分散，通常用方差来衡量数据分散程度，此处，一个字段的方差用每条记录与该字段的均值的差的平方表示： <span class="math display">\[
+Var(a)=\frac{1}{n}\sum_{i=1}^{n}(a_i-\mu)^2
+\]</span> 又每个字段的均值为0，因此： <span class="math display">\[
+Var(a)=\frac{1}{n}\sum_{i=1}^{n}a^2_i
+\]</span></p>
+<h3 id="协方差">协方差</h3>
+<p>对于上面二维降成一维的问题来说，找到那个使得方差最大的方向就可以了。不过对于更高维，还有一个问题需要解决。考虑三维降到二维问题。与之前相同，首先我们希望找到一个方向使得投影后方差最大，这样就完成了第一个方向的选择，继而我们选择第二个投影方向。</p>
+<p>如果我们还是单纯只选择方差最大的方向，很明显，这个方向与第一个方向应该是“几乎重合在一起”，显然这样的维度是没有用的，因此，应该有其他约束条件。从直观上说，让两个字段尽可能表示更多的原始信息，我们是不希望它们之间存在（线性）相关性的，因为相关性意味着两个字段不是完全独立，必然存在重复表示的信息。</p>
+<p>数学上使用可以用协方差表示两个字段的相关性： <span class="math display">\[
+Cov(a,b)=\frac{1}{n}\sum_{i=1}^{n}a_ib_i
+\]</span> 可以看到，在字段均值为0的情况下，两个字段的协方差简洁的表示为其内积除以记录数<span class="math inline">\(n\)</span>。设我们有<span class="math inline">\(n\)</span>个<span class="math inline">\(m\)</span>维数据记录（一个列向量表示一条记录），设<span class="math inline">\(C=\frac{1}{n}XX^T\)</span>，则<span class="math inline">\(C\)</span>是一个对称矩阵，其对角线分别个各个字段的方差，而第<span class="math inline">\(i\)</span>行<span class="math inline">\(j\)</span>列和<span class="math inline">\(j\)</span>行<span class="math inline">\(i\)</span>列元素相同，表示<span class="math inline">\(i\)</span>和<span class="math inline">\(j\)</span>两个字段的协方差。对于协方差矩阵中的任意元素<span class="math inline">\(C_{ij}\)</span>，有以下两个非常好的性质：</p>
+<ol type="1">
+<li>当<span class="math inline">\(i=j\)</span>时，表示该字段的方差</li>
+<li>当<span class="math inline">\(i\neq j\)</span>时，表示第<span class="math inline">\(i\)</span>个字段和第<span class="math inline">\(j\)</span>个字段之间的协方差</li>
+</ol>
+<h3 id="协方差矩阵对角化">协方差矩阵对角化</h3>
+<p>根据上述推导，我们发现要达到优化目前，等价于将协方差矩阵对角化：即除对角线外的其它元素化为0，并且在对角线上将元素按大小从上到下排列，这样我们就达到了优化目的。这样说可能还不是很明晰，我们进一步看下原矩阵与基变换后矩阵协方差矩阵的关系：</p>
+<p>设原始数据矩阵<span class="math inline">\(X\)</span>对应的协方差矩阵为<span class="math inline">\(C\)</span>，而<span class="math inline">\(P\)</span>是一组基按行组成的</p>
+<p>矩阵，设<span class="math inline">\(Y=PX\)</span>，则<span class="math inline">\(Y\)</span>为<span class="math inline">\(X\)</span>对<span class="math inline">\(P\)</span>做基变换后的数据。设<span class="math inline">\(Y\)</span>的协方差矩阵为<span class="math inline">\(D\)</span>，我们推导一下<span class="math inline">\(D\)</span>与<span class="math inline">\(C\)</span>的关系：</p>
+<p><span class="math display">\[\begin{align*}
+D &amp; = \frac{1}{n} YY^T \\
+  &amp;= \frac{1}{n} PXX^TP^T \\
+  &amp;= P(\frac{1}{n}XX^T)P^T \\
+  &amp;= PCP^T
+\end{align*}\]</span></p>
+<p>因此，现在事情很明白了！我们要找的<span class="math inline">\(P\)</span>不是别的，而是能让原始协方差矩阵对角化的<span class="math inline">\(P\)</span>。换句话说，优化目标变成了寻找一个矩阵<span class="math inline">\(P\)</span>，满足<span class="math inline">\(PCP^T\)</span>是一个对角矩阵，并且对角元素按从大到小依次排列，那么<span class="math inline">\(P\)</span>的前<span class="math inline">\(r\)</span>行就是要寻找的基，用<span class="math inline">\(P\)</span>的前<span class="math inline">\(r\)</span>行组成的矩阵乘以<span class="math inline">\(X\)</span>就使得<span class="math inline">\(X\)</span>从<span class="math inline">\(m\)</span>维降到了<span class="math inline">\(r\)</span>维并满足上述优化条件。</p>
+<p>接下来将对称阵对角化就比较容易了，并且对称阵一定能对角化，将<span class="math inline">\(C\)</span>对角化步骤如下：</p>
+<ol type="1">
+<li>令<span class="math inline">\(CX=\lambda X\)</span>，求出对应特征值，<span class="math inline">\(\lambda _1\)</span>,<span class="math inline">\(\lambda _2\)</span>,...</li>
+<li>求线性方程<span class="math inline">\(CX=\lambda_i X\)</span>的解，便是对应特征向量<span class="math inline">\(p_i\)</span></li>
+<li>将一组线性无关的特征向量按列便是变换矩阵<span class="math inline">\(P=(p_1,p_2,...)\)</span></li>
+</ol>
+<p>以上便是PCA的数学原理。</p>
+<h2 id="进一步讨论">进一步讨论</h2>
+<p>根据上面对PCA的数学原理的解释，我们可以了解到一些PCA的能力和限制。PCA本质上是将方差最大的方向作为主要特征，并且在各个正交方向上将数据“离相关”，也就是让它们在不同正交方向上没有相关性。</p>
+<p>因此，PCA也存在一些限制，例如它可以很好的解除线性相关，但是对于高阶相关性就没有办法了，对于存在高阶相关性的数据，可以考虑Kernel PCA，通过Kernel函数将非线性相关转为线性相关，关于这点就不展开讨论了。另外，PCA假设数据各主特征是分布在正交方向上，如果在非正交方向上存在几个方差较大的方向，PCA的效果就大打折扣了。</p>
+<p>最后需要说明的是，PCA是一种无参数技术，也就是说面对同样的数据，如果不考虑清洗，谁来做结果都一样，没有主观参数的介入，所以PCA便于通用实现，但是本身无法个性化的优化。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol type="1">
+<li>https://mp.weixin.qq.com/s/GLk63XChKmnCP18C9ihMlA</li>
+</ol>
 
       
     </div>
@@ -474,7 +520,7 @@
           
             <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
           
-            <a href="/tags/XGBoost/" rel="tag"># XGBoost</a>
+            <a href="/tags/PCA/" rel="tag"># PCA</a>
           
         </div>
       
@@ -496,6 +542,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/校招面试考点-机器学习-Adabost/" rel="prev" title="校招面试考点-机器学习-Adabost">
+                校招面试考点-机器学习-Adabost <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -539,8 +589,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -555,7 +614,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -665,7 +724,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -718,6 +781,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵相乘意义"><span class="nav-number">1.</span> <span class="nav-text">矩阵相乘意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降维的数学表达"><span class="nav-number">2.</span> <span class="nav-text">降维的数学表达</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方差"><span class="nav-number">2.1.</span> <span class="nav-text">方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差"><span class="nav-number">2.2.</span> <span class="nav-text">协方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差矩阵对角化"><span class="nav-number">2.3.</span> <span class="nav-text">协方差矩阵对角化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步讨论"><span class="nav-number">3.</span> <span class="nav-text">进一步讨论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
