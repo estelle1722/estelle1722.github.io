@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="blogs of Rong Zhang">
 <meta property="og:description" content="这篇博客来简单介绍XGBoost数学原理以及常见面试考点：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-15T07:01:55.169Z">
+<meta property="og:updated_time" content="2019-08-03T12:05:36.084Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-XGBoost">
 <meta name="twitter:description" content="这篇博客来简单介绍XGBoost数学原理以及常见面试考点：">
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-15 15:01:55" itemprop="dateModified" datetime="2019-07-15T15:01:55+08:00">2019-07-15</time>
+                <time title="修改时间：2019-08-03 20:05:36" itemprop="dateModified" datetime="2019-08-03T20:05:36+08:00">2019-08-03</time>
               
             
           </span>
@@ -485,7 +485,7 @@ f(x+\Delta x) \approx f(x) + f&#39;(x)\Delta x + \frac{f&#39;&#39;(x)}{2} \Delta
 l(y_i,\hat y ^{t-1} + f_t(x_i)) \approx l(y_i,\hat y ^{t - 1}) + g_i f_t(x_i) + \frac{h_i}{2} f_t ^ 2(x_i)
 \end{equation}
 \]</span></p>
-<p>其中，<span class="math inline">\(g_i\)</span>和<span class="math inline">\(h_i\)</span>分别表示l(y_i,y ^{t - 1})对<span class="math inline">\(\hat y ^{t-1}\)</span>的一阶导数和二阶导数。因此，<span class="math inline">\(Obj\)</span>可写为：</p>
+<p>其中，<span class="math inline">\(g_i\)</span>和<span class="math inline">\(h_i\)</span>分别表示<span class="math inline">\(l(y_i,\hat y ^{t - 1})\)</span>对<span class="math inline">\(\hat y ^{t-1}\)</span>的一阶导数和二阶导数。因此，<span class="math inline">\(Obj\)</span>可写为：</p>
 <p><span class="math display">\[\begin{align*}
 Obj &amp; =\sum_{i=1}^{n}l(y_i,\hat y ^{t-1} + f_t(x_i)) + \Omega(f_t(x)) + C \\
     &amp; \approx \sum_{i=1}^{n}[ l(y_i,\hat y ^{t - 1}) + g_i f_t(x_i) + \frac{h_i}{2} f_t ^ 2(x_i)] + \gamma T + \frac{\lambda}{2} \sum_{j=1}^{T} w_j^2 + C \\
@@ -493,7 +493,7 @@ Obj &amp; =\sum_{i=1}^{n}l(y_i,\hat y ^{t-1} + f_t(x_i)) + \Omega(f_t(x)) + C \\
     &amp;= \sum_{j=1}^{T} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2}((\sum_{i\in I_j} h_i) + \lambda) w_j ^2] + \gamma T + C \\
     &amp;= \sum_{j=1}^{T} [G_j w_j + \frac{1}{2}(H_j + \lambda) w_j ^2] + \gamma T + C
 \end{align*}\]</span></p>
-<p><span class="math inline">\(Obj\)</span>对<span class="math inline">\(w\)</span>得：</p>
+<p>其中<span class="math inline">\(I_j\)</span>表示分到第<span class="math inline">\(j\)</span>个叶子节点所有的样本集合，<span class="math inline">\(Obj\)</span>对<span class="math inline">\(w\)</span>得：</p>
 <p><span class="math display">\[
 w_j=-\frac{G_j}{H_j+\lambda}
 \]</span></p>
