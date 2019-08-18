@@ -108,7 +108,11 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/fast_rcnn.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/faster_rcnn.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/rpn.png">
-<meta property="og:updated_time" content="2019-08-13T02:58:24.169Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/workflow.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/yolo_v1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/7x7_grid.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/loss.png">
+<meta property="og:updated_time" content="2019-08-18T08:55:39.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用物体检测算法概述">
 <meta name="twitter:description" content="Object Detection 物体检测是计算机视觉领域比较重要的一个子方向，场景是给定一个图片，找出图片中一个一个物体（除背景外）；通常是以一个矩形框将检测到的物体框出表示预测结果；Selective Search算法（利用图像中物体之间纹理、颜色等相似度来生成矩形框）是代表性传统物体检测算法。随着CNN的崛起以及流行，自然会有大佬想如何将CNN应用于物体检测领域，通常CNN有分类和回归两种不">
@@ -410,7 +414,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-13 10:58:24" itemprop="dateModified" datetime="2019-08-13T10:58:24+08:00">2019-08-13</time>
+                <time title="修改时间：2019-08-18 16:55:39" itemprop="dateModified" datetime="2019-08-18T16:55:39+08:00">2019-08-18</time>
               
             
           </span>
@@ -527,7 +531,53 @@
 <p>上面提到，以<code>feature map</code>每个像素点为中心点映射到原图生成不同<code>Anchors</code>，每个像素点会生成生成<span class="math inline">\(9\)</span>个<code>Anchors</code>，如果<code>feature map</code>有<span class="math inline">\(W\times H\)</span>个像素，则会生成<span class="math inline">\(9\times W\times H\)</span>个<code>Anchors</code>，<code>Anchors</code>数量还是不少的。在faster RCNN中，还用了<code>NMS</code>措施来减少<code>Anchors</code>，另外，在训练阶段（测试阶段保留），还直接过滤掉存在出界部分<code>Anchors</code>。</p>
 <p>经过以上骚操作之后，faster RCNN一秒能处理五张图像，为实时物体检测提供了可能。</p>
 <h2 id="yolo">YOLO</h2>
-<p>YOLO</p>
+<p><strong>one-stage v.s two-stage</strong></p>
+<p>在介绍YOLO之前，先来介绍下<code>one-stage</code>和<code>two-stage</code>的区别，简单来说，<code>two-stage</code>指的是以<code>faster RCNN</code>为代表的物体检测框架，这些框架的共同特征是将物体检测任务分为了两步：（1）候选框（<code>region proposal</code>）的提取；（2）候选框的分类和位置回归。<code>RCNN</code>、<code>fast RCNN</code>和<code>faster RCNN</code>是这类算法的典型代表，不同的是<code>RCNN</code>、<code>fast RCNN</code>通过速度较慢的<code>Selective Search</code>算法提取候选框，而<code>faster RCNN</code>通过较为高效的卷积神经网络<code>RPN</code>来提取候选框。<code>one-stage</code>则是只用一个CNN、在不生成候选框情况下，直接完成物体的定位和分类的一种方法，典型代表是接下来要介绍的<code>YOLO</code>系列网络和<code>SSD</code>。相比于<code>two-stage</code>框架，<code>one-stage</code>框架最典型特征是速度快。两者直接的工作流程区别如下图所示：</p>
+<p><img src="/2019/08/01/常用物体检测算法概述/workflow.png" width="90%"></p>
+<h3 id="yolo-v1">YOLO v1</h3>
+<p><code>YOLO v1</code>是在<code>faster RCNN</code>基础上提出来的，最重要的改进是不在产生候选框情况下完成定位和分类，物体检测流程分为以下三步：</p>
+<ol type="1">
+<li>将输入图片resize到<span class="math inline">\(448\times 448\)</span></li>
+<li>将图片送入网络</li>
+<li>对网络预测结果执行NMS，去掉冗余框</li>
+</ol>
+<p>网络结构图如下：</p>
+<p><img src="/2019/08/01/常用物体检测算法概述/yolo_v1.png" width="90%"></p>
+<p>可以看到，整个物体检测只用了单个CNN完成，而没有提取候选框的步骤，那么我们不禁要问，如果不产生候选框（接着对候选框进行分类和回归），如何完成物体定位呢？<code>YOLO v1</code>中是将一张图分为<span class="math inline">\(S\times S\)</span>个小方格，如果<code>groundtruth</code>中某个物体中心点所在的小方格，那么这个小方格就用来预测该物体。示意图如下：</p>
+<p><img src="/2019/08/01/常用物体检测算法概述/7x7_grid.png" width="90%"></p>
+<p>可以看到，每个小方格产生<span class="math inline">\(B\)</span>个<code>Bounding Box</code>，负责预测一个物体，每个<code>Bounding Box</code>回归出五个值，包括坐标和置信度<code>c</code>，再加上<span class="math inline">\(20\)</span>个概率值，表示每种类别的概率，因此，每张图输出为：</p>
+<p><span class="math display">\[S\times S\times (5 \times B + C)\]</span></p>
+<p>论文中<span class="math inline">\(B=2, S=7, C=20\)</span>，因此最终产生的tensor维度为：<span class="math inline">\(7\times 7 \times(5 \times 2 + 20)=1470\)</span>。虽然每个小方格能给出<span class="math inline">\(2\)</span>个Bounding Box，但是最终只会将置信度最大的作为预测结果，也就是说输入一张图，网络最多给出98个物体预测结果。这也是YOLO v1最大的缺点，如果多个物体落在一个小方格中，就只能给出检测到一个物体，因此YOLO v1在对小物体效果较差检测。</p>
+<p><strong>损失函数</strong></p>
+<p>YOLO v1计算损失时，是以每个小方格为单位计算的，示意图如下：</p>
+<p><img src="/2019/08/01/常用物体检测算法概述/loss.png" width="90%"></p>
+<p>总共分为两个部分计算：回归+分类，写得还是挺清楚的。</p>
+<p><strong>讨论</strong></p>
+<p>YOLO v1是物体检测框架中第一个one-stage，算法精度相比two-stage的faster RCNN系列略差，但是速度要远快于faster RCNN系列。另外对背景有比较低的false positive，泛化性比较好。</p>
+<p>待改进的地方主要有：</p>
+<ol type="1">
+<li>最后一层卷积层接的是fc层，固定了输入，这也是首先要将输入图像resize到<span class="math inline">\(448\times 448\)</span>的原因。</li>
+<li>一个小方格只能给出一个预测结果，因此对小物体预测效果较差，尤其是很多个小物体叠加时，比如一群鸭子。</li>
+<li>预测精度略低于faster RCNN系列，尤其是小物体检测，主要因为输入图像分割比较稀疏，一个小方格也只会产生两个小方格，在经过Pool层之后会丢失特征。</li>
+</ol>
+<h3 id="yolo-v2">YOLO v2</h3>
+<p>YOLO v2是基于YOLO v1存在的缺点进行改进提出的，主要改进如下：</p>
+<ol type="1">
+<li><p>高分辨率分类器：YOLO V1首先在ImageNet上以224×224大小图像作为输入进行训练，之后在检测任务中提升到448×448。这里，作者在训练完224大小的分类网络后，首先调整网络大小为448×448，然后在ImageNet上进行fine tuning（10个epoch）。也就是得到了一个高分辨率的cls。再把它用detection上训练。这样，能够提升4%。</p></li>
+<li><p>引入Anchor Boxes：YOLO V1中直接在CNN后面街上全连接层，直接回归bounding box的参数。这里引入了Faster RCNN中的anchor box概念，不再直接回归bounding box的参数，而是相对于anchor box的参数。在faster RCNN中，是手动选择生成9个Anchors，在YOLO v2中，作者使用了<span class="math inline">\(K-Means\)</span>聚类（衡量距离是<span class="math inline">\(IoU\)</span>），最终这种复杂度和准确率选择生成5个Anchors。直接结果是recall提升，accuracy下降了一些，想想也是，YOLO v1中一张图给出<span class="math inline">\(7\times 7 \times 2\)</span>个预测结果，而YOLO V2给出<span class="math inline">\(13\times 13 \times 5\)</span>个预测结果。</p></li>
+<li><p>Batch Normalization，并且丢掉了YOLO v1网络中的两个全连接层，改成了全卷积网络。</p></li>
+<li><p>Multi-scale training：和GoogleNet训练时一样，为了提高模型的鲁棒性，在训练的时候使用多尺度的输入进行训练。YOLO v2 每迭代几次都会改变网络参数。每 10 个 Batch，网络会随机地选择一个新的图片尺寸，由于使用了下采样参数是 32，所以不同的尺寸大小也选择为32的倍数 {320，352…..608}，最小<span class="math inline">\(320\times 320\)</span>，最大 <span class="math inline">\(608\times 608\)</span>，网络会自动改变尺寸，并继续训练的过程。</p></li>
+<li><p>训练时引入了世界树（WordTree）结构，将检测和分类问题做成了一个统一的框架，并且提出了一种层次性联合训练方法，将ImageNet分类数据集和COCO检测数据集同时对模型训练。</p></li>
+</ol>
+<p>另外，YOLO v2输入尺寸也变化了，YOLO v1输入大小是固定<span class="math inline">\(448\times 448\)</span>，而YOLO v2输入大小是<span class="math inline">\(416\times 416\)</span>，下采样是<span class="math inline">\(32\)</span>倍，所以最后每个feature map大小是13，也可以理解为将输入尺寸<span class="math inline">\(416\times 416\)</span>划分为<span class="math inline">\(13\times 13\)</span>个小方格。</p>
+<h3 id="yolo-v3">YOLO v3</h3>
+<p>YOLO v3算是集大成之作了，在速度和精度上都达到了惊艳的效果，更是可以用来做实时物体检测，主要改进如下：</p>
+<ol type="1">
+<li>更好的主干网络（DarkNet19 -&gt; DarkNet53）</li>
+<li>Multi-scale prediction，类似FPN，将低层特征通过skip connection方式concat到最后一层，从而加强小物体的特征，这样能多产生很多Bounding Box</li>
+<li>将softmax激活函数变成logistic激活函数（binary cross entropy），在YOLOv3中，每个框使用多标签分类来预测边界框可能包含的类。该算法不使用softmax，因为它对于高性能没有必要，因此YOLOv3使用独立的逻辑分类器。在训练过程中，我们使用二元交叉熵损失来进行类别预测。对于重叠的标签，多标签方法可以更好地模拟数据</li>
+<li>增加Anchor Boxes至9个（原来是5个）</li>
+</ol>
 <h2 id="ssd">SSD</h2>
 <h2 id="参考资料">参考资料</h2>
 <ol type="1">
@@ -537,8 +587,12 @@
 <li><a href="https://arxiv.org/pdf/1504.08083.pdf" target="_blank" rel="noopener">fast RCNN</a></li>
 <li><a href="https://arxiv.org/pdf/1406.4729.pdf" target="_blank" rel="noopener">SPP Net</a></li>
 <li><a href="https://arxiv.org/pdf/1506.01497.pdf" target="_blank" rel="noopener">faster RCNN</a></li>
-<li>YOLO</li>
-<li>SSD</li>
+<li><a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="noopener">YOLO v1</a></li>
+<li><a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="noopener">YOLO v2</a></li>
+<li><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener">YOLO v3</a></li>
+<li><a href="https://arxiv.org/abs/1512.02325" target="_blank" rel="noopener">SSD</a></li>
+<li>https://zhuanlan.zhihu.com/p/44092856</li>
+<li>https://xmfbit.github.io/2017/02/04/yolo-paper/</li>
 </ol>
 
       
@@ -847,7 +901,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#object-detection"><span class="nav-number">1.</span> <span class="nav-text">Object Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn"><span class="nav-number">2.</span> <span class="nav-text">RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-rcnn"><span class="nav-number">3.</span> <span class="nav-text">fast RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faster-rcnn"><span class="nav-number">4.</span> <span class="nav-text">faster RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yolo"><span class="nav-number">5.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssd"><span class="nav-number">6.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#object-detection"><span class="nav-number">1.</span> <span class="nav-text">Object Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rcnn"><span class="nav-number">2.</span> <span class="nav-text">RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-rcnn"><span class="nav-number">3.</span> <span class="nav-text">fast RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#faster-rcnn"><span class="nav-number">4.</span> <span class="nav-text">faster RCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yolo"><span class="nav-number">5.</span> <span class="nav-text">YOLO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yolo-v1"><span class="nav-number">5.1.</span> <span class="nav-text">YOLO v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yolo-v2"><span class="nav-number">5.2.</span> <span class="nav-text">YOLO v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yolo-v3"><span class="nav-number">5.3.</span> <span class="nav-text">YOLO v3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssd"><span class="nav-number">6.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
