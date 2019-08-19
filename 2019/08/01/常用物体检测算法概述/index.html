@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/yolo_v1.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/7x7_grid.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/01/常用物体检测算法概述/loss.png">
-<meta property="og:updated_time" content="2019-08-18T08:55:39.246Z">
+<meta property="og:updated_time" content="2019-08-19T10:21:14.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用物体检测算法概述">
 <meta name="twitter:description" content="Object Detection 物体检测是计算机视觉领域比较重要的一个子方向，场景是给定一个图片，找出图片中一个一个物体（除背景外）；通常是以一个矩形框将检测到的物体框出表示预测结果；Selective Search算法（利用图像中物体之间纹理、颜色等相似度来生成矩形框）是代表性传统物体检测算法。随着CNN的崛起以及流行，自然会有大佬想如何将CNN应用于物体检测领域，通常CNN有分类和回归两种不">
@@ -414,7 +414,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-18 16:55:39" itemprop="dateModified" datetime="2019-08-18T16:55:39+08:00">2019-08-18</time>
+                <time title="修改时间：2019-08-19 18:21:14" itemprop="dateModified" datetime="2019-08-19T18:21:14+08:00">2019-08-19</time>
               
             
           </span>
@@ -468,6 +468,7 @@
       
         <h2 id="object-detection">Object Detection</h2>
 <p>物体检测是计算机视觉领域比较重要的一个子方向，场景是给定一个图片，找出图片中一个一个物体（除背景外）；通常是以一个矩形框将检测到的物体框出表示预测结果；<code>Selective Search</code>算法（利用图像中物体之间纹理、颜色等相似度来生成矩形框）是代表性传统物体检测算法。随着CNN的崛起以及流行，自然会有大佬想如何将CNN应用于物体检测领域，通常CNN有分类和回归两种不同问题处理思路，那么物体检测任务应该被抽象为分类还是回归问题呢？</p>
+<a id="more"></a>
 <p><strong>Object Detection as Classification?</strong></p>
 <p>如果将物体检测任务抽象为分类问题，那么给定一张图像，往往需要借助滑动窗口产生很多个小<code>patch</code>，否则，CNN只能给出这张图像是什么物体，但是无法给出定位物体，因此需要借助滑动窗口产生小<code>patch</code>，这样就能完成定位，随后将<code>patch</code>输入CNN做预测即可。逻辑上似乎能将物体检测任务抽象为分类问题，但是最主要问题是时间代价非常高，效率比较低，无法实现实时，主要因为滑动窗口将会产生大量的<code>patch</code>，导致计算量比较大；另外一个小问题就是不同物体的大小尺寸不一样，因此势必会有不同的滑动窗口大小，而不同输入尺寸情况下，CNN是无法work的（主要是fully connected layer要求输入维度固定），下文会详细介绍其解决方案（<code>resize</code>，<code>RoI layer</code>）。</p>
 <p><strong>Object Detection as Regression?</strong></p>
@@ -566,7 +567,7 @@
 <li><p>高分辨率分类器：YOLO V1首先在ImageNet上以224×224大小图像作为输入进行训练，之后在检测任务中提升到448×448。这里，作者在训练完224大小的分类网络后，首先调整网络大小为448×448，然后在ImageNet上进行fine tuning（10个epoch）。也就是得到了一个高分辨率的cls。再把它用detection上训练。这样，能够提升4%。</p></li>
 <li><p>引入Anchor Boxes：YOLO V1中直接在CNN后面街上全连接层，直接回归bounding box的参数。这里引入了Faster RCNN中的anchor box概念，不再直接回归bounding box的参数，而是相对于anchor box的参数。在faster RCNN中，是手动选择生成9个Anchors，在YOLO v2中，作者使用了<span class="math inline">\(K-Means\)</span>聚类（衡量距离是<span class="math inline">\(IoU\)</span>），最终这种复杂度和准确率选择生成5个Anchors。直接结果是recall提升，accuracy下降了一些，想想也是，YOLO v1中一张图给出<span class="math inline">\(7\times 7 \times 2\)</span>个预测结果，而YOLO V2给出<span class="math inline">\(13\times 13 \times 5\)</span>个预测结果。</p></li>
 <li><p>Batch Normalization，并且丢掉了YOLO v1网络中的两个全连接层，改成了全卷积网络。</p></li>
-<li><p>Multi-scale training：和GoogleNet训练时一样，为了提高模型的鲁棒性，在训练的时候使用多尺度的输入进行训练。YOLO v2 每迭代几次都会改变网络参数。每 10 个 Batch，网络会随机地选择一个新的图片尺寸，由于使用了下采样参数是 32，所以不同的尺寸大小也选择为32的倍数 {320，352…..608}，最小<span class="math inline">\(320\times 320\)</span>，最大 <span class="math inline">\(608\times 608\)</span>，网络会自动改变尺寸，并继续训练的过程。</p></li>
+<li><p>Multi-scale training：和GoogleNet训练时一样，为了提高模型的鲁棒性，在训练的时候使用多尺度的输入进行训练。YOLO v2 每迭代几次都会改变网络参数。每10个Batch，网络会随机地选择一个新的图片尺寸，由于使用了下采样参数是 32，所以不同的尺寸大小也选择为32的倍数 {320，352…..608}，最小<span class="math inline">\(320\times 320\)</span>，最大<span class="math inline">\(608\times 608\)</span>，网络会自动改变尺寸，并继续训练的过程。</p></li>
 <li><p>训练时引入了世界树（WordTree）结构，将检测和分类问题做成了一个统一的框架，并且提出了一种层次性联合训练方法，将ImageNet分类数据集和COCO检测数据集同时对模型训练。</p></li>
 </ol>
 <p>另外，YOLO v2输入尺寸也变化了，YOLO v1输入大小是固定<span class="math inline">\(448\times 448\)</span>，而YOLO v2输入大小是<span class="math inline">\(416\times 416\)</span>，下采样是<span class="math inline">\(32\)</span>倍，所以最后每个feature map大小是13，也可以理解为将输入尺寸<span class="math inline">\(416\times 416\)</span>划分为<span class="math inline">\(13\times 13\)</span>个小方格。</p>
@@ -575,7 +576,7 @@
 <ol type="1">
 <li>更好的主干网络（DarkNet19 -&gt; DarkNet53）</li>
 <li>Multi-scale prediction，类似FPN，将低层特征通过skip connection方式concat到最后一层，从而加强小物体的特征，这样能多产生很多Bounding Box</li>
-<li>将softmax激活函数变成logistic激活函数（binary cross entropy），在YOLOv3中，每个框使用多标签分类来预测边界框可能包含的类。该算法不使用softmax，因为它对于高性能没有必要，因此YOLOv3使用独立的逻辑分类器。在训练过程中，我们使用二元交叉熵损失来进行类别预测。对于重叠的标签，多标签方法可以更好地模拟数据</li>
+<li>类别预测方面主要是将原来的单标签分类改进为多标签分类，原来分类网络中的softmax层都是假设一张图像或一个object只属于一个类别，但是在一些复杂场景下，一个object可能属于多个类。将softmax激活函数变成logistic激活函数（binary cross entropy），在YOLOv3中，每个框使用多标签分类来预测边界框可能包含的类。该算法不使用softmax，因为它对于高性能没有必要，因此YOLOv3使用独立的逻辑分类器。在训练过程中，我们使用二元交叉熵损失来进行类别预测。对于重叠的标签，多标签方法可以更好地模拟数据</li>
 <li>增加Anchor Boxes至9个（原来是5个）</li>
 </ol>
 <h2 id="ssd">SSD</h2>
@@ -593,6 +594,8 @@
 <li><a href="https://arxiv.org/abs/1512.02325" target="_blank" rel="noopener">SSD</a></li>
 <li>https://zhuanlan.zhihu.com/p/44092856</li>
 <li>https://xmfbit.github.io/2017/02/04/yolo-paper/</li>
+<li>https://blog.csdn.net/u014380165/article/details/80202337</li>
+<li><a href="https://zhuanlan.zhihu.com/p/33544892" target="_blank" rel="noopener">知乎 SSD</a></li>
 </ol>
 
       
