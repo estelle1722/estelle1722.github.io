@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/decision_tree.jpeg">
 <meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/datasets.jpeg">
 <meta property="og:image" content="http://yoursite.com/2019/04/23/校招面试考点-机器学习-决策树/tree.jpeg">
-<meta property="og:updated_time" content="2019-08-19T10:20:33.102Z">
+<meta property="og:updated_time" content="2019-09-05T12:42:16.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="校招面试考点-机器学习-决策树">
 <meta name="twitter:description" content="定义及其构建 决策树是一类常见机器学习算法，决策树构建过程可以理解为决策过程；算法流程如下图所示：">
@@ -409,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-19 18:20:33" itemprop="dateModified" datetime="2019-08-19T18:20:33+08:00">2019-08-19</time>
+                <time title="修改时间：2019-09-05 20:42:16" itemprop="dateModified" datetime="2019-09-05T20:42:16+08:00">2019-09-05</time>
               
             
           </span>
@@ -535,7 +535,7 @@ Gini(D) &amp;=\sum_{k=1}^{|\mathcal{Y}|} \sum_{k&#39;=k} p_k p_{k&#39;}\\
 \]</span></p>
 <p>基尼值反映了从数据集中随机抽取两个样本，其类别标记不一致的概率，因此基尼值越小，则数据集纯度越高。属性<span class="math inline">\(a\)</span>的基尼系数可定义为：</p>
 <p><span class="math display">\[
-Gini\_index(D,a)=\sum_{v=1}^{V}\frac{D^v}{D}Gini(D^v)
+Gini\_index(D,a)=\sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)
 \]</span></p>
 <p>与信息增益和增益率不同的是，选择基尼系数最小的作为最优划分。</p>
 <p>那么到底使用基尼指数还是熵来进行属性划分选择呢？其实大部分时候它们两种属性划分选择方式所生产的决策树基本相同，但gini值的计算更快一些，因此在sklrean中默认的划分方式就是gini指数，默认的决策树是CART树；但是gini指数的划分趋向于孤立数据集中数量多的类，将它们分到一个树叶中，而熵偏向于构建一颗平衡的树，也就是数量多的类可能分散到不同的叶子中去了。</p>
